@@ -28,14 +28,14 @@ class Track extends AppModel {
 			'message' => 'Track number is required'
 		),
 		't_DiskNumber' => array(
-			// array(
-			// 	'rule' => '_hasRequiredDiscNumber',
-			// 	'message' => 'Disc number is required because the album has multiple discs'
-			// ),
-			// array(
-			// 	'rule' => '_hasValidDiscNumber',
-			// 	'message' => 'Invalid disc number'
-			// ),
+			array(
+				'rule' => '_hasRequiredDiscNumber',
+				'message' => 'Disc number is required because the album has multiple discs'
+			),
+			array(
+				'rule' => '_hasValidDiscNumber',
+				'message' => 'Invalid disc number'
+			),
 			array(
 				'rule' => 'numeric',
 				'allowEmpty' => true,
@@ -53,7 +53,12 @@ class Track extends AppModel {
 				// 'message' => 'Duration should be formatted in m:ss (ex: 2:34)'
 			)
 		),
-	// 	't_ITunesPreviewUrl' => 'url'
+		't_ITunesPreviewUrl' => array(
+			'rule' => 'url',
+			'required' => false,
+			'allowEmpty' => true,
+			'message' => 'This should be a URL (ex: http://example.com/preview.mp3)'
+		)
 	);
 	
 	function _hasRequiredArtist() {
@@ -75,29 +80,34 @@ class Track extends AppModel {
 		return true;
 	}
 	
-	// function _hasRequiredDiscNumber() {
-	// 	debug($this->data);
-	// 	if (isset($this->data['Track']['t_AlbumID'])) {
-	// 		$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $this->data['Track']['t_AlbumID'])));
-	// 	} elseif (isset($this->data['Track']['t_TrackID'])) {
-	// 		$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $this->data['Track']['t_TrackID'])));
-	// 	}
-	// 	
-	// 	return ($albumData['Album']['a_DiscCount'] == 1 || !empty($this->data['Track']['t_DiskNumber']));
-	// }
-	// 
-	// function _hasValidDiscNumber() {
-	// 	if (isset($this->data['Track']['t_AlbumID'])) {
-	// 		$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $this->data['Track']['t_AlbumID'])));
-	// 	} elseif (isset($this->data['Track']['t_TrackID'])) {
-	// 		$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $this->data['Track']['t_TrackID'])));
-	// 	}
-	// 	
-	// 	if (!empty($this->data['Track']['t_DiskNumber'])) {
-	// 		return ($this->data['Track']['t_DiskNumber'] > 0 && $this->data['Track']['t_DiskNumber'] <= $albumData['Album']['a_DiscCount']);
-	// 	}
-	// 	return true;
-	// }
+	function _hasRequiredDiscNumber() {
+		$track = array_values($this->data);
+		$track = $track[0];
+		
+		if (isset($track['t_AlbumID'])) {
+			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $track['t_AlbumID'])));
+		} elseif (isset($track['t_TrackID'])) {
+			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $track['t_TrackID'])));
+		}
+		
+		return ($albumData['Album']['a_DiscCount'] == 1 || !empty($track['t_DiskNumber']));
+	}
+	
+	function _hasValidDiscNumber() {
+		$track = array_values($this->data);
+		$track = $track[0];
+		
+		if (isset($track['t_AlbumID'])) {
+			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $track['t_AlbumID'])));
+		} elseif (isset($track['t_TrackID'])) {
+			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $track['t_TrackID'])));
+		}
+		
+		if (!empty($track['t_DiskNumber'])) {
+			return ($track['t_DiskNumber'] > 0 && $track['t_DiskNumber'] <= $albumData['Album']['a_DiscCount']);
+		}
+		return true;
+	}
 	
 	function _hasRequiredDuration() {
 		$track = array_values($this->data);
@@ -129,34 +139,6 @@ class Track extends AppModel {
 	
 	function __construct($id = false, $table = null, $ds = null) {
 		parent::__construct($id, $table, $ds);
-		
-		// $this->validate = array(
-		// 	't_Title' => array(
-		// 		'rule' => 'alphaNumeric',
-		// 		'required' => true,
-		// 		'allowEmpty' => false
-		// 	),
-		// 	't_Artist' => array(
-		// 		'rule' => array('_validateArtist'),
-		// 		'required' => false
-		// 	),
-		// 	't_TrackNumber' => array(
-		// 		'rule' => 'numeric',
-		// 		'required' => true,
-		// 		'allowEmpty' => false
-		// 	),
-		// 	't_DiskNumber' => array(
-		// 		'rule' => 'numeric'
-		// 	),
-		// 	't_ITunesPreviewUrl' => 'url'
-		// );
-		// 
-		// if (Configure::read('Options.ReportingPeriod')) {
-		// 	$this->validate['t_Duration'] = array(
-		// 		'rule' => 'numeric',
-		// 		'required' => true
-		// 	);
-		// }
 	}
 }
 ?>

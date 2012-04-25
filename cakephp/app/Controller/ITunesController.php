@@ -19,17 +19,16 @@ class ITunesController extends AppController {
 		$itAlbumData = $this->ITunes->getAlbumById($itAlbumId);
 		if (count($itAlbumData['results']) === 0) throw new NotFoundException();
 		
-		$album = array(
+		$data = array(
 			'Tracks' => array()
 		);
 		
 		foreach ($itAlbumData['results'] as $result) {
-			if (!isset($album['Album']) && $result['wrapperType'] === 'collection') {
+			if (!isset($data['Album']) && $result['wrapperType'] === 'collection') {
 				// Try and find the genre
 				$genre = $this->Genre->find('first', array('conditions' => array('Genre.g_Name' => $result['primaryGenreName'])));
-				if (!$genre) $data['Genre'] = array('g_Name' => $result['primaryGenreName'], 'g_TopLevel' => 1);
 				
-				$album['Album'] = array(
+				$data['Album'] = array(
 					'a_Title' => $result['collectionName'],
 					'a_Compilation' => $result['collectionType'] == 'Compilation',
 					'a_Artist' => $result['artistName'],
@@ -39,8 +38,8 @@ class ITunesController extends AppController {
 				);
 			} elseif ($result['wrapperType'] === 'track') {
 				// Get the album's disc count from the tracks
-				if (isset($album['Album']) && !isset($album['Album']['a_DiscCount']) && isset($result['discCount'])) {
-					$album['Album']['a_DiscCount'] = $result['discCount'];
+				if (isset($data['Album']) && !isset($data['Album']['a_DiscCount']) && isset($result['discCount'])) {
+					$data['Album']['a_DiscCount'] = $result['discCount'];
 				}
 				
 				$track = array(
@@ -52,16 +51,13 @@ class ITunesController extends AppController {
 					't_ITunesPreviewUrl' => $result['previewUrl']
 				);
 				
-				array_push($album['Tracks'], $track);
+				array_push($data['Tracks'], $track);
 			}
 		}
 		
-		if (!isset($album)) throw new NotFoundException();
-		
-		if ($this->Album->saveAll($album)) {
-		// if (!$this->Album->addAlbumWithTracks($album, $tracks)) {
-			$this->Session->setFlash('Could not import album... ', 'flash_error', array('details' => print_r($album, true)."\n\n".print_r($this->Album->validationErrors, true)), 'error');
-			$this->redirect(array('action' => 'view', $album['Album']['a_ITunesId']));
+		if ($this->Album->addAlbumWithTracks($data)) {
+			$this->Session->setFlash('Could not import album... ', 'flash_error', array('details' => print_r($data, true)."\n\n".print_r($this->Album->validationErrors, true)), 'error');
+			$this->redirect(array('controller' => 'albums', 'action' => 'add'));
 		} else {
 			$this->Session->setFlash(
 				'The album was imported.',
@@ -79,10 +75,10 @@ class ITunesController extends AppController {
 	}
 	
 	function view($itAlbumId) {
-		if (!isset($itAlbumId)) $this->cakeError('error404');
+		if (!isset($itAlbumId)) throw new NotFoundException();
 		$itAlbumData = $this->ITunes->getAlbumById($itAlbumId);
 		
-		if (count($itAlbumData['results']) === 0) $this->cakeError('error404');
+		if (count($itAlbumData['results']) === 0) throw new NotFoundException();
 		
 		$album = null;
 		$tracks = array();
@@ -111,7 +107,7 @@ class ITunesController extends AppController {
 			}
 		}
 		
-		if ($album === null) $this->cakeError('error404');
+		if ($album === null) throw new NotFoundException();
 		
 		// Check if the album has already been imported
 		$importedAlbum = $this->Album->find('first', array('conditions' => array('a_ITunesId' => $album['id'])));

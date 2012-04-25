@@ -46,10 +46,13 @@ class Album extends AppModel {
 			'rule' => 'boolean',
 			'required' => true
 		),
-	// 	'a_DiscCount' => array(
-	// 		'rule' => 'numeric',
-	// 		'required' => true
-	// 	),
+		'a_DiscCount' => array(
+			array(
+				'rule' => 'numeric',
+				'allowEmpty' => true,
+				'message' => 'Invalid disc count'
+			)
+		),
 		'a_AlbumArt' => array(
 			'rule' => 'url',
 			'required' => false,
@@ -65,8 +68,8 @@ class Album extends AppModel {
 		}
 		
 		// If disc count isn't provided, default to 1
-		if (empty($this->data['Album']['a_DiscCount'])) {
-			$this->data['Album']['a_DiscCount'] = 1;
+		if (empty($this->data['Album']['a_DiscCount']) || $this->data['Album']['a_DiscCount'] <= 0) {
+			$this->data['Album']['a_DiscCount'] = '1';
 		}
 		
 		return true;
@@ -99,23 +102,26 @@ class Album extends AppModel {
 		return $this->find('all', array_merge($params, array('conditions' => $conditions)));
 	}
 	
-	public function addAlbumWithTracks($album, $tracks) {
-		$dataSource = $this->getDataSource();
+	public function addAlbumWithTracks($data) {
+		// debug($data);
 		
-		$dataSource->begin();
-		$success = true;
+		$ds = $this->getDataSource();
+		$ds->begin();
 		
-		if (!$this->save($album)) $success = false;
+		$success = false;
 		
-		foreach ($tracks as $track) {
-			$track['t_AlbumID'] = $this->id;
-			if (!$this->Tracks->save($track)) $success = false;
+		if ($this->save($data)) {
+			foreach ($data['Tracks'] as $key => $value) {
+				$data['Tracks'][$key]['t_AlbumID'] = $this->id;
+			}
+			
+			if ($this->Tracks->saveMany($data['Tracks'])) $success = true;
 		}
 		
 		if ($success) {
-			$dataSource->commit();
+			$ds->commit();
 		} else {
-			$dataSource->rollback();
+			$ds->rollback();
 		}
 		
 		return $success;

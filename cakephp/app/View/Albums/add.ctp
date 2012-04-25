@@ -27,6 +27,7 @@
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
+					'min' => 1,
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
@@ -45,16 +46,18 @@
 					)
 				)); ?>
 			</fieldset>
-			<?php for ($i = 0; $i <= 5; $i++): ?>
+			<?php for ($i = 0; $i < 2; $i++): ?>
 				<fieldset>
 					<legend>Track</legend>
 					<?php echo $this->TB->input('Tracks.'.$i.'.t_DiskNumber', array(
 						'type' => 'number',
+						'min' => 1,
 						'label' => 'Disc',
 						'class' => 'span3'
 					)); ?>
 					<?php echo $this->TB->input('Tracks.'.$i.'.t_TrackNumber', array(
 						'type' => 'number',
+						'min' => 1,
 						'label' => '#',
 						'class' => 'span3'
 					)); ?>

@@ -41,7 +41,8 @@ class AlbumsController extends AppController {
 	
 	function add() {
 		if ($this->request->is('post') && !empty($this->request->data)) {
-			if ($this->Album->saveAssociated($this->request->data)) {
+			// Save album, set the foreign key on each track, then save the tracks
+			if ($this->Album->addAlbumWithTracks($this->request->data)) {
 				$this->Session->setFlash(
 					'The album was saved.',
 					'flash_success',
@@ -52,25 +53,7 @@ class AlbumsController extends AppController {
 				);
 				$this->redirect(array('controller' => 'albums', 'action' => 'add'));
 			}
-			$this->set('data', $this->request->data);
-		}
-		
-		$this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));
-	}
-	
-	function addWithTracks() {
-		if ($this->request->is('post') && !empty($this->request->data)) {
-			if ($this->Album->saveAssociated($this->request->data)) {
-				$this->Session->setFlash(
-					'The album was saved.',
-					'flash_success',
-					array(
-						'link_text' => 'View now',
-						'link_url' => array('controller' => 'albums', 'action' => 'view', $this->Album->id)
-					), 'success'
-				);
-				$this->redirect(array('controller' => 'albums', 'action' => 'add'));
-			}
+			
 			$this->set('data', $this->request->data);
 		}
 		
