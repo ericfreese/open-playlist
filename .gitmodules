@@ -1,0 +1,6 @@
+[submodule "tools/twitter-bootstrap"]
+	path = tools/twitter-bootstrap
+	url = git://github.com/twitter/bootstrap.git
+[submodule "cakephp/app/Plugin/TwitterBootstrap"]
+	path = cakephp/app/Plugin/TwitterBootstrap
+	url = git://github.com/ericfreese/twitter-bootstrap-helper
