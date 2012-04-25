@@ -1,3 +1,1 @@
-<?php
-	$echo $this->Json($albums);
-?>
+<?php echo json_encode($albums); ?>

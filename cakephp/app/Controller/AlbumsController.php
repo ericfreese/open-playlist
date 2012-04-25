@@ -6,12 +6,34 @@ class AlbumsController extends AppController {
 	var $components = array('ITunes');
 	
 	function index() {
-		$albums = $this->Album->find('all');
+		$options = array_merge(array(
+			'type' => 'all',
+			'filter' => false,
+			'recursive' => -1,
+			'order' => false,
+			'limit' => 20,
+			'offset' => 0
+			
+		), $this->request->query);
+		
+		// Set params
+		$params = array(
+			'recursive' => $options['recursive'],
+			'limit' => $options['limit'],
+			'offset' => $options['offset']
+		);
+		if ($options['order'] !== false) $params['order'] = $options['order'];
+		
+		// Set conditions
+		$conditions = array();
+		$params['conditions'] = $conditions;
+		
+		// Make the request
+		$albums = $this->Album->find($options['type'], $params);
 		$this->set('albums', $albums);
 	}
 	
 	function view($id) {
-		debug($this->params['ext']);
 		$album = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $id)));
 		if (!$album) throw new NotFoundException('Album does not exist');
 		$this->set('album', $album);

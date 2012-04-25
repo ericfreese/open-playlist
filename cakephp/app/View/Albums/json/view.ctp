@@ -1,6 +1,1 @@
-<album>
-	<?php
-		$xml = Xml::build($album);
-		echo $xml->saveXML();
-	?>
-</album>
+<?php echo json_encode($album); ?>
