@@ -6,11 +6,13 @@
 				<?php echo $this->Form->input('t_TrackID', array('type' => 'hidden')); ?>
 				<?php echo $this->TB->input('t_DiskNumber', array(
 					'type' => 'number',
+					'min' => 1,
 					'label' => 'Disc',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('t_TrackNumber', array(
 					'type' => 'number',
+					'min' => 1,
 					'label' => '#',
 					'class' => 'span3'
 				)); ?>
@@ -27,6 +29,7 @@
 					'label' => 'Duration (seconds)',
 					'class' => 'span3'
 				)); ?>
+				<?php echo $this->Form->hidden('t_ITunesPreviewUrl'); ?>
 				<div class="form-actions">
 					<?php echo $this->TB->button('Save Track', array('style' => 'primary')); ?>
 				</div>

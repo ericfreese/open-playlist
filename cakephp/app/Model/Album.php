@@ -103,19 +103,21 @@ class Album extends AppModel {
 	}
 	
 	public function addAlbumWithTracks($data) {
-		// debug($data);
-		
 		$ds = $this->getDataSource();
 		$ds->begin();
 		
 		$success = false;
 		
 		if ($this->save($data)) {
-			foreach ($data['Tracks'] as $key => $value) {
-				$data['Tracks'][$key]['t_AlbumID'] = $this->id;
+			if (isset($data['Tracks'])) {
+				foreach ($data['Tracks'] as $key => $value) {
+					$data['Tracks'][$key]['t_AlbumID'] = $this->id;
+				}
+				
+				if ($this->Tracks->saveMany($data['Tracks'])) $success = true;
+			} else {
+				$success = true;
 			}
-			
-			if ($this->Tracks->saveMany($data['Tracks'])) $success = true;
 		}
 		
 		if ($success) {

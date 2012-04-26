@@ -31,19 +31,18 @@
 								<div class="row-fluid"><div class="span12"><?php echo $this->Html->link($album['collectionName'], array('controller' => 'itunes', 'action' => 'view', $album['collectionId'])) ?></div></div>
 								<div class="row-fluid"><div class="span12"><i><?php echo $album['artistName'] ?></i></div></div>
 								<div class="row-fluid"><div class="span12"><i><?php echo $album['trackCount'].' track'.($album['trackCount'] > 1 ? 's' : '') ?></i></div></div>
-								<div class="btn-group">
-									<?php echo $this->Html->link($this->TB->icon('download').' Import', array('controller' => 'itunes', 'action' => 'import', $album['collectionId']), array('class' => 'btn btn-mini', 'escape' => false)); ?>
+								<div>
+									<?php if (isset($album['localId']) && isset($album['localAddDate'])): ?>
+										<?php echo $this->Html->link($this->TB->icon('download', 'white').' Imported '.$this->Time->format('n/d/y', $album['localAddDate']), array('controller' => 'albums', 'action' => 'view', $album['localId']), array('class' => 'btn btn-mini btn-info', 'escape' => false)); ?>
+									<?php else: ?>
+										<?php echo $this->Form->create(false, array('type' => 'post', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
+											<?php echo $this->Form->hidden('iTunesAlbumId', array('value' => $album['collectionId'])); ?>
+											<?php echo $this->TB->button($this->TB->icon('download').' Import', array('size' => 'mini')); ?>
+										<?php echo $this->Form->end(); ?>
+									<?php endif; ?>
 								</div>
 							</div>
 						</div>
-					
-						<?php //echo $this->element('album_tile', array(
-							// 'albumArtUrl' => $album['artworkUrl60'],
-							// 'albumTitle' => $album['collectionName'],
-							// 'albumUrl' => array('controller' => 'itunes', 'action' => 'album', $album['collectionId']),
-							// 'artistTitle' => $album['artistName'],
-							// 'numTracks' => $album['trackCount']
-						//)) ?>
 					</div>
 					<?php if (($i + 1) % 3 === 0): ?>
 						</div><div class="row-fluid">

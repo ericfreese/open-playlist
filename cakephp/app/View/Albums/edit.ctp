@@ -28,6 +28,7 @@
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
+					'min' => 1,
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
@@ -45,6 +46,7 @@
 						'Digital Library' => 'Digital Library'
 					)
 				)); ?>
+				<?php echo $this->Form->hidden('a_ITunesId'); ?>
 				<div class="form-actions">
 					<?php echo $this->TB->button('Save Album', array('style' => 'primary')); ?>
 				</div>

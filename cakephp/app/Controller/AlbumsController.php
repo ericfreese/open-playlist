@@ -41,6 +41,61 @@ class AlbumsController extends AppController {
 	
 	function add() {
 		if ($this->request->is('post') && !empty($this->request->data)) {
+			// Importing from iTunes
+			if (isset($this->request->data['iTunesAlbumId'])) {
+				// Fetch the data from iTunes
+				$itAlbumData = $this->ITunes->getAlbumById($this->request->data['iTunesAlbumId']);
+				if (count($itAlbumData['results']) === 0) throw new NotFoundException();
+				
+				$data = array(
+					'Tracks' => array()
+				);
+				
+				foreach ($itAlbumData['results'] as $result) {
+					if (!isset($data['Album']) && $result['wrapperType'] === 'collection') {
+						// Try and find the genre
+						$genre = $this->Genre->find('first', array(
+							'conditions' => array('Genre.g_Name' => $result['primaryGenreName'], 'g_TopLevel' => 1)
+						));
+						
+						$data['Album'] = array(
+							'a_Title' => $result['collectionName'],
+							'a_Compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists',
+							'a_Artist' => $result['artistName'],
+							'a_Label' => '',
+							'a_GenreID' => $genre ? $genre['Genre']['g_GenreID'] : '',
+							'a_AlbumArt' => $result['artworkUrl100'],
+							'a_ITunesId' => $result['collectionId'],
+							'a_Location' => 'Gnu Bin'
+						);
+					} elseif ($result['wrapperType'] === 'track') {
+						// Get the album's disc count from the tracks
+						if (isset($data['Album']) && !isset($data['Album']['a_DiscCount']) && isset($result['discCount'])) {
+							$data['Album']['a_DiscCount'] = $result['discCount'];
+						}
+						
+						$track = array(
+							't_Title' => $result['trackName'],
+							't_Artist' => $result['artistName'],
+							't_DiskNumber' => $result['discNumber'],
+							't_TrackNumber' => $result['trackNumber'],
+							't_Duration' => round($result['trackTimeMillis'] / 1000),
+							't_ITunesPreviewUrl' => $result['previewUrl']
+						);
+						
+						array_push($data['Tracks'], $track);
+					}
+				}
+				
+				if (!$data['Album']['a_Compilation']) {
+					foreach ($data['Tracks'] as $key => $value) {
+						unset($data['Tracks'][$key]['t_Artist']);
+					}
+				}
+				
+				$this->request->data = $data;
+			}
+			
 			// Save album, set the foreign key on each track, then save the tracks
 			if ($this->Album->addAlbumWithTracks($this->request->data)) {
 				$this->Session->setFlash(
@@ -51,7 +106,7 @@ class AlbumsController extends AppController {
 						'link_url' => array('controller' => 'albums', 'action' => 'view', $this->Album->id)
 					), 'success'
 				);
-				$this->redirect(array('controller' => 'albums', 'action' => 'add'));
+				$this->redirect($this->referer());
 			}
 			
 			$this->set('data', $this->request->data);

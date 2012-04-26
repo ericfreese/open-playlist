@@ -10,68 +10,31 @@ class ITunesController extends AppController {
 	}
 	
 	function search() {
-		if (isset($this->params->query['q'])) {
-			$this->set('response', $this->ITunes->searchAlbums($this->params->query['q']));
-		}
-	}
-	
-	function import($itAlbumId) {
-		$itAlbumData = $this->ITunes->getAlbumById($itAlbumId);
-		if (count($itAlbumData['results']) === 0) throw new NotFoundException();
-		
-		$data = array(
-			'Tracks' => array()
-		);
-		
-		foreach ($itAlbumData['results'] as $result) {
-			if (!isset($data['Album']) && $result['wrapperType'] === 'collection') {
-				// Try and find the genre
-				$genre = $this->Genre->find('first', array('conditions' => array('Genre.g_Name' => $result['primaryGenreName'])));
-				
-				$data['Album'] = array(
-					'a_Title' => $result['collectionName'],
-					'a_Compilation' => $result['collectionType'] == 'Compilation',
-					'a_Artist' => $result['artistName'],
-					'a_GenreID' => $genre ? $genre['Genre']['g_GenreID'] : 0,
-					'a_AlbumArt' => $result['artworkUrl100'],
-					'a_ITunesId' => $result['collectionId']
-				);
-			} elseif ($result['wrapperType'] === 'track') {
-				// Get the album's disc count from the tracks
-				if (isset($data['Album']) && !isset($data['Album']['a_DiscCount']) && isset($result['discCount'])) {
-					$data['Album']['a_DiscCount'] = $result['discCount'];
-				}
-				
-				$track = array(
-					't_Title' => $result['trackName'],
-					't_Artist' => $result['artistName'],
-					't_DiskNumber' => $result['discNumber'],
-					't_TrackNumber' => $result['trackNumber'],
-					't_Duration' => round($result['trackTimeMillis'] / 1000),
-					't_ITunesPreviewUrl' => $result['previewUrl']
-				);
-				
-				array_push($data['Tracks'], $track);
+		if (isset($this->params->query['q']) && $this->params->query['q'] !== '') {
+			$albums = $this->ITunes->searchAlbums($this->params->query['q']);
+			
+			$iTunesIds = array();
+			foreach ($albums['results'] as $album) {
+				array_push($iTunesIds, $album['collectionId']);
 			}
+			
+			$localAlbums = $this->Album->find('list', array(
+				'conditions' => array('Album.a_ITunesId' => $iTunesIds),
+				'fields' => array('Album.a_AlbumID', 'Album.a_AddDate', 'Album.a_ITunesId')
+			));
+			
+			foreach ($albums['results'] as $key => $album) {
+				if (isset($localAlbums[$album['collectionId']])) {
+					$id = array_keys($localAlbums[$album['collectionId']]);
+					$addDate = array_values($localAlbums[$album['collectionId']]);
+					
+					$albums['results'][$key]['localId'] = $id[0];
+					$albums['results'][$key]['localAddDate'] = $addDate[0];
+				}
+			}
+			
+			$this->set('response', $albums);
 		}
-		
-		if ($this->Album->addAlbumWithTracks($data)) {
-			$this->Session->setFlash('Could not import album... ', 'flash_error', array('details' => print_r($data, true)."\n\n".print_r($this->Album->validationErrors, true)), 'error');
-			$this->redirect(array('controller' => 'albums', 'action' => 'add'));
-		} else {
-			$this->Session->setFlash(
-				'The album was imported.',
-				'flash_success',
-				array(
-					'link_text' => 'Import another',
-					'link_url' => array('controller' => 'itunes', 'action' => 'search')
-				), 'success'
-			);
-			// $this->redirect(array('controller' => 'albums', 'action' => 'view', $this->Album->id));
-		}
-		
-		// $this->Album->saveAll($data);
-		// $this->set('data', $data);
 	}
 	
 	function view($itAlbumId) {
@@ -91,7 +54,8 @@ class ITunesController extends AppController {
 					'albumArt' => $result['artworkUrl100'],
 					'genre' => $result['primaryGenreName'],
 					'trackCount' => $result['trackCount'],
-					'copyright' => $result['copyright']
+					'copyright' => $result['copyright'],
+					'compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists'
 				);
 			} elseif ($result['wrapperType'] === 'track') {
 				// Get the album's disc count from the tracks
@@ -99,6 +63,7 @@ class ITunesController extends AppController {
 				
 				array_push($tracks, array(
 					'name' => $result['trackName'],
+					'artistName' => $result['artistName'],
 					'previewUrl' => $result['previewUrl'],
 					'discNumber' => $result['discNumber'],
 					'trackNumber' => $result['trackNumber'],
@@ -110,8 +75,10 @@ class ITunesController extends AppController {
 		if ($album === null) throw new NotFoundException();
 		
 		// Check if the album has already been imported
-		$importedAlbum = $this->Album->find('first', array('conditions' => array('a_ITunesId' => $album['id'])));
-		if ($importedAlbum) $this->set('importedAlbum', $importedAlbum);
+		if ($localAlbum = $this->Album->find('first', array(
+			'conditions' => array('a_ITunesId' => $album['id']),
+			'recursive' => -1
+		))) $this->set('localAlbum', $localAlbum);
 		
 		$this->set('album', $album);
 		$this->set('tracks', $tracks);

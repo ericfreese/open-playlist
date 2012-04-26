@@ -45,40 +45,43 @@
 						'Digital Library' => 'Digital Library'
 					)
 				)); ?>
+				<?php echo $this->Form->hidden('a_ITunesId'); ?>
 			</fieldset>
-			<?php for ($i = 0; $i < 2; $i++): ?>
-				<fieldset>
-					<legend>Track</legend>
-					<?php echo $this->TB->input('Tracks.'.$i.'.t_DiskNumber', array(
-						'type' => 'number',
-						'min' => 1,
-						'label' => 'Disc',
-						'class' => 'span3'
-					)); ?>
-					<?php echo $this->TB->input('Tracks.'.$i.'.t_TrackNumber', array(
-						'type' => 'number',
-						'min' => 1,
-						'label' => '#',
-						'class' => 'span3'
-					)); ?>
-					<?php echo $this->TB->input('Tracks.'.$i.'.t_Title', array(
-						'label' => 'Track Name',
-						'class' => 'span3'
-					)); ?>
-					<?php echo $this->TB->input('Tracks.'.$i.'.t_Artist', array(
-						'label' => 'Artist',
-						'class' => 'span3'
-					)); ?>
-					<?php echo $this->TB->input('Tracks.'.$i.'.t_Duration', array(
-						// 'type' => 'text',
-						'label' => 'Duration (seconds)',
-						'class' => 'span3'
-					)); ?>
-				</fieldset>
-			<?php endfor; ?>
+			<?php if (isset($this->request->data['Tracks'])): ?>
+				<?php for ($i = 0; $i < count($this->request->data['Tracks']); $i++): ?>
+					<fieldset>
+						<legend>Track</legend>
+						<?php echo $this->TB->input('Tracks.'.$i.'.t_DiskNumber', array(
+							'type' => 'number',
+							'min' => 1,
+							'label' => 'Disc',
+							'class' => 'span3'
+						)); ?>
+						<?php echo $this->TB->input('Tracks.'.$i.'.t_TrackNumber', array(
+							'type' => 'number',
+							'min' => 1,
+							'label' => '#',
+							'class' => 'span3'
+						)); ?>
+						<?php echo $this->TB->input('Tracks.'.$i.'.t_Title', array(
+							'label' => 'Track Name',
+							'class' => 'span3'
+						)); ?>
+						<?php echo $this->TB->input('Tracks.'.$i.'.t_Artist', array(
+							'label' => 'Artist',
+							'class' => 'span3'
+						)); ?>
+						<?php echo $this->TB->input('Tracks.'.$i.'.t_Duration', array(
+							// 'type' => 'text',
+							'label' => 'Duration (seconds)',
+							'class' => 'span3'
+						)); ?>
+						<?php echo $this->Form->hidden('Tracks.'.$i.'.t_ITunesPreviewUrl'); ?>
+					</fieldset>
+				<?php endfor; ?>
+			<?php endif; ?>
 			<fieldset>
 				<div class="form-actions">
-					<?php echo $this->Html->link('Add Track', '#', array('class' => 'btn btn-success'))?>
 					<?php echo $this->TB->button('Save Album', array('style' => 'primary')); ?>
 				</div>
 			</fieldset>
