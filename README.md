@@ -1,3 +1,3 @@
 comrad
 ======
-testin' it, yo.
+Seriously.
