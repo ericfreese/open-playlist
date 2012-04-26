@@ -5,7 +5,7 @@
 				<legend>iTunes Search</legend>
 				<?php echo $this->TB->basic_input('q', array(
 					'type' => 'search',
-					'class' => 'search-query input-xlarge',
+					'class' => 'search-query',
 					'label' => false,
 					'value' => isset($this->params->query['q']) ? $this->params->query['q'] : ''
 				)); ?>
