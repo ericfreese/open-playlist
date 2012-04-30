@@ -5,7 +5,7 @@ class MusicLibraryController extends AppController {
 	var $helpers = array('Time', 'Html');
 	var $components = array('ITunes');
 	
-	function show($set = 'all') {
+	function catalog($set = 'all') {
 		if ($set === 'all') {
 			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_Title ASC')));
 		} elseif ($set === 'recentlyadded') {
