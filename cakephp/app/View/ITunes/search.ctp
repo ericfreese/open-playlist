@@ -35,7 +35,7 @@
 									<?php if (isset($album['localId']) && isset($album['localAddDate'])): ?>
 										<?php echo $this->Html->link($this->TB->icon('download', 'white').' Imported '.$this->Time->format('n/d/y', $album['localAddDate']), array('controller' => 'albums', 'action' => 'view', $album['localId']), array('class' => 'btn btn-mini btn-info', 'escape' => false)); ?>
 									<?php else: ?>
-										<?php echo $this->Form->create(false, array('type' => 'post', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
+										<?php echo $this->Form->create(false, array('type' => 'put', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
 											<?php echo $this->Form->hidden('iTunesAlbumId', array('value' => $album['collectionId'])); ?>
 											<?php echo $this->TB->button($this->TB->icon('download').' Import', array('size' => 'mini')); ?>
 										<?php echo $this->Form->end(); ?>

@@ -9,7 +9,7 @@
 			<?php if (isset($localAlbum['Album']['a_AlbumID'])): ?>
 				<?php echo $this->Html->link($this->TB->icon('download', 'white').' Imported '.$this->Time->format('n/d/y', $localAlbum['Album']['a_AddDate']), array('controller' => 'albums', 'action' => 'view', $localAlbum['Album']['a_AlbumID']), array('class' => 'btn btn-info', 'escape' => false)); ?>
 			<?php else: ?>
-				<?php echo $this->Form->create(false, array('type' => 'post', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
+				<?php echo $this->Form->create(false, array('type' => 'put', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
 					<?php echo $this->Form->hidden('iTunesAlbumId', array('value' => $album['id'])); ?>
 					<?php echo $this->TB->button($this->TB->icon('download').' Import'); ?>
 				<?php echo $this->Form->end(); ?>

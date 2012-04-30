@@ -40,7 +40,7 @@ class AlbumsController extends AppController {
 	}
 	
 	function add() {
-		if ($this->request->is('post') && !empty($this->request->data)) {
+		if ($this->request->is('put') && !empty($this->request->data)) {
 			// Importing from iTunes
 			if (isset($this->request->data['iTunesAlbumId'])) {
 				// Fetch the data from iTunes
