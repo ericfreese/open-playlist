@@ -22,6 +22,16 @@ class Album extends AppModel {
 	);
 	
 	var $validate = array(
+		'a_AlbumID' => array(
+			array(
+				'rule' => 'numeric',
+				'required' => true,
+				'message' => 'CD Code is required'
+			), array(
+				'rule' => '_hasUniqueCDCode',
+				'message' => 'CD Code already in use'
+			)
+		),
 		'a_Title' => array(
 			'rule' => 'notEmpty',
 			'required' => true,
@@ -32,10 +42,9 @@ class Album extends AppModel {
 			'message' => 'Artist is required because the album is not a compilation'
 		),
 		'a_Label' => array(
-			array(
-				'rule' => '_hasRequiredLabel',
-				'message' => 'Label is required because we\'re in a reporting period'
-			)
+			'rule' => 'notEmpty',
+			'required' => true,
+			'message' => 'Label is required'
 		),
 		'a_GenreID' => array(
 			'rule' => 'numeric',
@@ -75,14 +84,13 @@ class Album extends AppModel {
 		return true;
 	}
 	
+	function _hasUniqueCDCode() {
+		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) == 0);
+	}
+	
 	// Require artist unless the album is a compilation
 	function _hasArtistOrIsCompilation() {
 		return ($this->data['Album']['a_Compilation'] || !empty($this->data['Album']['a_Artist']));
-	}
-	
-	// Only require label when in a reporting period
-	function _hasRequiredLabel() {
-		return !(Configure::read('Options.ReportingPeriod') && empty($this->data['Album']['a_Label']));
 	}
 	
 	function __construct($id = false, $table = null, $ds = null) {
