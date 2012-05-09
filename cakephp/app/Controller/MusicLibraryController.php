@@ -17,6 +17,8 @@ class MusicLibraryController extends AppController {
 		} else {
 			$this->set('albums', array());
 		}
+		
+		$this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));
 	}
 	
 	function add($from) {

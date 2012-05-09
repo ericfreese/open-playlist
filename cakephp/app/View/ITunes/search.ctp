@@ -1,3 +1,7 @@
+<?php // $this->start('subNavLinks'); ?>
+	<?php // echo $this->element('subnav/musiclibrary'); ?>
+<?php // $this->end(); ?>
+
 <div class="row-fluid">
 	<div class="span12">
 		<?php echo $this->Form->create(false, array('class' => 'form-search', 'type' => 'get')); ?>
@@ -54,7 +58,7 @@
 	<div class="row-fluid">
 		<div class="span12">
 			<p style="margin-top: 20px">Can't find what you're looking for?</p>
-			<?php echo $this->Html->link('Add an Album Manually &raquo;', array('controller' => 'albums', 'action' => 'add'), array('class' => 'btn btn-success', 'escape' => false))?>
+			<?php echo $this->Html->link('Add Album Manually &raquo;', array('controller' => 'albums', 'action' => 'add'), array('class' => 'btn btn-success', 'escape' => false))?>
 		</div>
 	</div>
 <?php endif; ?>

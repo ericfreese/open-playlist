@@ -32,6 +32,7 @@
 				<?php echo $this->Form->hidden('t_ITunesPreviewUrl'); ?>
 				<div class="form-actions">
 					<?php echo $this->TB->button('Save Track', array('style' => 'primary')); ?>
+					<?php echo $this->Html->link('Cancel', $this->request->referer(), array('class' => 'btn')); ?>
 				</div>
 			</fieldset>
 		<?php echo $this->Form->end(); ?>

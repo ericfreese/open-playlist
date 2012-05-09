@@ -46,12 +46,19 @@
 						<ul class="nav">
 							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'showbuilder', 'action' => 'upcomingshows')) ?></li>
 							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
-							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'show', 'all')) ?></li>
-							<li><?php echo $this->Html->link('Events', array('controller' => 'events', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>
+							<li class="active dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Music Library <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><?php echo $this->Html->link('Catalog', array('controller' => 'musiclibrary', 'action' => 'catalog')) ?></li>
+									<li class="nav-header">Add Music</li>
+									<li><?php echo $this->Html->link('Import From iTunes', array('controller' => 'itunes', 'action' => 'search')); ?></li>
+									<li><?php echo $this->Html->link('Add Manually', array('controller' => 'albums', 'action' => 'add')); ?></li>
+								</ul>
+							</li>
+							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 						</ul>
 						<ul class="nav pull-right">
-							<li class="divider-vertical"></li>
+							<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as username <span class="caret"></span></a>
 								<ul class="dropdown-menu">
@@ -59,10 +66,20 @@
 								</ul>
 							</li>
 						</ul>
-					</div><!--/.nav-collapse -->
+					</div>
 				</div>
 			</div>
 		</div>
+		
+		<?php if ($this->fetch('subNavLinks')): ?>
+		<div class="subnav">
+			<div class="container-fluid">
+				<ul class="nav nav-pills">
+					<?php echo $this->fetch('subNavLinks'); ?>
+				</ul>
+			</div>
+		</div>
+		<?php endif; ?>
 		
 		<div class="container-fluid">
 			<div class="row-fluid">
