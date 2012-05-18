@@ -20,7 +20,7 @@ class TracksController extends AppController {
 		
 		$this->set('album', $album);
 		
-		if ($this->request->is('post')) {
+		if ($this->request->is('put')) {
 			$this->set('data', $this->data);
 			$this->Track->set($this->data['Track']);
 			if ($this->Track->save()) {

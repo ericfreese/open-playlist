@@ -5,7 +5,8 @@
 				<legend>Add Album</legend>
 				<?php echo $this->TB->input('a_AlbumID', array(
 					'label' => 'CD Code',
-					'type' => 'number',
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_Title', array(
@@ -32,11 +33,13 @@
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
-					'min' => 1,
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
 					'label' => 'Album Art URL',
+					'type' => 'url',
 					'class' => 'span3',
 					'placeholder' => 'http://'
 				)); ?>

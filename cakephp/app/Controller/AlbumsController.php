@@ -118,12 +118,8 @@ class AlbumsController extends AppController {
 	}
 	
 	function edit($id) {
-		$this->Album->id = $id;
-		
-		if ($this->request->is('put')) {
-			$this->set('data', $this->data);
-			$this->Album->set($this->data['Album']);
-			if ($this->Album->save()) {
+		if ($this->request->is('put') && !empty($this->request->data)) {
+			if ($this->Album->save($this->request->data)) {
 				$this->Session->setFlash(
 					'The album was saved.',
 					'flash_success',
@@ -135,6 +131,7 @@ class AlbumsController extends AppController {
 				$this->redirect(array('controller' => 'albums', 'action' => 'edit', $id));
 			}
 		} else {
+			$this->Album->id = $id;
 			$this->data = $this->Album->read();
 		}
 		
@@ -146,16 +143,6 @@ class AlbumsController extends AppController {
 		if ($this->Album->delete($id)) {
 			$this->Session->setFlash('The album was successfully deleted.');
 			$this->redirect(array('controller' => 'musiclibrary', 'action' => 'catalog'));
-		}
-	}
-	
-	function save() {
-		if ($this->request->is('post')) {
-			if ($this->Album->save($this->data)) {
-				$this->Session->setFlash('The album was successfully saved.');
-				$this->redirect(array('action' => 'view', $this->Album->id));
-				return;
-			}
 		}
 	}
 }

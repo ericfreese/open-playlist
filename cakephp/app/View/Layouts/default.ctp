@@ -93,11 +93,6 @@
 			
 			<footer>
 				<p>Built with CakePHP v<?php echo Configure::version() ?></p>
-				
-				<button style="float: right" onclick="$('#sql_dump').toggle();">Toggle SQL Dump</button>
-				<div id="sql_dump" style="display: none"</div>
-					<?php echo $this->element('sql_dump'); ?>
-				</div>
 			</footer>
 			
 		</div><!--/.fluid-container-->

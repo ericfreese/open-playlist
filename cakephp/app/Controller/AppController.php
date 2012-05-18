@@ -43,7 +43,8 @@ class AppController extends Controller {
 	
 	var $components = array(
 		'RequestHandler',
-		'Session'
+		'Session',
+		'DebugKit.Toolbar'
 	);
 	
 	// function beforeFilter() {

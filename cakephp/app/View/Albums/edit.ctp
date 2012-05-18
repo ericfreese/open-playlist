@@ -1,6 +1,6 @@
 <div class="row-fluid">
 	<div class="span12">
-		<?php echo $this->Form->create('Album', array('class' => 'form-horizontal')); ?>
+		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 				<legend>Edit Album</legend>
 				<?php echo $this->Form->input('a_AlbumID', array('type' => 'hidden')); ?>
@@ -28,7 +28,8 @@
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
-					'min' => 1,
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
