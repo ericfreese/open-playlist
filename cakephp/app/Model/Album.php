@@ -29,7 +29,8 @@ class Album extends AppModel {
 				'message' => 'CD Code is required'
 			), array(
 				'rule' => '_hasUniqueCDCode',
-				'message' => 'CD Code already in use'
+				'message' => 'CD Code already in use',
+				'on' => 'create'
 			)
 		),
 		'a_Title' => array(
