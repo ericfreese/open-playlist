@@ -2,21 +2,18 @@
 class MusicLibraryController extends AppController {
 	var $name = 'MusicLibrary';
 	var $uses = array('Album', 'Track', 'Genre');
-	var $helpers = array('Time', 'Html');
+	var $helpers = array('Time', 'Html', 'Paginator');
 	var $components = array('ITunes');
 	
-	function catalog($set = 'all') {
-		if ($set === 'all') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_Title ASC')));
-		} elseif ($set === 'recentlyadded') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} elseif ($set === 'recentlyplayed') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} elseif ($set === 'flagged') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} else {
-			$this->set('albums', array());
-		}
+	var $paginate = array(
+		'limit' => 20,
+		'order' => array(
+			'Album.a_AddDate' => 'desc'
+		)
+	);
+	
+	function catalog() {
+		$this->set('albums', $this->paginate('Album'));
 	}
 	
 	function add($from) {

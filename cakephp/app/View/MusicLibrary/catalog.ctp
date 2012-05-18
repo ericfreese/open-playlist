@@ -19,6 +19,8 @@
 	<div class="span10">
 		<div class="row-fluid">
 			<div class="span12">
+				<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+				<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
 				<?php
 					// echo $this->Form->create(false, array('type' => 'get', 'class' => 'form-search'));
 					// echo $this->Form->input('q', array(
@@ -62,5 +64,7 @@
 				<?php endforeach; ?>
 			</tbody>
 		</table>
+		<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+		<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
 	</div>
 </div>
