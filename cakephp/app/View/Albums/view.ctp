@@ -38,9 +38,6 @@
 						<td><?php echo floor($track['t_Duration'] / 60).':'.($track['t_Duration'] % 60 < 10 ? '0' : '').($track['t_Duration'] % 60); ?></td>
 						<td style="white-space: nowrap">
 							<div class="btn-group pull-right">
-								<?php if ($track['t_ITunesPreviewUrl']): ?>
-									<?php echo $this->Html->link($this->TB->icon('play-circle'), $track['t_ITunesPreviewUrl'], array('class' => 'btn btn-mini', 'escape' => false, 'target' => '_blank'))?>
-								<?php endif; ?>
 								<?php echo $this->Html->link($this->TB->icon('pencil'), array('controller' => 'tracks', 'action' => 'edit', $track['t_TrackID']), array('class' => 'btn btn-mini', 'escape' => false))?>
 								<?php echo $this->Html->link($this->TB->icon('trash', 'white'), array('controller' => 'tracks', 'action' => 'delete', $track['t_TrackID']), array('class' => 'btn btn-mini btn-danger', 'escape' => false))?>
 							</div>

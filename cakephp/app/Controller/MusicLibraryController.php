@@ -132,8 +132,7 @@ class MusicLibraryController extends AppController {
 					't_Title' => $result['trackName'],
 					't_DiskNumber' => $result['discNumber'],
 					't_TrackNumber' => $result['trackNumber'],
-					't_Duration' => round($result['trackTimeMillis'] / 1000),
-					't_ITunesPreviewUrl' => $result['previewUrl']
+					't_Duration' => round($result['trackTimeMillis'] / 1000)
 				);
 				
 				if ($data['Album']['a_Compilation']) $track['t_Artist'] = $result['artistName'];

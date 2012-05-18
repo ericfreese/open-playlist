@@ -30,7 +30,6 @@
 					'label' => 'Duration (seconds)',
 					'class' => 'input-large'
 				)); ?>
-				<?php echo $this->Form->hidden('t_ITunesPreviewUrl'); ?>
 				<div class="form-actions">
 					<?php echo $this->TB->button('Save Track', array('style' => 'primary')); ?>
 				</div>

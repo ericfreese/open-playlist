@@ -84,7 +84,6 @@
 							'label' => 'Duration (seconds)',
 							'class' => 'input-large'
 						)); ?>
-						<?php echo $this->Form->hidden('Tracks.'.$i.'.t_ITunesPreviewUrl'); ?>
 					</fieldset>
 				<?php endfor; ?>
 			<?php endif; ?>

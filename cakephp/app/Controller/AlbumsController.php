@@ -85,8 +85,7 @@ class AlbumsController extends AppController {
 							't_Artist' => $result['artistName'],
 							't_DiskNumber' => $result['discNumber'],
 							't_TrackNumber' => $result['trackNumber'],
-							't_Duration' => round($result['trackTimeMillis'] / 1000),
-							't_ITunesPreviewUrl' => $result['previewUrl']
+							't_Duration' => round($result['trackTimeMillis'] / 1000)
 						);
 						
 						array_push($data['Tracks'], $track);
