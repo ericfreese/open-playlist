@@ -55,7 +55,9 @@ class AlbumsController extends AppController {
 					if (!isset($data['Album']) && $result['wrapperType'] === 'collection') {
 						// Try and find the genre
 						$genre = $this->Genre->find('first', array(
-							'conditions' => array('Genre.g_Name' => $result['primaryGenreName'], 'g_TopLevel' => 1)
+							'conditions' => array('Genre.g_Name' => $result['primaryGenreName'], 'g_TopLevel' => 1),
+							'recursive' => 0,
+							'fields' => 'Genre.g_GenreID'
 						));
 						
 						$data['Album'] = array(
