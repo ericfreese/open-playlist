@@ -2,23 +2,17 @@
 class MusicLibraryController extends AppController {
 	var $name = 'MusicLibrary';
 	var $uses = array('Album', 'Track', 'Genre');
-	var $helpers = array('Time', 'Html');
+	var $helpers = array('Time', 'Html', 'Paginator');
 	var $components = array('ITunes');
+	var $paginate = array(
+		'limit' => 20,
+		'order' => array(
+			'Album.a_AddDate' => 'desc'
+		)
+	);
 	
-	function catalog($set = 'all') {
-		if ($set === 'all') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_Title ASC')));
-		} elseif ($set === 'recentlyadded') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} elseif ($set === 'recentlyplayed') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} elseif ($set === 'flagged') {
-			$this->set('albums', $this->Album->find('all', array('order' => 'Album.a_AddDate DESC')));
-		} else {
-			$this->set('albums', array());
-		}
-		
-		$this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));
+	function catalog() {
+		$this->set('albums', $this->paginate('Album'));
 	}
 	
 	function add($from) {
@@ -134,8 +128,7 @@ class MusicLibraryController extends AppController {
 					't_Title' => $result['trackName'],
 					't_DiskNumber' => $result['discNumber'],
 					't_TrackNumber' => $result['trackNumber'],
-					't_Duration' => round($result['trackTimeMillis'] / 1000),
-					't_ITunesPreviewUrl' => $result['previewUrl']
+					't_Duration' => round($result['trackTimeMillis'] / 1000)
 				);
 				
 				if ($data['Album']['a_Compilation']) $track['t_Artist'] = $result['artistName'];

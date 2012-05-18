@@ -8,29 +8,28 @@
 					'type' => 'text',
 					'pattern' => '[0-9]*',
 					'label' => 'Disc',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_TrackNumber', array(
 					'type' => 'text',
 					'pattern' => '[0-9]*',
 					'label' => '#',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Title', array(
 					'label' => 'Track Name',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Artist', array(
 					'label' => 'Artist',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Duration', array(
 					'type' => 'text',
 					'pattern' => '[0-9]*',
 					'label' => 'Duration (seconds)',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
-				<?php echo $this->Form->hidden('t_ITunesPreviewUrl'); ?>
 				<div class="form-actions">
 					<?php echo $this->TB->button('Save Track', array('style' => 'primary')); ?>
 					<?php echo $this->Html->link('Cancel', $this->request->referer(), array('class' => 'btn')); ?>

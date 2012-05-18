@@ -7,11 +7,11 @@
 					'label' => 'CD Code',
 					'type' => 'text',
 					'pattern' => '[0-9]*',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_Title', array(
 					'label' => 'Album Title',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_Compilation', array(
 					'label' => 'Compilation',
@@ -19,33 +19,33 @@
 				)); ?>
 				<?php echo $this->TB->input('a_Artist', array(
 					'label' => 'Artist',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_GenreID', array(
 					'label' => 'Genre',
-					'class' => 'span3',
+					'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.$iTunesGenre.'\');"></i>' : false),
 					'empty' => true,
 					'options' => $genres
 				)); ?>
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
-					'class' => 'span3'
+					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.$iTunesCopyright.'\');"></i>' : false),
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
 					'type' => 'text',
 					'pattern' => '[0-9]*',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
 					'label' => 'Album Art URL',
 					'type' => 'url',
-					'class' => 'span3',
+					'class' => 'input-large',
 					'placeholder' => 'http://'
 				)); ?>
 				<?php echo $this->TB->input('a_Location', array(
 					'label' => 'Location',
-					'class' => 'span3',
 					'options' => array(
 						'Gnu Bin' => 'Gnu Bin',
 						'Personal' => 'Personal',
@@ -60,31 +60,31 @@
 					<fieldset>
 						<legend>Track</legend>
 						<?php echo $this->TB->input('Tracks.'.$i.'.t_DiskNumber', array(
-							'type' => 'number',
-							'min' => 1,
+							'type' => 'text',
+							'pattern' => '[0-9]*',
 							'label' => 'Disc',
-							'class' => 'span3'
+							'class' => 'input-large'
 						)); ?>
 						<?php echo $this->TB->input('Tracks.'.$i.'.t_TrackNumber', array(
-							'type' => 'number',
-							'min' => 1,
+							'type' => 'text',
+							'pattern' => '[0-9]*',
 							'label' => '#',
-							'class' => 'span3'
+							'class' => 'input-large'
 						)); ?>
 						<?php echo $this->TB->input('Tracks.'.$i.'.t_Title', array(
 							'label' => 'Track Name',
-							'class' => 'span3'
+							'class' => 'input-large'
 						)); ?>
 						<?php echo $this->TB->input('Tracks.'.$i.'.t_Artist', array(
 							'label' => 'Artist',
-							'class' => 'span3'
+							'class' => 'input-large'
 						)); ?>
 						<?php echo $this->TB->input('Tracks.'.$i.'.t_Duration', array(
-							// 'type' => 'text',
+							'type' => 'text',
+							'pattern' => '[0-9]*',
 							'label' => 'Duration (seconds)',
-							'class' => 'span3'
+							'class' => 'input-large'
 						)); ?>
-						<?php echo $this->Form->hidden('Tracks.'.$i.'.t_ITunesPreviewUrl'); ?>
 					</fieldset>
 				<?php endfor; ?>
 			<?php endif; ?>

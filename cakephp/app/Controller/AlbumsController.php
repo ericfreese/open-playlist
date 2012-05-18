@@ -60,6 +60,11 @@ class AlbumsController extends AppController {
 							'fields' => 'Genre.g_GenreID'
 						));
 						
+						// Show the genre and copyright info from iTunes to help with finding the local genre and label
+						if (!$genre) $this->set('iTunesGenre', $result['primaryGenreName']);
+						$this->set('iTunesCopyright', $result['copyright']);
+						
+						// Gather the album data
 						$data['Album'] = array(
 							'a_Title' => $result['collectionName'],
 							'a_Compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists',
@@ -81,8 +86,7 @@ class AlbumsController extends AppController {
 							't_Artist' => $result['artistName'],
 							't_DiskNumber' => $result['discNumber'],
 							't_TrackNumber' => $result['trackNumber'],
-							't_Duration' => round($result['trackTimeMillis'] / 1000),
-							't_ITunesPreviewUrl' => $result['previewUrl']
+							't_Duration' => round($result['trackTimeMillis'] / 1000)
 						);
 						
 						array_push($data['Tracks'], $track);

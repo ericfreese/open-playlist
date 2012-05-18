@@ -2,6 +2,8 @@
 	<?php // echo $this->element('subnav/musiclibrary'); ?>
 <?php // $this->end(); ?>
 
+<?php $pageParams = $this->Paginator->params('Album'); ?>
+
 <div class="row-fluid">
 	<div class="span2">
 		<div class="btn-group">
@@ -43,6 +45,27 @@
 		</div>
 	</div>
 	<div class="span10">
+		<div class="row-fluid">
+			<div class="span12">
+				<?php if ($pageParams['count'] > 1): ?>
+					<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+					<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+				<?php endif; ?>
+				<?php
+					// echo $this->Form->create(false, array('type' => 'get', 'class' => 'form-search'));
+					// echo $this->Form->input('q', array(
+					// 	'type' => 'text',
+					// 	'value' => $q,
+					// 	'label' => false,
+					// 	'placeholder' => 'Search albums...',
+					// 	'div' => false,
+					// 	'class' => 'search-query input-medium'
+					// ));
+					// echo $this->Form->button('Search', array('div' => false, 'class' => 'btn'));
+					// echo $this->Form->end();
+				?>
+			</div>
+		</div>
 		<table class="table table-condensed">
 			<thead>
 				<tr>
@@ -70,6 +93,10 @@
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
-		</table>
+		</table>	
+		<?php if ($pageParams['count'] > 1): ?>
+			<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+			<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+		<?php endif; ?>
 	</div>
 </div>

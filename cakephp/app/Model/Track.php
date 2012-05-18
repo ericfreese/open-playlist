@@ -52,12 +52,6 @@ class Track extends AppModel {
 				// 'rule' => '/^([0-9]+):([0-5][0-9])$/',
 				// 'message' => 'Duration should be formatted in m:ss (ex: 2:34)'
 			)
-		),
-		't_ITunesPreviewUrl' => array(
-			'rule' => 'url',
-			'required' => false,
-			'allowEmpty' => true,
-			'message' => 'This should be a URL (ex: http://example.com/preview.mp3)'
 		)
 	);
 	
