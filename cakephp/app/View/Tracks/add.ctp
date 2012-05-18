@@ -1,6 +1,6 @@
 <div class="row-fluid">
 	<div class="span12">
-		<?php echo $this->Form->create('Track', array('class' => 'form-horizontal', 'action' => 'add/'.$album['Album']['a_AlbumID'])); ?>
+		<?php echo $this->Form->create('Track', array('type' => 'put', 'class' => 'form-horizontal', 'action' => 'add/'.$album['Album']['a_AlbumID'])); ?>
 			<fieldset>
 				<legend>Add Track to <i><?php echo $this->Html->link($album['Album']['a_Title'], array('controller' => 'albums', 'action' => 'view', $album['Album']['a_AlbumID'])) ?></i></legend>
 				<?php echo $this->Form->input('t_AlbumID', array('type' => 'hidden', 'value' => $album['Album']['a_AlbumID'])); ?>
