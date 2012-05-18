@@ -5,14 +5,14 @@
 				<legend>Add Track to <i><?php echo $this->Html->link($album['Album']['a_Title'], array('controller' => 'albums', 'action' => 'view', $album['Album']['a_AlbumID'])) ?></i></legend>
 				<?php echo $this->Form->input('t_AlbumID', array('type' => 'hidden', 'value' => $album['Album']['a_AlbumID'])); ?>
 				<?php echo $this->TB->input('t_DiskNumber', array(
-					'type' => 'number',
-					'min' => 1,
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'label' => 'Disc',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('t_TrackNumber', array(
-					'type' => 'number',
-					'min' => 1,
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'label' => '#',
 					'class' => 'span3'
 				)); ?>
@@ -25,7 +25,8 @@
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('t_Duration', array(
-					// 'type' => 'text',
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'label' => 'Duration (seconds)',
 					'class' => 'span3'
 				)); ?>

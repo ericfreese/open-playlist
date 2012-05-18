@@ -29,7 +29,7 @@ class Album extends AppModel {
 				'message' => 'CD Code is required'
 			), array(
 				'rule' => '_hasUniqueCDCode',
-				'message' => 'CD Code already in use'
+				'message' => 'An album with this CD Code already exists'
 			)
 		),
 		'a_Title' => array(
@@ -38,7 +38,7 @@ class Album extends AppModel {
 			'message' => 'Title is required'
 		),
 		'a_Artist' => array(
-			'rule' => array('_hasArtistOrIsCompilation'),
+			'rule' => '_hasArtistOrIsCompilation',
 			'message' => 'Artist is required because the album is not a compilation'
 		),
 		'a_Label' => array(
@@ -56,6 +56,10 @@ class Album extends AppModel {
 			'required' => true
 		),
 		'a_DiscCount' => array(
+			array(
+				'rule' => '_hasDiscCountGreaterThanZero',
+				'message' => 'Invalid disc count'
+			),
 			array(
 				'rule' => 'numeric',
 				'allowEmpty' => true,
@@ -84,13 +88,17 @@ class Album extends AppModel {
 		return true;
 	}
 	
-	function _hasUniqueCDCode() {
+	protected function _hasUniqueCDCode() {
 		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) == 0);
 	}
 	
 	// Require artist unless the album is a compilation
-	function _hasArtistOrIsCompilation() {
+	protected function _hasArtistOrIsCompilation() {
 		return ($this->data['Album']['a_Compilation'] || !empty($this->data['Album']['a_Artist']));
+	}
+	
+	protected function _hasDiscCountGreaterThanZero() {
+		return ($this->data['Album']['a_DiscCount'] > 0);
 	}
 	
 	function __construct($id = false, $table = null, $ds = null) {

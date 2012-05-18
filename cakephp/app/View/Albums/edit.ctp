@@ -28,7 +28,8 @@
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
-					'min' => 1,
+					'type' => 'text',
+					'pattern' => '[0-9]*',
 					'class' => 'span3'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
