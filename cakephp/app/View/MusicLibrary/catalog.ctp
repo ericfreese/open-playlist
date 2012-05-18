@@ -1,3 +1,4 @@
+<?php $pageParams = $this->Paginator->params('Album'); ?>
 <div class="row-fluid">
 	<div class="span2">
 		<div class="btn-group">
@@ -19,8 +20,10 @@
 	<div class="span10">
 		<div class="row-fluid">
 			<div class="span12">
-				<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
-				<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+				<?php if ($pageParams['count'] > 1): ?>
+					<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+					<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+				<?php endif; ?>
 				<?php
 					// echo $this->Form->create(false, array('type' => 'get', 'class' => 'form-search'));
 					// echo $this->Form->input('q', array(
@@ -63,8 +66,10 @@
 					</tr>
 				<?php endforeach; ?>
 			</tbody>
-		</table>
-		<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
-		<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+		</table>	
+		<?php if ($pageParams['count'] > 1): ?>
+			<?php echo $this->Paginator->counter('{:start}-{:end} of {:count}'); ?> &mdash; 
+			<?php echo $this->Paginator->numbers(array('first' => 1, 'last' => 1)); ?>
+		<?php endif; ?>
 	</div>
 </div>
