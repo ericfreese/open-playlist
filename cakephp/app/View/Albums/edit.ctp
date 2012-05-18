@@ -6,7 +6,7 @@
 				<?php echo $this->Form->input('a_AlbumID', array('type' => 'hidden')); ?>
 				<?php echo $this->TB->input('a_Title', array(
 					'label' => 'Album Title',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_Compilation', array(
 					'label' => 'Compilation',
@@ -14,32 +14,30 @@
 				)); ?>
 				<?php echo $this->TB->input('a_Artist', array(
 					'label' => 'Artist',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_GenreID', array(
 					'label' => 'Genre',
-					'class' => 'span3',
 					'empty' => true,
 					'options' => $genres
 				)); ?>
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_DiscCount', array(
 					'label' => 'Disc Count',
 					'type' => 'text',
 					'pattern' => '[0-9]*',
-					'class' => 'span3'
+					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
 					'label' => 'Album Art URL',
-					'class' => 'span3',
+					'class' => 'input-large',
 					'placeholder' => 'http://'
 				)); ?>
 				<?php echo $this->TB->input('a_Location', array(
 					'label' => 'Location',
-					'class' => 'span3',
 					'options' => array(
 						'Gnu Bin' => 'Gnu Bin',
 						'Personal' => 'Personal',

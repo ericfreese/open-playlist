@@ -60,6 +60,10 @@ class AlbumsController extends AppController {
 							'fields' => 'Genre.g_GenreID'
 						));
 						
+						// Show the copyright info from iTunes to help with finding the label
+						$this->set('albumCopyrightInfo', $result['copyright']);
+						
+						// Gather the album data
 						$data['Album'] = array(
 							'a_Title' => $result['collectionName'],
 							'a_Compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists',
