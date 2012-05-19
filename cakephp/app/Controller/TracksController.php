@@ -10,6 +10,9 @@ class TracksController extends AppController {
 	function view($id) {
 		$track = $this->Track->find('first', array('conditions' => array('t_TrackID' => $id), 'recursive' => 2));
 		if (!$track) throw new NotFoundException('Track does not exist');
+		
+		$this->Crumb->saveCrumb($track['Track']['t_Title'], $this->request);
+		
 		$this->set('track', $track);
 	}
 	
@@ -17,6 +20,8 @@ class TracksController extends AppController {
 		// Make sure the album exists
 		$album = $this->Album->find('first', array('conditions' => array('Album.a_AlbumID' => $albumId)));
 		if (!$album) throw new NotFoundException();
+		
+		$this->Crumb->saveCrumb('Add Track', $this->request);
 		
 		$this->set('album', $album);
 		
@@ -38,12 +43,8 @@ class TracksController extends AppController {
 	}
 	
 	function edit($id) {
-		$this->Track->id = $id;
-		
-		if ($this->request->is('put')) {
-			$this->set('data', $this->data);
-			$this->Track->set($this->data['Track']);
-			if ($this->Track->save()) {
+		if ($this->request->is('put') && !empty($this->request->data)) {
+			if ($this->Track->save($this->request->data)) {
 				$this->Session->setFlash(
 					'The track was saved.',
 					'flash_success',
@@ -55,14 +56,14 @@ class TracksController extends AppController {
 				$this->redirect(array('controller' => 'tracks', 'action' => 'edit', $id));
 			}
 		} else {
+			$this->Track->id = $id;
 			$this->data = $this->Track->read();
+			$this->Crumb->saveCrumb($this->data['Track']['t_Title'], $this->request);
 		}
 		
 		$track = $this->Track->find('first', array('conditions' => array('Track.t_TrackID' => $id)));
-		$album = $this->Album->find('first', array('conditions' => array('Album.a_AlbumID' => $track['Track']['t_AlbumID'])));
-	
 		$this->set('track', $track);
-		$this->set('album', $album);
+		$this->set('album', $this->Album->find('first', array('conditions' => array('Album.a_AlbumID' => $track['Track']['t_AlbumID']))));
 	}
 	
 	function delete($id) {

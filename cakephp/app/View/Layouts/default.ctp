@@ -46,15 +46,7 @@
 						<ul class="nav">
 							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'showbuilder', 'action' => 'upcomingshows')) ?></li>
 							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
-							<li class="active dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Music Library <span class="caret"></span></a>
-								<ul class="dropdown-menu">
-									<li><?php echo $this->Html->link('Catalog', array('controller' => 'musiclibrary', 'action' => 'catalog')) ?></li>
-									<li class="nav-header">Add Music</li>
-									<li><?php echo $this->Html->link('Import From iTunes', array('controller' => 'itunes', 'action' => 'search')); ?></li>
-									<li><?php echo $this->Html->link('Add Manually', array('controller' => 'albums', 'action' => 'add')); ?></li>
-								</ul>
-							</li>
+							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'catalog')) ?></li>
 							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 						</ul>
 						<ul class="nav pull-right">
@@ -82,11 +74,34 @@
 		<?php endif; ?>
 		
 		<div class="container-fluid">
+			<?php $crumbs = $this->Session->read('Breadcrumb.crumbs'); ?>
+			<?php if (count($crumbs) > 1): ?>
+				<div class="row-fluid">
+					<div class="span12">
+						<ul class="breadcrumb">
+							<?php foreach ($crumbs as $i => $crumb): ?>
+								<?php if ($i < count($crumbs) - 1): ?>
+									<li>
+										<a href="<?php echo $crumb['url'] ?>"><?php echo $crumb['title'] ?></a>
+										<span class="divider">/</span>
+									</li>
+								<?php else: ?>
+									<li class="active">
+										<?php echo $crumb['title']?>
+									</li>
+								<?php endif; ?>
+							<?php endforeach; ?>
+						</ul>
+					</div>
+				</div>
+			<?php endif; ?>
+			
 			<div class="row-fluid">
 				<div class="span12">
 					<?php echo $this->TB->flashes(array('closable' => true)); ?>
 				</div>
 			</div>
+			
 			<?php echo $content_for_layout; ?>
 			
 			<hr>

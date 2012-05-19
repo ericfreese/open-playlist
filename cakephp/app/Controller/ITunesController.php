@@ -10,6 +10,8 @@ class ITunesController extends AppController {
 	}
 	
 	function search() {
+		$this->Crumb->saveCrumb('iTunes Search', $this->request);
+		
 		if (isset($this->params->query['q']) && $this->params->query['q'] !== '') {
 			$albums = $this->ITunes->searchAlbums($this->params->query['q']);
 			
@@ -79,6 +81,8 @@ class ITunesController extends AppController {
 			'conditions' => array('a_ITunesId' => $album['id']),
 			'recursive' => -1
 		))) $this->set('localAlbum', $localAlbum);
+		
+		$this->Crumb->saveCrumb(($localAlbum ? $localAlbum['Album']['a_Title'] : $album['title']), $this->request);
 		
 		$this->set('album', $album);
 		$this->set('tracks', $tracks);

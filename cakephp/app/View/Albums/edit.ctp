@@ -4,6 +4,12 @@
 			<fieldset>
 				<legend>Edit Album</legend>
 				<?php echo $this->Form->input('a_AlbumID', array('type' => 'hidden')); ?>
+				<?php echo $this->TB->input('a_CDCode', array(
+					'label' => 'CD Code',
+					'type' => 'text',
+					'pattern' => '[0-9]*',
+					'class' => 'input-large'
+				)); ?>
 				<?php echo $this->TB->input('a_Title', array(
 					'label' => 'Album Title',
 					'class' => 'input-large'

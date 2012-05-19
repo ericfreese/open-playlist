@@ -22,15 +22,14 @@ class Album extends AppModel {
 	);
 	
 	var $validate = array(
-		'a_AlbumID' => array(
+		'a_CDCode' => array(
 			array(
 				'rule' => 'numeric',
 				'required' => true,
 				'message' => 'CD Code is required'
 			), array(
-				'rule' => '_hasUniqueCDCode',
-				'message' => 'An album with this CD Code already exists',
-				'on' => 'create'
+				'rule' => 'isUnique',
+				'message' => 'An album with this CD Code already exists'
 			)
 		),
 		'a_Title' => array(
@@ -58,12 +57,12 @@ class Album extends AppModel {
 		),
 		'a_DiscCount' => array(
 			array(
-				'rule' => '_hasDiscCountGreaterThanZero',
+				'rule' => 'numeric',
+				'allowEmpty' => true,
 				'message' => 'Invalid disc count'
 			),
 			array(
-				'rule' => 'numeric',
-				'allowEmpty' => true,
+				'rule' => '_hasDiscCountGreaterThanZero',
 				'message' => 'Invalid disc count'
 			)
 		),
@@ -87,10 +86,6 @@ class Album extends AppModel {
 		}
 		
 		return true;
-	}
-	
-	protected function _hasUniqueCDCode() {
-		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) == 0);
 	}
 	
 	// Require artist unless the album is a compilation

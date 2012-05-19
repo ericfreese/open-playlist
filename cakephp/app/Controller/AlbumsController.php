@@ -36,10 +36,15 @@ class AlbumsController extends AppController {
 	function view($id) {
 		$album = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $id)));
 		if (!$album) throw new NotFoundException('Album does not exist');
+		
+		$this->Crumb->saveCrumb($album['Album']['a_Title'], $this->request);
+		
 		$this->set('album', $album);
 	}
 	
 	function add() {
+		$this->Crumb->saveCrumb('Add Album', $this->request);
+		
 		if ($this->request->is('put') && !empty($this->request->data)) {
 			// Importing from iTunes
 			if (isset($this->request->data['iTunesAlbumId'])) {
@@ -112,7 +117,12 @@ class AlbumsController extends AppController {
 						'link_url' => array('controller' => 'albums', 'action' => 'view', $this->Album->id)
 					), 'success'
 				);
-				$this->redirect($this->referer());
+				
+				if ($this->request->data['Album']['a_ITunesId'] === '') {
+					$this->redirect(array('controller' => 'albums', 'action' => 'add'));
+				} else {
+					$this->redirect(array('controller' => 'itunes', 'action' => 'search'));
+				}
 			}
 			
 			$this->set('data', $this->request->data);
@@ -137,6 +147,7 @@ class AlbumsController extends AppController {
 		} else {
 			$this->Album->id = $id;
 			$this->data = $this->Album->read();
+			$this->Crumb->saveCrumb($this->data['Album']['a_Title'], $this->request);
 		}
 		
 		$this->set('album', $this->Album->find('first', array('conditions' => array('Album.a_AlbumID' => $id))));

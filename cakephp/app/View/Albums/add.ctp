@@ -3,7 +3,7 @@
 		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 				<legend>Add Album</legend>
-				<?php echo $this->TB->input('a_AlbumID', array(
+				<?php echo $this->TB->input('a_CDCode', array(
 					'label' => 'CD Code',
 					'type' => 'text',
 					'pattern' => '[0-9]*',

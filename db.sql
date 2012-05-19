@@ -29,6 +29,7 @@ USE `comrad`;
 
 CREATE TABLE IF NOT EXISTS `Albums` (
   `a_AlbumID` int(11) NOT NULL AUTO_INCREMENT,
+  `a_CDCode` int(11) NOT NULL,
   `a_Title` varchar(250) NOT NULL,
   `a_Artist` varchar(250) DEFAULT NULL,
   `a_Label` varchar(250) DEFAULT NULL,
@@ -43,13 +44,13 @@ CREATE TABLE IF NOT EXISTS `Albums` (
   PRIMARY KEY (`a_AlbumID`),
   KEY `IX_GenreId` (`a_GenreID`),
   FULLTEXT KEY `a_Title` (`a_Title`,`a_Artist`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12346 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `Albums`
 --
 
-INSERT INTO `Albums` (`a_AlbumID`, `a_Title`, `a_Artist`, `a_Label`, `a_GenreID`, `a_AddDate`, `a_Local`, `a_Compilation`, `a_Location`, `a_DiscCount`, `a_AlbumArt`, `a_ITunesId`) VALUES(12345, 'Abbey Road', 'The Beatles', 'Apple', 9, '2012-05-18 20:58:21', NULL, 0, 'Gnu Bin', 1, 'http://a3.mzstatic.com/us/r1000/068/Music/17/07/36/mzi.ldnorbao.100x100-75.jpg', 401186200);
+INSERT INTO `Albums` (`a_AlbumID`, `a_CDCode`, `a_Title`, `a_Artist`, `a_Label`, `a_GenreID`, `a_AddDate`, `a_Local`, `a_Compilation`, `a_Location`, `a_DiscCount`, `a_AlbumArt`, `a_ITunesId`) VALUES(1, 12345, 'Abbey Road', 'The Beatles', 'Apple', 9, '2012-05-18 20:58:21', NULL, 0, 'Gnu Bin', 1, 'http://a3.mzstatic.com/us/r1000/068/Music/17/07/36/mzi.ldnorbao.100x100-75.jpg', 401186200);
 
 -- --------------------------------------------------------
 
@@ -527,24 +528,24 @@ CREATE TABLE IF NOT EXISTS `Tracks` (
 -- Dumping data for table `Tracks`
 --
 
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(1, 12345, 'Come Together', 1, '', 1, 259);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(2, 12345, 'Something', 2, '', 1, 182);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(3, 12345, 'Maxwell''s Silver Hammer', 3, '', 1, 208);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(4, 12345, 'Oh! Darling', 4, '', 1, 207);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(5, 12345, 'Octopus''s Garden', 5, '', 1, 171);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(6, 12345, 'I Want You (She''s So Heavy)', 6, '', 1, 467);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(7, 12345, 'Here Comes the Sun', 7, '', 1, 186);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(8, 12345, 'Because', 8, '', 1, 166);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(9, 12345, 'You Never Give Me Your Money', 9, '', 1, 243);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(10, 12345, 'Sun King', 10, '', 1, 146);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(11, 12345, 'Mean Mr. Mustard', 11, '', 1, 67);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(12, 12345, 'Polythene Pam', 12, '', 1, 73);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(13, 12345, 'She Came In Through the Bathroom Window', 13, '', 1, 119);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(14, 12345, 'Golden Slumbers', 14, '', 1, 92);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(15, 12345, 'Carry That Weight', 15, '', 1, 96);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(16, 12345, 'The End', 16, '', 1, 142);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(17, 12345, 'Her Majesty', 17, '', 1, 24);
-INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(18, 12345, 'Abbey Road (Documentary)', 18, '', 1, 232);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(1, 1, 'Come Together', 1, '', 1, 259);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(2, 1, 'Something', 2, '', 1, 182);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(3, 1, 'Maxwell''s Silver Hammer', 3, '', 1, 208);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(4, 1, 'Oh! Darling', 4, '', 1, 207);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(5, 1, 'Octopus''s Garden', 5, '', 1, 171);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(6, 1, 'I Want You (She''s So Heavy)', 6, '', 1, 467);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(7, 1, 'Here Comes the Sun', 7, '', 1, 186);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(8, 1, 'Because', 8, '', 1, 166);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(9, 1, 'You Never Give Me Your Money', 9, '', 1, 243);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(10, 1, 'Sun King', 10, '', 1, 146);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(11, 1, 'Mean Mr. Mustard', 11, '', 1, 67);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(12, 1, 'Polythene Pam', 12, '', 1, 73);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(13, 1, 'She Came In Through the Bathroom Window', 13, '', 1, 119);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(14, 1, 'Golden Slumbers', 14, '', 1, 92);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(15, 1, 'Carry That Weight', 15, '', 1, 96);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(16, 1, 'The End', 16, '', 1, 142);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(17, 1, 'Her Majesty', 17, '', 1, 24);
+INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_Artist`, `t_DiskNumber`, `t_Duration`) VALUES(18, 1, 'Abbey Road (Documentary)', 18, '', 1, 232);
 
 -- --------------------------------------------------------
 

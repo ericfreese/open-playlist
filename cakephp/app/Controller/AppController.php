@@ -36,6 +36,7 @@ class AppController extends Controller {
 		// 'Auth',
 		'Html',
 		'Form',
+		'Session',
 		'TB' => array(
 			'className' => 'TwitterBootstrap.TwitterBootstrap'
 		)
@@ -44,7 +45,8 @@ class AppController extends Controller {
 	var $components = array(
 		'RequestHandler',
 		'Session',
-		'DebugKit.Toolbar'
+		'DebugKit.Toolbar',
+		'Crumb'
 	);
 	
 	// function beforeFilter() {
