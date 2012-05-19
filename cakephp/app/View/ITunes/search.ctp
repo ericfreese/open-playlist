@@ -1,7 +1,3 @@
-<?php // $this->start('subNavLinks'); ?>
-	<?php // echo $this->element('subnav/musiclibrary'); ?>
-<?php // $this->end(); ?>
-
 <div class="row-fluid">
 	<div class="span12">
 		<div class="page-header">
@@ -35,7 +31,7 @@
 								<?php echo $this->Html->image($album['artworkUrl100'], array('style' => 'width: 100%')); ?>
 							</div>
 							<div class="span9">
-								<div class="row-fluid"><div class="span12"><?php echo $this->Html->link($album['collectionName'], array('controller' => 'itunes', 'action' => 'view', $album['collectionId'])) ?></div></div>
+								<div class="row-fluid"><div class="span12"><?php echo $this->Html->link($album['collectionName'], array('controller' => 'i_tunes', 'action' => 'view', $album['collectionId'])) ?></div></div>
 								<div class="row-fluid"><div class="span12"><i><?php echo $album['artistName'] ?></i></div></div>
 								<div class="row-fluid"><div class="span12"><i><?php echo $album['trackCount'].' track'.($album['trackCount'] > 1 ? 's' : '') ?></i></div></div>
 								<div>

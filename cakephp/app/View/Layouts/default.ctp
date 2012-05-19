@@ -1,8 +1,10 @@
+<?php require_once 'initialize.php' ?>
+
 <!DOCTYPE html>
 <html lang="en">
 	<head>
 		<?php echo $this->Html->charset(); ?>
-		<title><?php __('Music Manager'); ?> - <?php echo $title_for_layout; ?></title>
+		<title><?php echo 'Music Library' ?> - <?php echo $title_for_layout; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="KGNU">
 		<meta name="author" content="KGNU">
@@ -47,21 +49,21 @@
 							<!--
 							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'showbuilder', 'action' => 'upcomingshows')) ?></li>
 							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
-							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')) ?></li>
+							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 							-->
 							<li><?php echo $this->Html->link('Show Builder', 'http://kgnu.net/playlist/findshows.php') ?></li>
 							<li><?php echo $this->Html->link('Schedule', 'http://kgnu.net/playlist/calendar.php') ?></li>
-							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')) ?></li>
+							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Events', 'http://kgnu.net/playlist/events.php') ?></li>
 						</ul>
 						<ul class="nav pull-right">
 							<!--<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>-->
 							<li><?php echo $this->Html->link('Help', 'http://kgnu.net/playlist/about.php') ?></li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as username <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo $_SESSION['Username'] ?> <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="logout">Log Out</a></li>
+									<li><a href="http://kgnu.net/playlist/index.php?signout=1">Log Out</a></li>
 								</ul>
 							</li>
 						</ul>

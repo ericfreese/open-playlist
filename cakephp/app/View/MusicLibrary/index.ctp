@@ -6,7 +6,7 @@
 			<div class="btn-group">
 				<a class="btn btn-success dropdown-toggle input-block-level" data-toggle="dropdown" href="#"><i class="icon-plus icon-white"></i> Add Music <span class="caret"></span></a>
 				<ul class="dropdown-menu">
-					<li><?php echo $this->Html->link('Import From iTunes', array('controller' => 'itunes', 'action' => 'search')); ?></li>
+					<li><?php echo $this->Html->link('Import From iTunes', array('controller' => 'i_tunes', 'action' => 'search')); ?></li>
 					<li><?php echo $this->Html->link('Add Manually', array('controller' => 'albums', 'action' => 'add')); ?></li>
 				</ul>
 			</div>
@@ -14,7 +14,7 @@
 		<!--<div class="well sidebar-nav">-->
 			<!--<ul class="nav nav-list">
 				<li class="nav-header">Saved Filters</li>
-				<li><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')); ?></li>
+				<li><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')); ?></li>
 			</ul>-->
 			<!--
 			<?php echo $this->Form->create(false, array('type' => 'get')); ?>

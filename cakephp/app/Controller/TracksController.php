@@ -76,7 +76,7 @@ class TracksController extends AppController {
 				if ($this->request->data['confirm']) {
 					if ($this->Track->delete($this->request->data['t_TrackID'])) {
 						$this->Session->setFlash('The track was successfully deleted.');
-						$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
+						$this->redirect(array('controller' => 'music_library', 'action' => 'index'));
 					}
 				} else {
 					$this->redirect(array('controller' => 'tracks', 'action' => 'view', $this->request->data['t_TrackID']));

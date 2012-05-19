@@ -121,7 +121,7 @@ class AlbumsController extends AppController {
 				if ($this->request->data['Album']['a_ITunesId'] === '') {
 					$this->redirect(array('controller' => 'albums', 'action' => 'add'));
 				} else {
-					$this->redirect(array('controller' => 'itunes', 'action' => 'search'));
+					$this->redirect(array('controller' => 'i_tunes', 'action' => 'search'));
 				}
 			}
 			
@@ -171,7 +171,7 @@ class AlbumsController extends AppController {
 				if ($this->request->data['confirm']) {
 					if ($this->Album->delete($this->request->data['a_AlbumID'])) {
 						$this->Session->setFlash('The album was successfully deleted.');
-						$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
+						$this->redirect(array('controller' => 'music_library', 'action' => 'index'));
 					}
 				} else {
 					$this->redirect(array('controller' => 'albums', 'action' => 'view', $this->request->data['a_AlbumID']));
