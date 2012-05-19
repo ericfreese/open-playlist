@@ -513,9 +513,9 @@ CREATE TABLE IF NOT EXISTS `TimeInfo` (
 CREATE TABLE IF NOT EXISTS `Tracks` (
   `t_TrackID` int(11) NOT NULL AUTO_INCREMENT,
   `t_AlbumID` int(11) NOT NULL,
-  `t_Title` text NOT NULL,
+  `t_Title` varchar(250) NOT NULL,
   `t_TrackNumber` smallint(6) NOT NULL,
-  `t_Artist` text,
+  `t_Artist` varchar(250) DEFAULT NULL,
   `t_DiskNumber` smallint(6) DEFAULT NULL,
   `t_Duration` int(11) NOT NULL,
   PRIMARY KEY (`t_TrackID`),
