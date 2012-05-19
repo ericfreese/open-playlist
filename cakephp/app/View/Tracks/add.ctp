@@ -1,8 +1,10 @@
 <div class="row-fluid">
 	<div class="span12">
+		<div class="page-header">
+			<h1>Add Track</h1>
+		</div>
 		<?php echo $this->Form->create('Track', array('type' => 'put', 'class' => 'form-horizontal', 'action' => 'add/'.$album['Album']['a_AlbumID'])); ?>
 			<fieldset>
-				<legend>Add Track to <i><?php echo $album['Album']['a_Title'] ?></i></legend>
 				<?php echo $this->Form->input('t_AlbumID', array('type' => 'hidden', 'value' => $album['Album']['a_AlbumID'])); ?>
 				<?php echo $this->TB->input('t_DiskNumber', array(
 					'type' => 'text',
@@ -18,10 +20,12 @@
 				)); ?>
 				<?php echo $this->TB->input('t_Title', array(
 					'label' => 'Track Name',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Artist', array(
 					'label' => 'Artist',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Duration', array(

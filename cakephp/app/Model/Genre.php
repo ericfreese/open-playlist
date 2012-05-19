@@ -8,6 +8,7 @@ class Genre extends AppModel {
 	
 	var $hasMany = array(
 		'Albums' => array(
+			'className' => 'Album',
 			'foreignKey' => 'a_GenreID',
 			'order' => 'Albums.a_Title ASC'
 		)

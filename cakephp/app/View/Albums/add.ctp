@@ -13,6 +13,7 @@
 				)); ?>
 				<?php echo $this->TB->input('a_Title', array(
 					'label' => 'Album Title',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_Compilation', array(
@@ -21,6 +22,7 @@
 				)); ?>
 				<?php echo $this->TB->input('a_Artist', array(
 					'label' => 'Artist',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_GenreID', array(
@@ -31,6 +33,7 @@
 				)); ?>
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
+					'type' => 'text',
 					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.$iTunesCopyright.'\');"></i>' : false),
 					'class' => 'input-large'
 				)); ?>

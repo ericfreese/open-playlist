@@ -20,10 +20,12 @@
 				)); ?>
 				<?php echo $this->TB->input('t_Title', array(
 					'label' => 'Track Name',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Artist', array(
 					'label' => 'Artist',
+					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('t_Duration', array(
