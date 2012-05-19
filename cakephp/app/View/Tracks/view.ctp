@@ -22,5 +22,13 @@
 			</small>
 		</h2>
 		<?php echo floor($track['Track']['t_Duration'] / 60).':'.($track['Track']['t_Duration'] % 60 < 10 ? '0' : '').($track['Track']['t_Duration'] % 60); ?>
+		<?php if (count($track['FloatingShowElement']) > 0): ?>
+		<h2>Played <?php echo count($track['FloatingShowElement']) ?> time<?php echo count($track['FloatingShowElement']) > 1 ? 's' : ''?>:</h2>
+		<ul>
+			<?php foreach ($track['FloatingShowElement'] as $trackPlay): ?>
+				<li><?php echo $trackPlay['fse_Executed'] ?></li>
+			<?php endforeach; ?>
+		</ul>
+		<?php endif; ?>
 	</div>
 </div>

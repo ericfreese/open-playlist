@@ -12,6 +12,13 @@ class Track extends AppModel {
 		)
 	);
 	
+	var $hasMany = array(
+		'FloatingShowElement' => array(
+			'foreignKey' => 'fse_TrackId',
+			'dependent' => true
+		)
+	);
+	
 	var $validate = array(
 		't_Title' => array(
 			'rule' => 'notEmpty',

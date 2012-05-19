@@ -155,17 +155,30 @@ class AlbumsController extends AppController {
 	}
 	
 	function delete($id) {
-		if ($this->request->is('delete') && !empty($this->request->data)) {
-			if ($this->request->data['confirm']) {
-				if ($this->Album->delete($this->request->data['a_AlbumID'])) {
-					$this->Session->setFlash('The album was successfully deleted.');
-					$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
+		$album = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $id), 'recursive' => 2));
+		$deleteDenied = false;
+		foreach ($album['Tracks'] as $track) {
+			if (count($track['FloatingShowElement']) > 0) {
+				$deleteDenied = true;
+				break;
+			}
+		}
+		if ($deleteDenied) {
+			$this->set('album', $album);
+			$this->set('deleteDenied', $deleteDenied);
+		} else {
+			if ($this->request->is('delete') && !empty($this->request->data)) {
+				if ($this->request->data['confirm']) {
+					if ($this->Album->delete($this->request->data['a_AlbumID'])) {
+						$this->Session->setFlash('The album was successfully deleted.');
+						$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
+					}
+				} else {
+					$this->redirect(array('controller' => 'albums', 'action' => 'view', $this->request->data['a_AlbumID']));
 				}
 			} else {
-				$this->redirect(array('controller' => 'albums', 'action' => 'view', $this->request->data['a_AlbumID']));
+				$this->set('albumId', $id);
 			}
-		} else {
-			$this->set('albumId', $id);
 		}
 	}
 }
