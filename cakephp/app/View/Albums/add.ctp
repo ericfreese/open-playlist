@@ -1,8 +1,10 @@
 <div class="row-fluid">
 	<div class="span12">
+		<div class="page-header">
+			<h1>Add Album</h1>
+		</div>
 		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
-				<legend>Add Album</legend>
 				<?php echo $this->TB->input('a_CDCode', array(
 					'label' => 'CD Code',
 					'type' => 'text',

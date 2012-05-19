@@ -4,16 +4,19 @@
 
 <div class="row-fluid">
 	<div class="span12">
+		<div class="page-header">
+			<h1>Search iTunes</h1>
+		</div>
 		<?php echo $this->Form->create(false, array('class' => 'form-search', 'type' => 'get')); ?>
 			<fieldset>
-				<legend>iTunes Search</legend>
-				<?php echo $this->TB->basic_input('q', array(
-					'type' => 'search',
-					'class' => 'search-query',
-					'label' => false,
-					'value' => isset($this->params->query['q']) ? $this->params->query['q'] : ''
-				)); ?>
-				<?php echo $this->TB->button('Search', array('style' => 'primary')); ?>
+				<div class="input-append">
+					<?php echo $this->TB->basic_input('q', array(
+						'type' => 'search',
+						'label' => false,
+						'class' => 'input-xlarge',
+						'value' => isset($this->params->query['q']) ? $this->params->query['q'] : ''
+					)); ?><?php echo $this->TB->button('Search', array('style' => 'primary')); ?>
+				</div>
 			</fieldset>
 		<?php echo $this->Form->end(); ?>
 	</div>
