@@ -1,8 +1,10 @@
 <div class="row-fluid">
 	<div class="span12">
+		<div class="page-header">
+			<h1>Edit Track</h1>
+		</div>
 		<?php echo $this->Form->create('Track', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
-				<legend>Edit Track on <i><?php echo $this->Html->link($album['Album']['a_Title'], array('controller' => 'albums', 'action' => 'view', $track['Track']['t_AlbumID'])) ?></i></legend>
 				<?php echo $this->Form->input('t_TrackID', array('type' => 'hidden')); ?>
 				<?php echo $this->TB->input('t_DiskNumber', array(
 					'type' => 'text',

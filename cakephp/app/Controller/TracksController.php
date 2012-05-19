@@ -67,11 +67,17 @@ class TracksController extends AppController {
 	}
 	
 	function delete($id) {
-		$track = $this->Track->find('first', array('conditions' => array('Track.t_TrackID' => $id)));
-		if (!$track) $this->cakeError('error404');
-		if ($this->Track->delete($id)) {
-			$this->Session->setFlash('The track was successfully deleted.');
-			$this->redirect(array('controller' => 'albums', 'action' => 'view', $track['Track']['t_AlbumID']));
+		if ($this->request->is('delete') && !empty($this->request->data)) {
+			if ($this->request->data['confirm']) {
+				if ($this->Track->delete($this->request->data['t_TrackID'])) {
+					$this->Session->setFlash('The track was successfully deleted.');
+					$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
+				}
+			} else {
+				$this->redirect(array('controller' => 'tracks', 'action' => 'view', $this->request->data['t_TrackID']));
+			}
+		} else {
+			$this->set('trackId', $id);
 		}
 	}
 	

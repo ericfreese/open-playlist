@@ -162,7 +162,7 @@ class AlbumsController extends AppController {
 					$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
 				}
 			} else {
-				$this->redirect(array('controller' => 'musiclibrary', 'action' => 'view', $this->request->data['a_AlbumID']));
+				$this->redirect(array('controller' => 'albums', 'action' => 'view', $this->request->data['a_AlbumID']));
 			}
 		} else {
 			$this->set('albumId', $id);
