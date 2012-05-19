@@ -50,14 +50,14 @@
 							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 							-->
-							<li><?php echo $this->Html->link('Show Builder', '/findshows.php') ?></li>
-							<li><?php echo $this->Html->link('Schedule', '/calendar.php') ?></li>
+							<li><?php echo $this->Html->link('Show Builder', 'http://kgnu.net/playlist/findshows.php') ?></li>
+							<li><?php echo $this->Html->link('Schedule', 'http://kgnu.net/playlist/calendar.php') ?></li>
 							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Events', '/events.php') ?></li>
+							<li><?php echo $this->Html->link('Events', 'http://kgnu.net/playlist/events.php') ?></li>
 						</ul>
 						<ul class="nav pull-right">
 							<!--<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>-->
-							<li><?php echo $this->Html->link('Help', '/about.php') ?></li>
+							<li><?php echo $this->Html->link('Help', 'http://kgnu.net/playlist/about.php') ?></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as username <span class="caret"></span></a>
 								<ul class="dropdown-menu">
