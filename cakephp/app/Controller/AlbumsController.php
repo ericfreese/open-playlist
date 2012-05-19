@@ -157,7 +157,7 @@ class AlbumsController extends AppController {
 	function delete($id) {
 		if ($this->Album->delete($id)) {
 			$this->Session->setFlash('The album was successfully deleted.');
-			$this->redirect(array('controller' => 'musiclibrary', 'action' => 'catalog'));
+			$this->redirect(array('controller' => 'musiclibrary', 'action' => 'index'));
 		}
 	}
 }

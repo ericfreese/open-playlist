@@ -46,7 +46,7 @@
 						<ul class="nav">
 							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'showbuilder', 'action' => 'upcomingshows')) ?></li>
 							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
-							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'catalog')) ?></li>
+							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 						</ul>
 						<ul class="nav pull-right">

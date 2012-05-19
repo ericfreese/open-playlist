@@ -11,7 +11,7 @@ class MusicLibraryController extends AppController {
 		)
 	);
 	
-	function catalog() {
+	function index() {
 		$this->Crumb->saveCrumb('Music Library', $this->request, true);
 		
 		$this->set('albums', $this->paginate('Album'));

@@ -14,7 +14,7 @@
 		<!--<div class="well sidebar-nav">-->
 			<!--<ul class="nav nav-list">
 				<li class="nav-header">Saved Filters</li>
-				<li><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'catalog')); ?></li>
+				<li><?php echo $this->Html->link('Music Library', array('controller' => 'musiclibrary', 'action' => 'index')); ?></li>
 			</ul>-->
 			<!--
 			<?php echo $this->Form->create(false, array('type' => 'get')); ?>
