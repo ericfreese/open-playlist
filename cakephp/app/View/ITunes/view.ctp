@@ -20,9 +20,7 @@
 		<?php if (count($tracks) > 0): ?>
 			<table class="table table-condensed">
 				<tr>
-					<?php if ($album['discCount'] > 1): ?>
-						<th>Disc</th>
-					<?php endif; ?>
+					<th>Disc</th>
 					<th>#</th>
 					<th>Name</th>
 					<?php if ($album['compilation']): ?>
@@ -33,9 +31,7 @@
 				</tr>
 				<?php foreach($tracks as $track): ?>
 					<tr>
-						<?php if ($album['discCount'] > 1): ?>
-							<td><?php echo $track['discNumber'] ?></td>
-						<?php endif; ?>
+						<td><?php echo $track['discNumber'] ?></td>
 						<td><?php echo $track['trackNumber'] ?></td>
 						<td><?php echo $track['name']; ?></td>
 						<?php if ($album['compilation']): ?>

@@ -30,12 +30,6 @@
 					'type' => 'text',
 					'class' => 'input-large'
 				)); ?>
-				<?php echo $this->TB->input('a_DiscCount', array(
-					'label' => 'Disc Count',
-					'type' => 'text',
-					'pattern' => '[0-9]*',
-					'class' => 'input-large'
-				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
 					'label' => 'Album Art URL',
 					'class' => 'input-large',

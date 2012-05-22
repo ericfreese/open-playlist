@@ -15,14 +15,13 @@
 		</hgroup>
 		<section class="info">
 			<p>Genre: <?php echo $album['genre'] ?></p>
-			<?php if ($album['discCount'] > 1): ?><p><?php echo $album['discCount'] ?> discs</p><?php endif; ?>
 			<p><?php echo $album['trackCount'] ?> track<?php if ($album['trackCount'] !== 1): ?>s<?php endif; ?></p>
 		</section>
 		<section class="tracks">
 			<?php if (count($tracks) > 0): ?>
 				<table>
 					<tr>
-						<?php if ($album['discCount'] > 1): ?><th>Disc</th><?php endif; ?>
+						<th>Disc</th>
 						<th>Track</th>
 						<?php if ($album['compilation']): ?><th>Artist</th><?php endif; ?>
 						<th>Name</th>
@@ -31,7 +30,7 @@
 					</tr>
 					<?php foreach($tracks as $track): ?>
 						<tr class="track">
-							<?php if ($album['discCount'] > 1): ?><td><?php echo $track['discNumber'] ?></td><?php endif; ?>
+							<td><?php echo $track['discNumber'] ?></td>
 							<td><?php echo $track['trackNumber'] ?></td>
 							<?php if ($album['compilation']): ?><td><?php echo $track['artist'] ?></td><?php endif; ?>
 							<td><?php echo $track['name'] ?></td>
