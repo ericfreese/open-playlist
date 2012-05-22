@@ -27,14 +27,14 @@
 				)); ?>
 				<?php echo $this->TB->input('a_GenreID', array(
 					'label' => 'Genre',
-					'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.$iTunesGenre.'\');"></i>' : false),
+					'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.str_replace('\'', '\\\'', $iTunesGenre).'\');"></i>' : false),
 					'empty' => true,
 					'options' => $genres
 				)); ?>
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
 					'type' => 'text',
-					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.$iTunesCopyright.'\');"></i>' : false),
+					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.str_replace('\'', '\\\'', $iTunesCopyright).'\');"></i>' : false),
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
