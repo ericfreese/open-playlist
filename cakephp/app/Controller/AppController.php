@@ -45,7 +45,7 @@ class AppController extends Controller {
 	var $components = array(
 		'RequestHandler',
 		'Session',
-		'DebugKit.Toolbar',
+		//'DebugKit.Toolbar',
 		'Crumb'
 	);
 	

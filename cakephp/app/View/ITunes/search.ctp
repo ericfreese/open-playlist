@@ -3,11 +3,11 @@
 		<div class="page-header">
 			<h1>Search iTunes</h1>
 		</div>
-		<?php echo $this->Form->create(false, array('class' => 'form-search', 'type' => 'get')); ?>
+		<?php echo $this->Form->create(false, array('type' => 'get')); ?>
 			<fieldset>
 				<div class="input-append">
 					<?php echo $this->TB->basic_input('q', array(
-						'type' => 'search',
+						'type' => 'text',
 						'label' => false,
 						'class' => 'input-xlarge',
 						'value' => isset($this->params->query['q']) ? $this->params->query['q'] : ''
@@ -28,12 +28,12 @@
 					<div class="span4">
 						<div class="row-fluid" style="margin-top: 10px">
 							<div class="span3">
-								<?php echo $this->Html->image($album['artworkUrl100'], array('style' => 'width: 100%')); ?>
+								<?php echo $this->Html->image($album['artworkUrl100']); ?>
 							</div>
 							<div class="span9">
-								<div class="row-fluid"><div class="span12"><?php echo $this->Html->link($album['collectionName'], array('controller' => 'i_tunes', 'action' => 'view', $album['collectionId'])) ?></div></div>
-								<div class="row-fluid"><div class="span12"><i><?php echo $album['artistName'] ?></i></div></div>
-								<div class="row-fluid"><div class="span12"><i><?php echo $album['trackCount'].' track'.($album['trackCount'] > 1 ? 's' : '') ?></i></div></div>
+								<div><?php echo $this->Html->link($album['collectionName'], array('controller' => 'i_tunes', 'action' => 'view', $album['collectionId'])) ?></div>
+								<div><i><?php echo $album['artistName'] ?></i></div>
+								<div><i><?php echo $album['trackCount'].' track'.($album['trackCount'] > 1 ? 's' : '') ?></i></div>
 								<div>
 									<?php if (isset($album['localId']) && isset($album['localAddDate'])): ?>
 										<?php echo $this->Html->link($this->TB->icon('download', 'white').' Imported '.$this->Time->format('n/d/y', $album['localAddDate']), array('controller' => 'albums', 'action' => 'view', $album['localId']), array('class' => 'btn btn-mini btn-info', 'escape' => false)); ?>

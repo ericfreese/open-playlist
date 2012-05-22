@@ -18,9 +18,7 @@
 		<?php if (count($album['Tracks']) > 0): ?>
 			<table class="table table-condensed">
 				<tr>
-					<?php if ($album['Album']['a_DiscCount'] > 1): ?>
-						<th>Disc</th>
-					<?php endif; ?>
+					<th>Disc</th>
 					<th>#</th>
 					<th>Name</th>
 					<?php if ($album['Album']['a_Compilation']): ?><th>Artist</th><?php endif; ?>
@@ -29,9 +27,7 @@
 				</tr>
 				<?php foreach($album['Tracks'] as $track): ?>
 					<tr>
-						<?php if ($album['Album']['a_DiscCount'] > 1): ?>
-							<td><?php echo $track['t_DiskNumber'] ?></td>
-						<?php endif; ?>
+						<td><?php echo $track['t_DiskNumber'] ?></td>
 						<td><?php echo $track['t_TrackNumber'] ?></td>
 						<td><?php echo $this->Html->link($track['t_Title'], array('controller' => 'tracks', 'action' => 'view', $track['t_TrackID'])); ?></td>
 						<?php if ($album['Album']['a_Compilation']): ?><td><?php echo $track['t_Artist'] ?></td><?php endif; ?>

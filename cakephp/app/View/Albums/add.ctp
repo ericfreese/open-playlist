@@ -5,7 +5,7 @@
 		</div>
 		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
-				<?php echo $this->TB->input('a_CDCode', array(
+				<?php echo $this->TB->input('a_AlbumID', array(
 					'label' => 'CD Code',
 					'type' => 'text',
 					'pattern' => '[0-9]*',
@@ -27,20 +27,14 @@
 				)); ?>
 				<?php echo $this->TB->input('a_GenreID', array(
 					'label' => 'Genre',
-					'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.$iTunesGenre.'\');"></i>' : false),
+					'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.str_replace('\'', '\\\'', $iTunesGenre).'\');"></i>' : false),
 					'empty' => true,
 					'options' => $genres
 				)); ?>
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
 					'type' => 'text',
-					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.$iTunesCopyright.'\');"></i>' : false),
-					'class' => 'input-large'
-				)); ?>
-				<?php echo $this->TB->input('a_DiscCount', array(
-					'label' => 'Disc Count',
-					'type' => 'text',
-					'pattern' => '[0-9]*',
+					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.str_replace('\'', '\\\'', $iTunesCopyright).'\');"></i>' : false),
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(

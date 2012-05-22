@@ -36,14 +36,6 @@ class Track extends AppModel {
 		),
 		't_DiskNumber' => array(
 			array(
-				'rule' => '_hasRequiredDiscNumber',
-				'message' => 'Disc number is required because the album has multiple discs'
-			),
-			array(
-				'rule' => '_hasValidDiscNumber',
-				'message' => 'Invalid disc number'
-			),
-			array(
 				'rule' => 'numeric',
 				'allowEmpty' => true,
 				'message' => 'Invalid disc number'
@@ -78,35 +70,6 @@ class Track extends AppModel {
 		
 		if ($albumData['Album']['a_Compilation']) return (!empty($track['t_Artist']));
 		
-		return true;
-	}
-	
-	function _hasRequiredDiscNumber() {
-		$track = array_values($this->data);
-		$track = $track[0];
-		
-		if (isset($track['t_AlbumID'])) {
-			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $track['t_AlbumID'])));
-		} elseif (isset($track['t_TrackID'])) {
-			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $track['t_TrackID'])));
-		}
-		
-		return ($albumData['Album']['a_DiscCount'] == 1 || !empty($track['t_DiskNumber']));
-	}
-	
-	function _hasValidDiscNumber() {
-		$track = array_values($this->data);
-		$track = $track[0];
-		
-		if (isset($track['t_AlbumID'])) {
-			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $track['t_AlbumID'])));
-		} elseif (isset($track['t_TrackID'])) {
-			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $track['t_TrackID'])));
-		}
-		
-		if (!empty($track['t_DiskNumber'])) {
-			return ($track['t_DiskNumber'] > 0 && $track['t_DiskNumber'] <= $albumData['Album']['a_DiscCount']);
-		}
 		return true;
 	}
 	

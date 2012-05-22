@@ -6,12 +6,6 @@
 		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset>
 				<?php echo $this->Form->input('a_AlbumID', array('type' => 'hidden')); ?>
-				<?php echo $this->TB->input('a_CDCode', array(
-					'label' => 'CD Code',
-					'type' => 'text',
-					'pattern' => '[0-9]*',
-					'class' => 'input-large'
-				)); ?>
 				<?php echo $this->TB->input('a_Title', array(
 					'label' => 'Album Title',
 					'type' => 'text',
@@ -34,12 +28,6 @@
 				<?php echo $this->TB->input('a_Label', array(
 					'label' => 'Label',
 					'type' => 'text',
-					'class' => 'input-large'
-				)); ?>
-				<?php echo $this->TB->input('a_DiscCount', array(
-					'label' => 'Disc Count',
-					'type' => 'text',
-					'pattern' => '[0-9]*',
 					'class' => 'input-large'
 				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(

@@ -60,9 +60,6 @@ class ITunesController extends AppController {
 					'compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists'
 				);
 			} elseif ($result['wrapperType'] === 'track') {
-				// Get the album's disc count from the tracks
-				if ($album !== null && !isset($album['discCount']) && isset($result['discCount'])) $album['discCount'] = $result['discCount'];
-				
 				array_push($tracks, array(
 					'name' => $result['trackName'],
 					'artistName' => $result['artistName'],

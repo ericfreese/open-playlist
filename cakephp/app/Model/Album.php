@@ -22,13 +22,14 @@ class Album extends AppModel {
 	);
 	
 	var $validate = array(
-		'a_CDCode' => array(
-			array(
+		'a_AlbumID' => array(
+			'numeric' => array(
 				'rule' => 'numeric',
 				'required' => true,
 				'message' => 'CD Code is required'
-			), array(
-				'rule' => 'isUnique',
+			),
+			'unique' => array( // We disable this when updating, since the album already exists...
+				'rule' => '_hasUniqueCDCode',
 				'message' => 'An album with this CD Code already exists'
 			)
 		),
@@ -55,17 +56,6 @@ class Album extends AppModel {
 			'rule' => 'boolean',
 			'required' => true
 		),
-		'a_DiscCount' => array(
-			array(
-				'rule' => 'numeric',
-				'allowEmpty' => true,
-				'message' => 'Invalid disc count'
-			),
-			array(
-				'rule' => '_hasDiscCountGreaterThanZero',
-				'message' => 'Invalid disc count'
-			)
-		),
 		'a_AlbumArt' => array(
 			'rule' => 'url',
 			'required' => false,
@@ -80,11 +70,6 @@ class Album extends AppModel {
 			$this->data['Album']['a_Artist'] = '';
 		}
 		
-		// If disc count isn't provided, default to 1
-		if (empty($this->data['Album']['a_DiscCount']) || $this->data['Album']['a_DiscCount'] <= 0) {
-			$this->data['Album']['a_DiscCount'] = '1';
-		}
-		
 		return true;
 	}
 	
@@ -93,8 +78,8 @@ class Album extends AppModel {
 		return ($this->data['Album']['a_Compilation'] || !empty($this->data['Album']['a_Artist']));
 	}
 	
-	protected function _hasDiscCountGreaterThanZero() {
-		return ($this->data['Album']['a_DiscCount'] > 0);
+	protected function _hasUniqueCDCode() {
+		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) === 0);
 	}
 	
 	function __construct($id = false, $table = null, $ds = null) {

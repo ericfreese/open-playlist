@@ -81,11 +81,6 @@ class AlbumsController extends AppController {
 							'a_Location' => 'Gnu Bin'
 						);
 					} elseif ($result['wrapperType'] === 'track') {
-						// Get the album's disc count from the tracks
-						if (isset($data['Album']) && !isset($data['Album']['a_DiscCount']) && isset($result['discCount'])) {
-							$data['Album']['a_DiscCount'] = $result['discCount'];
-						}
-						
 						$track = array(
 							't_Title' => $result['trackName'],
 							't_Artist' => $result['artistName'],
@@ -133,6 +128,8 @@ class AlbumsController extends AppController {
 	
 	function edit($id) {
 		if ($this->request->is('put') && !empty($this->request->data)) {
+			unset($this->Album->validate['a_AlbumID']['unique']); // Disable the unique cd code checks so we can save
+			
 			if ($this->Album->save($this->request->data)) {
 				$this->Session->setFlash(
 					'The album was saved.',
