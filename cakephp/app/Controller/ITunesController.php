@@ -87,5 +87,51 @@ class ITunesController extends AppController {
 		$this->set('album', $album);
 		$this->set('tracks', $tracks);
 	}
+	
+	function doctor() {
+		$albums = $this->Album->find('all', array(
+			'conditions' => array( 
+				'SUBSTRING(a_AlbumArt, 1, 7)=\'http://\'',
+				'a_ITunesId' => null
+			),
+			'recursive' => -1,
+			'limit' => 50,
+			// 'fields' => array('a_Title', 'a_AlbumArt', 'a_AlbumID')
+		));
+		
+		foreach ($albums as $key => $album) {
+			$keywords = $album['Album']['a_Title'].(!empty($album['Album']['a_Artist']) ? ' '.$album['Album']['a_Artist'] : '');
+			$keywords = preg_replace('/[\#]/', '', $keywords);
+			$keywords = preg_replace('/[\&]/', 'and', $keywords);
+			$itResults = $this->ITunes->searchAlbums($keywords);
+			$albums[$key]['keywords'] = $keywords;
+			foreach ($itResults['results'] as $itResult) {
+				if ($itResult['artworkUrl60'] === $album['Album']['a_AlbumArt'] || $itResult['artworkUrl100'] === $album['Album']['a_AlbumArt']) {
+					$albums[$key]['itAlbumID'] = $itResult['collectionId'];
+					
+					$albums[$key]['Album']['a_ITunesId'] = $itResult['collectionId'];
+					
+					$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
+					break;
+				} elseif (strtolower($album['Album']['a_Title']) === strtolower($itResult['collectionName']) && 
+					(strtolower($album['Album']['a_Artist']) === strtolower($itResult['artistName']) ||
+					($album['Album']['a_Compilation'] && ($itResult['artistName'] === 'Various Artists' || $itResult['collectionType'] === 'Compilation')))) {
+					$albums[$key]['itAlbumID'] = $itResult['collectionId'];
+					
+					$albums[$key]['Album']['a_Title'] = $itResult['collectionName'];
+					$albums[$key]['Album']['a_AlbumArt'] = $itResult['artworkUrl60'];
+					$albums[$key]['Album']['a_ITunesId'] = $itResult['collectionId'];
+					
+					$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
+					break;
+				}
+			}
+			if (!isset($albums[$key]['success']) || !$albums[$key]['success']) {
+				$albums[$key]['itResults'] = $itResults;
+			}
+		}
+		
+		$this->set('albums', $albums);
+	}
 }
 ?>
