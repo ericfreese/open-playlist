@@ -43,7 +43,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<?php echo $this->Html->link(Configure::read('Organization.Name'), '/', array('class' => 'brand')); ?>
+					<?php echo $this->Html->link(Configure::read('Organization.Name'), 'http://kgnu.net/playlist/contents.php', array('class' => 'brand')); ?>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<!--
