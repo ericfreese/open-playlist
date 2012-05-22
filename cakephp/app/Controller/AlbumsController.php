@@ -133,6 +133,8 @@ class AlbumsController extends AppController {
 	
 	function edit($id) {
 		if ($this->request->is('put') && !empty($this->request->data)) {
+			unset($this->Album->validate['a_AlbumID']['unique']); // Disable the unique cd code checks so we can save
+			
 			if ($this->Album->save($this->request->data)) {
 				$this->Session->setFlash(
 					'The album was saved.',

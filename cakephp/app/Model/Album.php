@@ -22,13 +22,14 @@ class Album extends AppModel {
 	);
 	
 	var $validate = array(
-		'a_CDCode' => array(
-			array(
+		'a_AlbumID' => array(
+			'numeric' => array(
 				'rule' => 'numeric',
 				'required' => true,
 				'message' => 'CD Code is required'
-			), array(
-				'rule' => 'isUnique',
+			),
+			'unique' => array( // We disable this when updating, since the album already exists...
+				'rule' => '_hasUniqueCDCode',
 				'message' => 'An album with this CD Code already exists'
 			)
 		),
@@ -95,6 +96,10 @@ class Album extends AppModel {
 	
 	protected function _hasDiscCountGreaterThanZero() {
 		return ($this->data['Album']['a_DiscCount'] > 0);
+	}
+	
+	protected function _hasUniqueCDCode() {
+		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) === 0);
 	}
 	
 	function __construct($id = false, $table = null, $ds = null) {
