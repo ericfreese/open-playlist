@@ -37,12 +37,6 @@
 					'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.$iTunesCopyright.'\');"></i>' : false),
 					'class' => 'input-large'
 				)); ?>
-				<?php echo $this->TB->input('a_DiscCount', array(
-					'label' => 'Disc Count',
-					'type' => 'text',
-					'pattern' => '[0-9]*',
-					'class' => 'input-large'
-				)); ?>
 				<?php echo $this->TB->input('a_AlbumArt', array(
 					'label' => 'Album Art URL',
 					'type' => 'url',

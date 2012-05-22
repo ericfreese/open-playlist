@@ -81,11 +81,6 @@ class AlbumsController extends AppController {
 							'a_Location' => 'Gnu Bin'
 						);
 					} elseif ($result['wrapperType'] === 'track') {
-						// Get the album's disc count from the tracks
-						if (isset($data['Album']) && !isset($data['Album']['a_DiscCount']) && isset($result['discCount'])) {
-							$data['Album']['a_DiscCount'] = $result['discCount'];
-						}
-						
 						$track = array(
 							't_Title' => $result['trackName'],
 							't_Artist' => $result['artistName'],

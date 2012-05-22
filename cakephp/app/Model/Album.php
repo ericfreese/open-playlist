@@ -56,17 +56,6 @@ class Album extends AppModel {
 			'rule' => 'boolean',
 			'required' => true
 		),
-		'a_DiscCount' => array(
-			array(
-				'rule' => 'numeric',
-				'allowEmpty' => true,
-				'message' => 'Invalid disc count'
-			),
-			array(
-				'rule' => '_hasDiscCountGreaterThanZero',
-				'message' => 'Invalid disc count'
-			)
-		),
 		'a_AlbumArt' => array(
 			'rule' => 'url',
 			'required' => false,
@@ -81,21 +70,12 @@ class Album extends AppModel {
 			$this->data['Album']['a_Artist'] = '';
 		}
 		
-		// If disc count isn't provided, default to 1
-		if (empty($this->data['Album']['a_DiscCount']) || $this->data['Album']['a_DiscCount'] <= 0) {
-			$this->data['Album']['a_DiscCount'] = '1';
-		}
-		
 		return true;
 	}
 	
 	// Require artist unless the album is a compilation
 	protected function _hasArtistOrIsCompilation() {
 		return ($this->data['Album']['a_Compilation'] || !empty($this->data['Album']['a_Artist']));
-	}
-	
-	protected function _hasDiscCountGreaterThanZero() {
-		return ($this->data['Album']['a_DiscCount'] > 0);
 	}
 	
 	protected function _hasUniqueCDCode() {
