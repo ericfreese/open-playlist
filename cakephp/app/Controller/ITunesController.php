@@ -13,10 +13,10 @@ class ITunesController extends AppController {
 		$this->Crumb->saveCrumb('iTunes Search', $this->request);
 		
 		if (isset($this->params->query['q']) && $this->params->query['q'] !== '') {
-			$albums = $this->ITunes->searchAlbums($this->params->query['q']);
+			$response = $this->ITunes->searchAlbums($this->params->query['q']);
 			
 			$iTunesIds = array();
-			foreach ($albums['results'] as $album) {
+			foreach ($response['results'] as $album) {
 				array_push($iTunesIds, $album['collectionId']);
 			}
 			
@@ -25,29 +25,29 @@ class ITunesController extends AppController {
 				'fields' => array('Album.a_AlbumID', 'Album.a_AddDate', 'Album.a_ITunesId')
 			));
 			
-			foreach ($albums['results'] as $key => $album) {
+			foreach ($response['results'] as $key => $album) {
 				if (isset($localAlbums[$album['collectionId']])) {
 					$id = array_keys($localAlbums[$album['collectionId']]);
 					$addDate = array_values($localAlbums[$album['collectionId']]);
 					
-					$albums['results'][$key]['localId'] = $id[0];
-					$albums['results'][$key]['localAddDate'] = $addDate[0];
+					$response['results'][$key]['localId'] = $id[0];
+					$response['results'][$key]['localAddDate'] = $addDate[0];
 				}
 			}
 			
-			$this->set('response', $albums);
+			$this->set('response', $response);
 		}
 	}
 	
 	function view($itAlbumId) {
 		if (!isset($itAlbumId)) throw new NotFoundException();
-		$itAlbumData = $this->ITunes->getAlbumById($itAlbumId);
+		$response = $this->ITunes->getAlbumById($itAlbumId);
 		
-		if (count($itAlbumData['results']) === 0) throw new NotFoundException();
+		if (count($response['results']) === 0) throw new NotFoundException();
 		
 		$album = null;
 		$tracks = array();
-		foreach ($itAlbumData['results'] as $result) {
+		foreach ($response['results'] as $result) {
 			if ($album === null && $result['wrapperType'] === 'collection') {
 				$album = array(
 					'id' => $result['collectionId'],
@@ -93,38 +93,44 @@ class ITunesController extends AppController {
 			),
 			'recursive' => -1,
 			'limit' => 50,
-			// 'fields' => array('a_Title', 'a_AlbumArt', 'a_AlbumID')
+			'order' => 'Album.a_AddDate DESC'
 		));
 		
 		foreach ($albums as $key => $album) {
 			$keywords = $album['Album']['a_Title'].(!empty($album['Album']['a_Artist']) ? ' '.$album['Album']['a_Artist'] : '');
 			$keywords = preg_replace('/[\#]/', '', $keywords);
 			$keywords = preg_replace('/[\&]/', 'and', $keywords);
-			$itResults = $this->ITunes->searchAlbums($keywords);
+			$response = $this->ITunes->searchAlbums($keywords);
 			$albums[$key]['keywords'] = $keywords;
-			foreach ($itResults['results'] as $itResult) {
-				if ($itResult['artworkUrl60'] === $album['Album']['a_AlbumArt'] || $itResult['artworkUrl100'] === $album['Album']['a_AlbumArt']) {
-					$albums[$key]['itAlbumID'] = $itResult['collectionId'];
+			if (isset($response['results'])) {
+				foreach ($response['results'] as $result) {
+					if ($result['artworkUrl60'] === $album['Album']['a_AlbumArt'] || $result['artworkUrl100'] === $album['Album']['a_AlbumArt']) {
+						$albums[$key]['itAlbumID'] = $result['collectionId'];
 					
-					$albums[$key]['Album']['a_ITunesId'] = $itResult['collectionId'];
+						$albums[$key]['Album']['a_ITunesId'] = $result['collectionId'];
 					
-					$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
-					break;
-				} elseif (strtolower($album['Album']['a_Title']) === strtolower($itResult['collectionName']) && 
-					(strtolower($album['Album']['a_Artist']) === strtolower($itResult['artistName']) ||
-					($album['Album']['a_Compilation'] && ($itResult['artistName'] === 'Various Artists' || $itResult['collectionType'] === 'Compilation')))) {
-					$albums[$key]['itAlbumID'] = $itResult['collectionId'];
+						$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
+						break;
+					} elseif (
+						strtolower($album['Album']['a_Title']) === strtolower($result['collectionName']) && (
+							strtolower($album['Album']['a_Artist']) === strtolower($result['artistName']) || (
+								$album['Album']['a_Compilation'] && (
+									$result['artistName'] === 'Various Artists' || $result['collectionType'] === 'Compilation'
+								)
+							)
+						)
+					) {
+						$albums[$key]['itAlbumID'] = $result['collectionId'];
 					
-					$albums[$key]['Album']['a_Title'] = $itResult['collectionName'];
-					$albums[$key]['Album']['a_AlbumArt'] = $itResult['artworkUrl60'];
-					$albums[$key]['Album']['a_ITunesId'] = $itResult['collectionId'];
+						$albums[$key]['Album']['a_Title'] = $result['collectionName'];
+						$albums[$key]['Album']['a_AlbumArt'] = $result['artworkUrl60'];
+						$albums[$key]['Album']['a_ITunesId'] = $result['collectionId'];
 					
-					$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
-					break;
+						$albums[$key]['success'] = $this->Album->save($albums[$key], array('validate' => false));
+						break;
+					}
 				}
-			}
-			if (!isset($albums[$key]['success']) || !$albums[$key]['success']) {
-				$albums[$key]['itResults'] = $itResults;
+				$albums[$key]['response'] = $response;
 			}
 		}
 		
