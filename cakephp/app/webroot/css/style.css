@@ -9,3 +9,9 @@ img.album-art {
 	width: 25px;
 	height: 25px;
 }
+
+/* Set margin to 0 for form controls inside tables */
+.form-horizontal table .control-group,
+.form-horizontal table .controls {
+	margin: 0;
+}

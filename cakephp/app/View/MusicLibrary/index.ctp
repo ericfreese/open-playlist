@@ -89,6 +89,7 @@
 								<td style="white-space: nowrap">
 									<div class="btn-group pull-right">
 										<?php echo $this->Html->link($this->TB->icon('pencil'), array('controller' => 'albums', 'action' => 'edit', $album['Album']['a_AlbumID']), array('class' => 'btn btn-mini', 'escape' => false)); ?>
+										<?php echo $this->Html->link($this->TB->icon('trash', 'white'), array('controller' => 'albums', 'action' => 'delete', $album['Album']['a_AlbumID']), array('class' => 'btn btn-mini btn-danger', 'escape' => false)); ?>
 									</div>
 								</td>
 							</tr>
