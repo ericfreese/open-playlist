@@ -1,4 +1,5 @@
 <?php $pageParams = $this->Paginator->params('Album'); ?>
+<?php $this->Paginator->options['convertKeys'] = array('page'); ?>
 
 <div class="row-fluid">
 	<div class="span2">
@@ -11,7 +12,7 @@
 				</ul>
 			</div>
 		</div>
-		<!--<div class="well sidebar-nav">-->
+		<!-- <div class="well sidebar-nav"> -->
 			<!--<ul class="nav nav-list">
 				<li class="nav-header">Saved Filters</li>
 				<li><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')); ?></li>
@@ -44,13 +45,16 @@
 	<div class="span10">
 		<div class="row-fluid">
 			<div class="span4">
-				<!--
 				<form class="form-inline" style="margin: 0">
 					<div class="input-append">
-						<input type="text" class="input-xlarge"><button class="btn"><i class="icon-search"></i></button>
+						<?php echo $this->TB->basic_input('q', array(
+							'type' => 'text',
+							'label' => false,
+							'class' => 'input-xlarge',
+							'value' => $this->request->query['q']
+						)); ?><button class="btn"><i class="icon-search"></i></button>
 					</div>
 				</form>
-				-->
 			</div>
 			<div class="span5"></div>
 			<div class="span3">
