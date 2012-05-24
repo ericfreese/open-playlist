@@ -129,7 +129,9 @@ class AlbumsController extends AppController {
 					$this->redirect(array('controller' => 'i_tunes', 'action' => 'search'));
 				}
 			}
-		} elseif (!isset($this->request->data['Tracks']) || count($this->request->data['Tracks']) === 0) {
+		}
+		
+		if (!isset($this->request->data['Tracks']) || count($this->request->data['Tracks']) === 0) {
 			$this->request->data['Tracks'] = array();
 			array_push($this->request->data['Tracks'], array(
 				't_DiskNumber' => '',

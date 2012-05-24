@@ -36,7 +36,7 @@ $(function() {
 	}
 	
 	var checkCompilation = function() {
-		if ($(this).is(':checked')) {
+		if ($('input[type="checkbox"][name="data[Album][a_Compilation]"]').is(':checked')) {
 			$('input[name="data[Album][a_Artist]"]').closest('.control-group').hide();
 			$('#tracks td.track-artist, #tracks th.track-artist').show();
 		} else {
