@@ -6,9 +6,7 @@ class MusicLibraryController extends AppController {
 	var $components = array('ITunes');
 	var $paginate = array(
 		'limit' => 20,
-		'order' => array(
-			'Album.a_AddDate' => 'desc'
-		),
+		'order' => 'Album.a_AddDate desc',
 		'paramType' => 'querystring'
 	);
 	
