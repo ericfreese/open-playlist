@@ -18,20 +18,19 @@ class MusicLibraryController extends AppController {
 		$conditions = array();
 		
 		if (isset($this->request->query['q'])) {
-			preg_match_all('/"[^"]+"|\w+/', $this->request->query['q'], $q);
-			$q = $q[0];
+			preg_match_all('/"[^"]+"|[\w\']+/', $this->request->query['q'], $q);
 			
-			$conditions = array(
-				'AND' => array()
-			);
-			
-			for ($i = 0; $i < count($q); $i++) {
-				$q[$i] = str_replace('"', '', $q[$i]);
-				array_push($conditions['AND'], array('OR' => array(
-					'Album.a_Title LIKE' => '%'.$q[$i].'%',
-					'Album.a_Artist LIKE' => '%'.$q[$i].'%',
-					'Genre.g_Name LIKE' => '%'.$q[$i].'%'
-				)));
+			if (count($q = $q[0]) > 0) {
+				$conditions['AND'] = array();
+				
+				for ($i = 0; $i < count($q); $i++) {
+					$q[$i] = str_replace('"', '', $q[$i]);
+					array_push($conditions['AND'], array('OR' => array(
+						'Album.a_Title LIKE' => '%'.$q[$i].'%',
+						'Album.a_Artist LIKE' => '%'.$q[$i].'%',
+						'Genre.g_Name LIKE' => '%'.$q[$i].'%'
+					)));
+				}
 			}
 		}
 		
