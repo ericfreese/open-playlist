@@ -34,7 +34,7 @@ class MusicLibraryController extends AppController {
 			}
 		}
 		
-		$this->set('albums', $this->paginate('Album', $conditions));
+		$this->set('albums', $this->paginate('Album', $conditions, array('a_Title', 'a_Artist', 'Genre.g_Name', 'a_AddDate')));
 		// $this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));
 	}
 }

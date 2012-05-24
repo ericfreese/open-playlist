@@ -1,5 +1,6 @@
 <?php $pageParams = $this->Paginator->params('Album'); ?>
-<?php $this->Paginator->options['convertKeys'] = array('page'); ?>
+<?php $sort = (isset($pageParams['options']['sort']) ? $pageParams['options']['sort'] : 'a_AddDate'); ?>
+<?php $direction = (isset($pageParams['options']['direction']) ? $pageParams['options']['direction'] : 'desc'); ?>
 
 <div class="row-fluid">
 	<div class="span2">
@@ -51,7 +52,7 @@
 							'type' => 'text',
 							'label' => false,
 							'class' => 'input-xlarge',
-							'value' => $this->request->query['q']
+							'value' => (isset($this->request->query['q']) ? $this->request->query['q'] : '')
 						)); ?><button class="btn"><i class="icon-search"></i></button>
 					</div>
 				</form>
@@ -75,10 +76,22 @@
 					<thead>
 						<tr>
 							<th></th>
-							<th>Album</th>
-							<th>Artist</th>
-							<th>Genre</th>
-							<th>Added</th>
+							<th<?php if ($sort === 'a_Title' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_Title', 'Album'); ?>
+								<?php if ($sort === 'a_Title'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'a_Artist' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_Artist', 'Artist'); ?>
+								<?php if ($sort === 'a_Artist'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'Genre.g_Name' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('Genre.g_Name', 'Genre'); ?>
+								<?php if ($sort === 'Genre.g_Name'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'a_AddDate' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_AddDate', 'Added'); ?>
+								<?php if ($sort === 'a_AddDate'): ?><span class="caret"></span><?php endif; ?>
+							</th>
 							<th></th>
 						</tr>
 					</thead>
@@ -93,6 +106,7 @@
 								<td style="white-space: nowrap">
 									<div class="btn-group pull-right">
 										<?php echo $this->Html->link($this->TB->icon('pencil'), array('controller' => 'albums', 'action' => 'edit', $album['Album']['a_AlbumID']), array('class' => 'btn btn-mini', 'escape' => false)); ?>
+										<?php echo $this->Html->link($this->TB->icon('trash', 'white'), array('controller' => 'albums', 'action' => 'delete', $album['Album']['a_AlbumID']), array('class' => 'btn btn-mini btn-danger', 'escape' => false)); ?>
 									</div>
 								</td>
 							</tr>

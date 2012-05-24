@@ -9,3 +9,22 @@ img.album-art {
 	width: 25px;
 	height: 25px;
 }
+
+th a {
+	color: inherit;
+}
+
+th .caret {
+	margin-top: 0.6em;
+}
+
+th.ascending .caret {
+	border-top: 0;
+	border-bottom: 4px solid black;
+	content: "\2191";
+}
+
+th a:hover + .caret {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
