@@ -39,6 +39,44 @@ class AlbumsController extends AppController {
 		
 		$this->Crumb->saveCrumb($album['Album']['a_Title'], $this->request);
 		
+		// Add any extra iTunes tracks if this album was imported from iTunes and is missing tracks
+		if (isset($album['Album']['a_ITunesId'])) {
+			$itAlbumData = $this->ITunes->getAlbumById($album['Album']['a_ITunesId']);
+			if (count($itAlbumData['results']) > 0) {
+				foreach ($itAlbumData['results'] as $result) {
+					if ($result['wrapperType'] === 'track') {
+						$iTunesTrack = array(
+							't_Title' => $result['trackName'],
+							't_Artist' => $result['artistName'],
+							't_DiskNumber' => $result['discNumber'],
+							't_TrackNumber' => $result['trackNumber'],
+							't_Duration' => round($result['trackTimeMillis'] / 1000)
+						);
+						
+						$albumHasTrack = false;
+						foreach ($album['Tracks'] as $albumTrack) {
+							if ($albumTrack['t_DiskNumber'] == $iTunesTrack['t_DiskNumber'] && $albumTrack['t_TrackNumber'] == $iTunesTrack['t_TrackNumber']) {
+								$albumHasTrack = true;
+								break;
+							}
+						}
+						if (!$albumHasTrack) {
+							array_push($album['Tracks'], $iTunesTrack);
+						}
+					}
+				}
+				
+				// Sort ascending by disc and track number
+				$discNumbers = array();
+				$trackNumbers = array();
+				foreach ($album['Tracks'] as $i => $track) {
+					$discNumbers[$i] = $track['t_DiskNumber'];
+					$trackNumbers[$i] = $track['t_TrackNumber'];
+				}
+				array_multisort($discNumbers, SORT_ASC, $trackNumbers, SORT_ASC, $album['Tracks']);
+			}
+		}
+		
 		$this->set('album', $album);
 	}
 	
