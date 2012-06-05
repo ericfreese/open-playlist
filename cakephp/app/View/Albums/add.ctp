@@ -77,7 +77,7 @@
 						<?php foreach ($this->request->data['Tracks'] as $key => $track): ?>
 							<tr>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_DiskNumber', array(
+									<?php echo $this->TB->basic_input('Tracks.'.$key.'.t_DiskNumber', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,
@@ -85,7 +85,7 @@
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_TrackNumber', array(
+									<?php echo $this->TB->basic_input('Tracks.'.$key.'.t_TrackNumber', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,
@@ -93,19 +93,19 @@
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Title', array(
+									<?php echo $this->TB->basic_input('Tracks.'.$key.'.t_Title', array(
 										'label' => false,
 										'class' => 'input-xlarge'
 									)); ?>
 								</td>
 								<td class="track-artist">
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Artist', array(
+									<?php echo $this->TB->basic_input('Tracks.'.$key.'.t_Artist', array(
 										'label' => false,
 										'class' => 'input-xlarge'
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Duration', array(
+									<?php echo $this->TB->basic_input('Tracks.'.$key.'.t_Duration', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,
