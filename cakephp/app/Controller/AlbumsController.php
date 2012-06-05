@@ -140,6 +140,16 @@ class AlbumsController extends AppController {
 				$this->request->data = $data;
 			}
 			
+			// Unset any empty tracks
+			foreach ($this->request->data['Tracks'] as $key => $track) {
+				if ($track['t_DiskNumber'] === '' &&
+					$track['t_TrackNumber'] === '' &&
+					$track['t_Title'] === '' &&
+					$track['t_Artist'] === ''&&
+					$track['t_Duration'] === ''
+				) unset($this->request->data['Tracks'][$key]);
+			}
+			
 			// Save album, set the foreign key on each track, then save the tracks
 			if ($this->Album->addAlbumWithTracks($this->request->data)) {
 				$this->Session->setFlash(
@@ -157,8 +167,17 @@ class AlbumsController extends AppController {
 					$this->redirect(array('controller' => 'i_tunes', 'action' => 'search'));
 				}
 			}
-			
-			$this->set('data', $this->request->data);
+		}
+		
+		if (!isset($this->request->data['Tracks']) || count($this->request->data['Tracks']) === 0) {
+			$this->request->data['Tracks'] = array();
+			array_push($this->request->data['Tracks'], array(
+				't_DiskNumber' => '',
+				't_TrackNumber' => '',
+				't_Title' => '',
+				't_Artist' => '',
+				't_Duration' => ''
+			));
 		}
 		
 		$this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));

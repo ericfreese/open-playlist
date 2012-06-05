@@ -29,7 +29,6 @@ USE `comrad`;
 
 CREATE TABLE IF NOT EXISTS `Albums` (
   `a_AlbumID` int(11) NOT NULL AUTO_INCREMENT,
-  `a_CDCode` int(11) NOT NULL,
   `a_Title` varchar(250) NOT NULL,
   `a_Artist` varchar(250) DEFAULT NULL,
   `a_Label` varchar(250) DEFAULT NULL,
@@ -38,7 +37,6 @@ CREATE TABLE IF NOT EXISTS `Albums` (
   `a_Local` tinyint(1) DEFAULT NULL,
   `a_Compilation` tinyint(1) DEFAULT NULL,
   `a_Location` enum('Gnu Bin','Personal','Library','Digital Library','Discarded/Lost') NOT NULL,
-  `a_DiscCount` int(1) NOT NULL DEFAULT '1',
   `a_AlbumArt` varchar(500) DEFAULT NULL,
   `a_ITunesId` int(11) DEFAULT NULL,
   PRIMARY KEY (`a_AlbumID`),
@@ -50,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `Albums` (
 -- Dumping data for table `Albums`
 --
 
-INSERT INTO `Albums` (`a_AlbumID`, `a_CDCode`, `a_Title`, `a_Artist`, `a_Label`, `a_GenreID`, `a_AddDate`, `a_Local`, `a_Compilation`, `a_Location`, `a_DiscCount`, `a_AlbumArt`, `a_ITunesId`) VALUES(1, 12345, 'Abbey Road', 'The Beatles', 'Apple', 9, '2012-05-18 20:58:21', NULL, 0, 'Gnu Bin', 1, 'http://a3.mzstatic.com/us/r1000/068/Music/17/07/36/mzi.ldnorbao.100x100-75.jpg', 401186200);
+INSERT INTO `Albums` (`a_AlbumID`, `a_Title`, `a_Artist`, `a_Label`, `a_GenreID`, `a_AddDate`, `a_Local`, `a_Compilation`, `a_Location`, `a_AlbumArt`, `a_ITunesId`) VALUES(1, 'Abbey Road', 'The Beatles', 'Apple', 9, '2012-05-18 20:58:21', NULL, 0, 'Gnu Bin', 'http://a3.mzstatic.com/us/r1000/068/Music/17/07/36/mzi.ldnorbao.100x100-75.jpg', 401186200);
 
 -- --------------------------------------------------------
 
