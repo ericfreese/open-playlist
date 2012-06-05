@@ -123,7 +123,7 @@
 		
 		<?php echo $this->Html->script('https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js'); ?>
 		<?php echo $this->Html->script('bootstrap'); ?>
-		<?php echo $scripts_for_layout; ?>
+		<?php echo $this->fetch('script'); ?>
 
 	</body>
 </html>
