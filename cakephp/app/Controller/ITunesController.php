@@ -17,21 +17,33 @@ class ITunesController extends AppController {
 			
 			$iTunesIds = array();
 			foreach ($response['results'] as $album) {
-				array_push($iTunesIds, $album['collectionId']);
+				$iTunesIds[$album['collectionId']] = array(
+					'trackCount' => $album['trackCount']
+				);
 			}
 			
-			$localAlbums = $this->Album->find('list', array(
-				'conditions' => array('Album.a_ITunesId' => $iTunesIds),
-				'fields' => array('Album.a_AlbumID', 'Album.a_AddDate', 'Album.a_ITunesId')
+			$localAlbums = $this->Album->find('all', array(
+				'conditions' => array('Album.a_ITunesId' => array_keys($iTunesIds))
 			));
 			
-			foreach ($response['results'] as $key => $album) {
-				if (isset($localAlbums[$album['collectionId']])) {
-					$id = array_keys($localAlbums[$album['collectionId']]);
-					$addDate = array_values($localAlbums[$album['collectionId']]);
-					
-					$response['results'][$key]['localId'] = $id[0];
-					$response['results'][$key]['localAddDate'] = $addDate[0];
+			foreach ($response['results'] as $key => $iTunesAlbum) {
+				// Try to find the local album
+				foreach ($localAlbums as $localAlbum) {
+					if ($localAlbum['Album']['a_ITunesId'] == $iTunesAlbum['collectionId']) {
+						$response['results'][$key]['localId'] = $localAlbum['Album']['a_AlbumID'];
+						$response['results'][$key]['localTrackCount'] = count($localAlbum['Tracks']);
+						
+						// The iTunes 'trackCount' field counts an extra "track" for each disc, so we need to add
+						// the local disc count to the local track count when comparing to figure out if the album
+						// has been entirely imported.
+						$numDiscs = 1;
+						foreach ($localAlbum['Tracks'] as $localTrack) {
+							if ($localTrack['t_DiskNumber'] > $numDiscs) $numDiscs = $localTrack['t_DiskNumber'];
+						}
+						
+						$response['results'][$key]['isPartialImport'] = $iTunesAlbum['trackCount'] > count($localAlbum['Tracks']) + $numDiscs;
+						break;
+					}
 				}
 			}
 			

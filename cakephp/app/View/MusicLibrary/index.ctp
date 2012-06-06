@@ -1,4 +1,6 @@
 <?php $pageParams = $this->Paginator->params('Album'); ?>
+<?php $sort = (isset($pageParams['options']['sort']) ? $pageParams['options']['sort'] : 'a_AddDate'); ?>
+<?php $direction = (isset($pageParams['options']['direction']) ? $pageParams['options']['direction'] : 'desc'); ?>
 
 <div class="row-fluid">
 	<div class="span2">
@@ -11,7 +13,7 @@
 				</ul>
 			</div>
 		</div>
-		<!--<div class="well sidebar-nav">-->
+		<!-- <div class="well sidebar-nav"> -->
 			<!--<ul class="nav nav-list">
 				<li class="nav-header">Saved Filters</li>
 				<li><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')); ?></li>
@@ -44,13 +46,16 @@
 	<div class="span10">
 		<div class="row-fluid">
 			<div class="span4">
-				<!--
 				<form class="form-inline" style="margin: 0">
 					<div class="input-append">
-						<input type="text" class="input-xlarge"><button class="btn"><i class="icon-search"></i></button>
+						<?php echo $this->TB->basic_input('q', array(
+							'type' => 'text',
+							'label' => false,
+							'class' => 'input-xlarge',
+							'value' => (isset($this->request->query['q']) ? $this->request->query['q'] : '')
+						)); ?><button class="btn"><i class="icon-search"></i></button>
 					</div>
 				</form>
-				-->
 			</div>
 			<div class="span5"></div>
 			<div class="span3">
@@ -71,10 +76,22 @@
 					<thead>
 						<tr>
 							<th></th>
-							<th>Album</th>
-							<th>Artist</th>
-							<th>Genre</th>
-							<th>Added</th>
+							<th<?php if ($sort === 'a_Title' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_Title', 'Album'); ?>
+								<?php if ($sort === 'a_Title'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'a_Artist' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_Artist', 'Artist'); ?>
+								<?php if ($sort === 'a_Artist'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'Genre.g_Name' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('Genre.g_Name', 'Genre'); ?>
+								<?php if ($sort === 'Genre.g_Name'): ?><span class="caret"></span><?php endif; ?>
+							</th>
+							<th<?php if ($sort === 'a_AddDate' && $direction === 'asc'): ?> class="ascending"<?php endif; ?>>
+								<?php echo $this->Paginator->sort('a_AddDate', 'Added'); ?>
+								<?php if ($sort === 'a_AddDate'): ?><span class="caret"></span><?php endif; ?>
+							</th>
 							<th></th>
 						</tr>
 					</thead>

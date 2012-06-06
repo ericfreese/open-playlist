@@ -82,10 +82,6 @@ class Album extends AppModel {
 		return (count($this->find('list', array('conditions' => array('a_AlbumID' => $this->data['Album']['a_AlbumID'])))) === 0);
 	}
 	
-	function __construct($id = false, $table = null, $ds = null) {
-		parent::__construct($id, $table, $ds);
-	}
-	
 	public function findByKeyword($keyword, $params = array()) {
 		$conditions = array(
 			'OR' => array(
