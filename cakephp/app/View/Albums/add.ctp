@@ -97,12 +97,14 @@
 										</td>
 										<td>
 											<?php echo $this->TB->input('Track.'.$key.'.t_Title', array(
+												'type' => 'text',
 												'label' => false,
 												'class' => 'input-xlarge'
 											)); ?>
 										</td>
 										<td class="track-artist">
 											<?php echo $this->TB->input('Track.'.$key.'.t_Artist', array(
+												'type' => 'text',
 												'label' => false,
 												'class' => 'input-xlarge'
 											)); ?>
