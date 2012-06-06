@@ -54,14 +54,14 @@ class AlbumsController extends AppController {
 						);
 						
 						$albumHasTrack = false;
-						foreach ($album['Tracks'] as $albumTrack) {
+						foreach ($album['Track'] as $albumTrack) {
 							if ($albumTrack['t_DiskNumber'] == $iTunesTrack['t_DiskNumber'] && $albumTrack['t_TrackNumber'] == $iTunesTrack['t_TrackNumber']) {
 								$albumHasTrack = true;
 								break;
 							}
 						}
 						if (!$albumHasTrack) {
-							array_push($album['Tracks'], $iTunesTrack);
+							array_push($album['Track'], $iTunesTrack);
 						}
 					}
 				}
@@ -69,11 +69,11 @@ class AlbumsController extends AppController {
 				// Sort ascending by disc and track number
 				$discNumbers = array();
 				$trackNumbers = array();
-				foreach ($album['Tracks'] as $i => $track) {
+				foreach ($album['Track'] as $i => $track) {
 					$discNumbers[$i] = $track['t_DiskNumber'];
 					$trackNumbers[$i] = $track['t_TrackNumber'];
 				}
-				array_multisort($discNumbers, SORT_ASC, $trackNumbers, SORT_ASC, $album['Tracks']);
+				array_multisort($discNumbers, SORT_ASC, $trackNumbers, SORT_ASC, $album['Track']);
 			}
 		}
 		
@@ -91,7 +91,7 @@ class AlbumsController extends AppController {
 				if (count($itAlbumData['results']) === 0) throw new NotFoundException();
 				
 				$data = array(
-					'Tracks' => array()
+					'Track' => array()
 				);
 				
 				foreach ($itAlbumData['results'] as $result) {
@@ -127,13 +127,13 @@ class AlbumsController extends AppController {
 							't_Duration' => round($result['trackTimeMillis'] / 1000)
 						);
 						
-						array_push($data['Tracks'], $track);
+						array_push($data['Track'], $track);
 					}
 				}
 				
 				if (!$data['Album']['a_Compilation']) {
-					foreach ($data['Tracks'] as $key => $value) {
-						unset($data['Tracks'][$key]['t_Artist']);
+					foreach ($data['Track'] as $key => $value) {
+						unset($data['Track'][$key]['t_Artist']);
 					}
 				}
 				
@@ -141,17 +141,17 @@ class AlbumsController extends AppController {
 			}
 			
 			// Unset any empty tracks
-			foreach ($this->request->data['Tracks'] as $key => $track) {
+			foreach ($this->request->data['Track'] as $key => $track) {
 				if ($track['t_DiskNumber'] === '' &&
 					$track['t_TrackNumber'] === '' &&
 					$track['t_Title'] === '' &&
 					$track['t_Artist'] === ''&&
 					$track['t_Duration'] === ''
-				) unset($this->request->data['Tracks'][$key]);
+				) unset($this->request->data['Track'][$key]);
 			}
 			
 			// Save album, set the foreign key on each track, then save the tracks
-			if ($this->Album->addAlbumWithTracks($this->request->data)) {
+			if ($this->Album->saveAssociated($this->request->data, array('validate' => true))) {
 				$this->Session->setFlash(
 					'The album was saved.',
 					'flash_success',
@@ -169,9 +169,10 @@ class AlbumsController extends AppController {
 			}
 		}
 		
-		if (!isset($this->request->data['Tracks']) || count($this->request->data['Tracks']) === 0) {
-			$this->request->data['Tracks'] = array();
-			array_push($this->request->data['Tracks'], array(
+		// If there are no tracks, add an empty one so the track form is generated
+		if (!isset($this->request->data['Track']) || count($this->request->data['Track']) === 0) {
+			$this->request->data['Track'] = array();
+			array_push($this->request->data['Track'], array(
 				't_DiskNumber' => '',
 				't_TrackNumber' => '',
 				't_Title' => '',
@@ -211,7 +212,7 @@ class AlbumsController extends AppController {
 	function delete($id) {
 		$album = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $id), 'recursive' => 2));
 		$deleteDenied = false;
-		foreach ($album['Tracks'] as $track) {
+		foreach ($album['Track'] as $track) {
 			if (count($track['FloatingShowElement']) > 0) {
 				$deleteDenied = true;
 				break;

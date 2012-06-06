@@ -7,10 +7,10 @@ class Genre extends AppModel {
 	var $displayField = 'g_Name';
 	
 	var $hasMany = array(
-		'Albums' => array(
+		'Album' => array(
 			'className' => 'Album',
 			'foreignKey' => 'a_GenreID',
-			'order' => 'Albums.a_Title ASC'
+			'order' => 'Album.a_Title ASC'
 		)
 	);
 }

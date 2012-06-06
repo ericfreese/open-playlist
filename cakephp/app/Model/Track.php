@@ -55,34 +55,28 @@ class Track extends AppModel {
 	);
 	
 	function _hasRequiredArtist() {
-		$track = array_values($this->data);
-		$track = $track[0];
-		
-		if (isset($track['t_AlbumID'])) {
-			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $track['t_AlbumID'])));
+		if (isset($this->data['Track']['t_AlbumID'])) {
+			$albumData = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $this->data['Track']['t_AlbumID'])));
 		} elseif (isset($this->data['Track']['t_TrackID'])) {
-			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $track['t_TrackID'])));
+			$albumData = $this->find('first', array('conditions' => array('t_TrackID' => $this->data['Track']['t_TrackID'])));
 		} else {
 			return false;
 		}
 		
 		if (!$albumData) return false;
 		
-		if ($albumData['Album']['a_Compilation']) return (!empty($track['t_Artist']));
+		if ($albumData['Album']['a_Compilation']) return (!empty($this->data['Track']['t_Artist']));
 		
 		return true;
 	}
 	
 	function _hasRequiredDuration() {
-		$track = array_values($this->data);
-		$track = $track[0];
-		
 		if (Configure::read('Options.ReportingPeriod')) {
-			return !empty($track['t_Duration']);
+			return !empty($this->data['Track']['t_Duration']);
 		} else {
 			return true;
 		}
-		return !(Configure::read('Options.ReportingPeriod') && empty($track['t_Duration']));
+		return !(Configure::read('Options.ReportingPeriod') && empty($this->data['Track']['t_Duration']));
 	}
 	
 	function beforeSave() {

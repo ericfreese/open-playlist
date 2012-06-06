@@ -15,7 +15,7 @@
 		</div>
 		<h1><?php echo $album['Album']['a_Title'] ?></h1>
 		<h2><small><i><?php echo $album['Album']['a_Compilation'] ? 'Various Artists' : $album['Album']['a_Artist'] ?></i></small></h2>
-		<?php if (count($album['Tracks']) > 0): ?>
+		<?php if (count($album['Track']) > 0): ?>
 			<table class="table table-condensed">
 				<thead>
 					<tr>
@@ -28,7 +28,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($album['Tracks'] as $track): ?>
+					<?php foreach($album['Track'] as $track): ?>
 						<tr>
 							<td><?php echo $track['t_DiskNumber'] ?></td>
 							<td><?php echo $track['t_TrackNumber'] ?></td>

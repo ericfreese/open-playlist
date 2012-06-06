@@ -60,11 +60,11 @@
 						</tr>
 					</thead>
 					<tbody>
-						<?php foreach ($this->request->data['Tracks'] as $key => $track): ?>
+						<?php foreach ($this->request->data['Track'] as $key => $track): ?>
 							<tr<?php if (isset($trackValidationErrors[$key])) echo ' class="error"' ?>>
 								<td>
-									<?php echo $this->Form->input('Tracks.'.$key.'.t_TrackID', array('type' => 'hidden')); ?>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_DiskNumber', array(
+									<?php echo $this->Form->input('Track.'.$key.'.t_TrackID', array('type' => 'hidden')); ?>
+									<?php echo $this->TB->basic_input('Track.'.$key.'.t_DiskNumber', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,
@@ -72,7 +72,7 @@
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_TrackNumber', array(
+									<?php echo $this->TB->basic_input('Track.'.$key.'.t_TrackNumber', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,
@@ -80,19 +80,19 @@
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Title', array(
+									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Title', array(
 										'label' => false,
 										'class' => 'input-xlarge'
 									)); ?>
 								</td>
 								<td class="track-artist">
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Artist', array(
+									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Artist', array(
 										'label' => false,
 										'class' => 'input-xlarge'
 									)); ?>
 								</td>
 								<td>
-									<?php echo $this->TB->input('Tracks.'.$key.'.t_Duration', array(
+									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Duration', array(
 										'type' => 'text',
 										'pattern' => '[0-9]*',
 										'label' => false,

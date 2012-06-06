@@ -27,7 +27,7 @@
 					'albumAddDate' => $album['Album']['a_AddDate'],
 					'albumId' => $album['Album']['a_AlbumID'],
 					'artistTitle' => $album['Album']['a_Artist'],
-					'numTracks' => count($album['Tracks'])
+					'numTracks' => count($album['Track'])
 				)) ?>
 			<?php endforeach; ?>
 		</div>

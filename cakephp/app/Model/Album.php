@@ -13,10 +13,10 @@ class Album extends AppModel {
 	);
 	
 	var $hasMany = array(
-		'Tracks' => array(
+		'Track' => array(
 			'className' => 'Track',
 			'foreignKey' => 't_AlbumID',
-			'order' => 'Tracks.t_DiskNumber ASC, Tracks.t_TrackNumber ASC',
+			'order' => 'Track.t_DiskNumber ASC, Track.t_TrackNumber ASC',
 			'dependent' => true
 		)
 	);
@@ -93,33 +93,6 @@ class Album extends AppModel {
 		if (isset($params['conditions'])) $conditions = array_merge_recursive($params['conditions'], $conditions);
 		
 		return $this->find('all', array_merge($params, array('conditions' => $conditions)));
-	}
-	
-	public function addAlbumWithTracks($data) {
-		$ds = $this->getDataSource();
-		$ds->begin();
-		
-		$success = false;
-		
-		if ($this->save($data)) {
-			if (isset($data['Tracks'])) {
-				foreach ($data['Tracks'] as $key => $value) {
-					$data['Tracks'][$key]['t_AlbumID'] = $this->id;
-				}
-				
-				if ($this->Tracks->saveMany($data['Tracks'])) $success = true;
-			} else {
-				$success = true;
-			}
-		}
-		
-		if ($success) {
-			$ds->commit();
-		} else {
-			$ds->rollback();
-		}
-		
-		return $success;
 	}
 }
 ?>

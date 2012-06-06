@@ -31,17 +31,17 @@ class ITunesController extends AppController {
 				foreach ($localAlbums as $localAlbum) {
 					if ($localAlbum['Album']['a_ITunesId'] == $iTunesAlbum['collectionId']) {
 						$response['results'][$key]['localId'] = $localAlbum['Album']['a_AlbumID'];
-						$response['results'][$key]['localTrackCount'] = count($localAlbum['Tracks']);
+						$response['results'][$key]['localTrackCount'] = count($localAlbum['Track']);
 						
 						// The iTunes 'trackCount' field counts an extra "track" for each disc, so we need to add
 						// the local disc count to the local track count when comparing to figure out if the album
 						// has been entirely imported.
 						$numDiscs = 1;
-						foreach ($localAlbum['Tracks'] as $localTrack) {
+						foreach ($localAlbum['Track'] as $localTrack) {
 							if ($localTrack['t_DiskNumber'] > $numDiscs) $numDiscs = $localTrack['t_DiskNumber'];
 						}
 						
-						$response['results'][$key]['isPartialImport'] = $iTunesAlbum['trackCount'] > count($localAlbum['Tracks']) + $numDiscs;
+						$response['results'][$key]['isPartialImport'] = $iTunesAlbum['trackCount'] > count($localAlbum['Track']) + $numDiscs;
 						break;
 					}
 				}
