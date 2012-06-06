@@ -205,7 +205,6 @@ class AlbumsController extends AppController {
 			$this->Crumb->saveCrumb($this->data['Album']['a_Title'], $this->request);
 		}
 		
-		$this->set('album', $this->Album->find('first', array('conditions' => array('Album.a_AlbumID' => $id))));
 		$this->set('genres', $this->Genre->find('list', array('conditions' => array('g_TopLevel' => 1), 'order' => 'Genre.g_Name')));
 	}
 	

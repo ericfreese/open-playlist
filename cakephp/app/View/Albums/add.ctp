@@ -9,6 +9,12 @@
 			<fieldset id="album">
 				<div class="row-fluid">
 					<div class="span6">
+						<?php echo $this->TB->input('a_AlbumID', array(
+							'label' => 'CD Code',
+							'type' => 'text',
+							'pattern' => '[0-9]*',
+							'class' => 'input-large'
+						)); ?>
 						<?php echo $this->TB->input('a_Title', array(
 							'label' => 'Album Title',
 							'type' => 'text',
@@ -23,6 +29,8 @@
 							'type' => 'text',
 							'class' => 'input-large'
 						)); ?>
+					</div>
+					<div class="span6">
 						<?php echo $this->TB->input('a_GenreID', array(
 							'label' => 'Genre',
 							'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.str_replace('\'', '\\\'', $iTunesGenre).'\');"></i>' : false),
@@ -33,14 +41,6 @@
 							'label' => 'Label',
 							'type' => 'text',
 							'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.str_replace('\'', '\\\'', $iTunesCopyright).'\');"></i>' : false),
-							'class' => 'input-large'
-						)); ?>
-					</div>
-					<div class="span6">
-						<?php echo $this->TB->input('a_AlbumID', array(
-							'label' => 'CD Code',
-							'type' => 'text',
-							'pattern' => '[0-9]*',
 							'class' => 'input-large'
 						)); ?>
 						<?php echo $this->TB->input('a_Location', array(
@@ -63,64 +63,69 @@
 				<?php echo $this->Form->hidden('a_ITunesId'); ?>
 			</fieldset>
 			<fieldset id="tracks">
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th>Disc</th>
-							<th>#</th>
-							<th>Track Name</th>
-							<th class="track-artist">Artist</th>
-							<th>Duration (seconds)</th>
-						</tr>
-					</thead>
-					<tbody>
-						<?php foreach ($this->request->data['Track'] as $key => $track): ?>
-							<tr>
-								<td>
-									<?php echo $this->TB->basic_input('Track.'.$key.'.t_DiskNumber', array(
-										'type' => 'text',
-										'pattern' => '[0-9]*',
-										'label' => false,
-										'class' => 'input-mini'
-									)); ?>
-								</td>
-								<td>
-									<?php echo $this->TB->basic_input('Track.'.$key.'.t_TrackNumber', array(
-										'type' => 'text',
-										'pattern' => '[0-9]*',
-										'label' => false,
-										'class' => 'input-mini'
-									)); ?>
-								</td>
-								<td>
-									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Title', array(
-										'label' => false,
-										'class' => 'input-xlarge'
-									)); ?>
-								</td>
-								<td class="track-artist">
-									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Artist', array(
-										'label' => false,
-										'class' => 'input-xlarge'
-									)); ?>
-								</td>
-								<td>
-									<?php echo $this->TB->basic_input('Track.'.$key.'.t_Duration', array(
-										'type' => 'text',
-										'pattern' => '[0-9]*',
-										'label' => false,
-										'class' => 'input-mini'
-									)); ?>
-								</td>
-								<td>
-									<a class="close" href="#" title="Remove track">&times;</a>
-								</td>
-							</tr>
-						<?php endforeach; ?>
-					</tbody>
-				</table>
-				<div>
-					<a href="#" class="btn add-track"><i class="icon-plus"></i> Add Track</a>
+				<div class="control-group">
+					<label for="Track0TDiskNumber" class="control-label">Tracks</label>
+					<div class="controls">
+						<table class="table table-condensed" style="width: inherit; margin-bottom: 6px;">
+							<thead>
+								<tr>
+									<th>Disc</th>
+									<th>#</th>
+									<th>Track Name</th>
+									<th class="track-artist">Artist</th>
+									<th>Duration (s)</th>
+								</tr>
+							</thead>
+							<tbody>
+								<?php foreach ($this->request->data['Track'] as $key => $track): ?>
+									<tr>
+										<td>
+											<?php echo $this->TB->input('Track.'.$key.'.t_DiskNumber', array(
+												'type' => 'text',
+												'pattern' => '[0-9]*',
+												'label' => false,
+												'class' => 'input-mini'
+											)); ?>
+										</td>
+										<td>
+											<?php echo $this->TB->input('Track.'.$key.'.t_TrackNumber', array(
+												'type' => 'text',
+												'pattern' => '[0-9]*',
+												'label' => false,
+												'class' => 'input-mini'
+											)); ?>
+										</td>
+										<td>
+											<?php echo $this->TB->input('Track.'.$key.'.t_Title', array(
+												'label' => false,
+												'class' => 'input-xlarge'
+											)); ?>
+										</td>
+										<td class="track-artist">
+											<?php echo $this->TB->input('Track.'.$key.'.t_Artist', array(
+												'label' => false,
+												'class' => 'input-xlarge'
+											)); ?>
+										</td>
+										<td>
+											<?php echo $this->TB->input('Track.'.$key.'.t_Duration', array(
+												'type' => 'text',
+												'pattern' => '[0-9]*',
+												'label' => false,
+												'class' => 'input-mini'
+											)); ?>
+										</td>
+										<td>
+											<a class="close" href="#" title="Remove track">&times;</a>
+										</td>
+									</tr>
+								<?php endforeach; ?>
+							</tbody>
+						</table>
+						<div>
+							<a href="#" class="btn btn-mini add-track"><i class="icon-plus"></i> Add track</a>
+						</div>
+					</div>
 				</div>
 			</fieldset>
 			<fieldset>
