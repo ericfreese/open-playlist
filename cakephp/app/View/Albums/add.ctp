@@ -123,7 +123,7 @@
 							</tbody>
 						</table>
 						<div>
-							<a href="#" class="btn btn-mini add-track"><i class="icon-plus"></i> Add track</a>
+							<a href="#" class="btn btn-mini add-track" style="margin-left: 5px;"><i class="icon-plus"></i> Add track</a>
 						</div>
 					</div>
 				</div>
