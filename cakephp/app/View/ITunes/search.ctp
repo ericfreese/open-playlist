@@ -33,10 +33,9 @@
 							<div class="span9">
 								<div><?php echo $this->Html->link($album['collectionName'], array('controller' => 'i_tunes', 'action' => 'view', $album['collectionId'])) ?></div>
 								<div><i><?php echo $album['artistName'] ?></i></div>
-								<div><i><?php echo $album['trackCount'].' track'.($album['trackCount'] > 1 ? 's' : '') ?></i></div>
 								<div>
-									<?php if (isset($album['localId']) && isset($album['localAddDate'])): ?>
-										<?php echo $this->Html->link($this->TB->icon('download', 'white').' Imported '.$this->Time->format('n/d/y', $album['localAddDate']), array('controller' => 'albums', 'action' => 'view', $album['localId']), array('class' => 'btn btn-mini btn-info', 'escape' => false)); ?>
+									<?php if (isset($album['localId']) && isset($album['localTrackCount']) && isset($album['isPartialImport'])): ?>
+										<?php echo $this->Html->link($this->TB->icon('download', 'white').' '.($album['isPartialImport'] ? $album['localTrackCount'].' Track'.($album['localTrackCount'] !== 1 ? 's' : '').' ' : '').'Imported', array('controller' => 'albums', 'action' => 'view', $album['localId']), array('class' => 'btn btn-mini '.($album['isPartialImport'] ? 'btn-warning' : 'btn-success'), 'escape' => false)); ?>
 									<?php else: ?>
 										<?php echo $this->Form->create(false, array('type' => 'put', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
 											<?php echo $this->Form->hidden('iTunesAlbumId', array('value' => $album['collectionId'])); ?>
