@@ -28,7 +28,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<?php foreach($album['Track'] as $track): ?>
+					<?php foreach ($album['Track'] as $track): ?>
 						<tr>
 							<td><?php echo $track['t_DiskNumber'] ?></td>
 							<td><?php echo $track['t_TrackNumber'] ?></td>
@@ -54,6 +54,16 @@
 				</tbody>
 			</table>
 		<?php endif; ?>
-		<p><?php echo $this->Html->link($this->TB->icon('plus-sign', 'white').' Add Track', array('controller' => 'tracks', 'action' => 'add', $album['Album']['a_AlbumID']), array('class' => 'btn btn-success', 'escape' => false)); ?></p>
+		<?php if (!isset($album['Album']['a_ITunesId'])): ?>
+			<p><?php echo $this->Html->link($this->TB->icon('plus-sign').' Add track', array('controller' => 'tracks', 'action' => 'add', $album['Album']['a_AlbumID']), array('class' => 'btn', 'escape' => false)); ?></p>
+		<?php elseif (isset($iTunesTracks) && count($iTunesTracks) > 0): ?>
+			<p>
+				<?php echo $this->Form->create(false, array('type' => 'put', 'url' => array('controller' => 'albums', 'action' => 'add'))); ?>
+					<?php echo $this->Form->hidden('iTunesAlbumId', array('value' => $album['Album']['a_ITunesId'])); ?>
+					<?php echo $this->Form->hidden('localAlbumId', array('value' => $album['Album']['a_AlbumID'])); ?>
+					<?php echo $this->TB->button($this->TB->icon('download', 'white').' Import Full Album', array('style' => 'warning')); ?>
+				<?php echo $this->Form->end(); ?>
+			</p>
+		<?php endif; ?>
 	</div>
 </div>

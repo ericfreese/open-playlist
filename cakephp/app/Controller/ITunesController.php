@@ -86,10 +86,9 @@ class ITunesController extends AppController {
 		if ($album === null) throw new NotFoundException();
 		
 		// Check if the album has already been imported
-		if ($localAlbum = $this->Album->find('first', array(
-			'conditions' => array('a_ITunesId' => $album['id']),
-			'recursive' => -1
-		))) $this->set('localAlbum', $localAlbum);
+		if ($localAlbum = $this->Album->find('first', array('conditions' => array('a_ITunesId' => $album['id'])))) {
+			$this->set('localAlbum', $localAlbum);
+		}
 		
 		$this->Crumb->saveCrumb(($localAlbum ? $localAlbum['Album']['a_Title'] : $album['title']), $this->request);
 		

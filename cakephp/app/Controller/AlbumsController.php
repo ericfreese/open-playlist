@@ -43,6 +43,7 @@ class AlbumsController extends AppController {
 		if (isset($album['Album']['a_ITunesId'])) {
 			$itAlbumData = $this->ITunes->getAlbumById($album['Album']['a_ITunesId']);
 			if (count($itAlbumData['results']) > 0) {
+				$iTunesTracks = array();
 				foreach ($itAlbumData['results'] as $result) {
 					if ($result['wrapperType'] === 'track') {
 						$iTunesTrack = array(
@@ -62,6 +63,7 @@ class AlbumsController extends AppController {
 						}
 						if (!$albumHasTrack) {
 							array_push($album['Track'], $iTunesTrack);
+							array_push($iTunesTracks, $iTunesTrack);
 						}
 					}
 				}
@@ -74,6 +76,8 @@ class AlbumsController extends AppController {
 					$trackNumbers[$i] = $track['t_TrackNumber'];
 				}
 				array_multisort($discNumbers, SORT_ASC, $trackNumbers, SORT_ASC, $album['Track']);
+				
+				$this->set('iTunesTracks', $iTunesTracks);
 			}
 		}
 		
@@ -90,12 +94,12 @@ class AlbumsController extends AppController {
 				$itAlbumData = $this->ITunes->getAlbumById($this->request->data['iTunesAlbumId']);
 				if (count($itAlbumData['results']) === 0) throw new NotFoundException();
 				
-				$data = array(
+				$iTunesAlbum = array(
 					'Track' => array()
 				);
 				
 				foreach ($itAlbumData['results'] as $result) {
-					if (!isset($data['Album']) && $result['wrapperType'] === 'collection') {
+					if (!isset($iTunesAlbum['Album']) && $result['wrapperType'] === 'collection') {
 						// Try and find the genre
 						$genre = $this->Genre->find('first', array(
 							'conditions' => array('Genre.g_Name' => $result['primaryGenreName'], 'g_TopLevel' => 1),
@@ -108,7 +112,7 @@ class AlbumsController extends AppController {
 						$this->set('iTunesCopyright', $result['copyright']);
 						
 						// Gather the album data
-						$data['Album'] = array(
+						$iTunesAlbum['Album'] = array(
 							'a_Title' => $result['collectionName'],
 							'a_Compilation' => $result['collectionType'] == 'Compilation' || $result['artistName'] === 'Various Artists',
 							'a_Artist' => $result['artistName'],
@@ -127,17 +131,55 @@ class AlbumsController extends AppController {
 							't_Duration' => round($result['trackTimeMillis'] / 1000)
 						);
 						
-						array_push($data['Track'], $track);
+						array_push($iTunesAlbum['Track'], $track);
 					}
 				}
 				
-				if (!$data['Album']['a_Compilation']) {
-					foreach ($data['Track'] as $key => $value) {
-						unset($data['Track'][$key]['t_Artist']);
+				// Don't save track artist unless album is a compilation
+				if (!$iTunesAlbum['Album']['a_Compilation']) {
+					foreach ($iTunesAlbum['Track'] as $key => $value) {
+						unset($iTunesAlbum['Track'][$key]['t_Artist']);
 					}
 				}
 				
-				$this->request->data = $data;
+				// Importing iTunes data into an existing album
+				if (isset($this->request->data['localAlbumId'])) {
+					$localAlbum = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $this->request->data['localAlbumId'])));
+					
+					unset($localAlbum['Genre']);
+					unset($localAlbum['Album']['a_AlbumID']);
+					
+					// Remove any tracks from the iTunes array that already exist locally
+					foreach ($iTunesAlbum['Track'] as $i => $iTunesTrack) {
+						foreach ($localAlbum['Track'] as $localTrack) {
+							if ($iTunesTrack['t_DiskNumber'] == $localTrack['t_DiskNumber'] && $iTunesTrack['t_TrackNumber'] == $localTrack['t_TrackNumber']) {
+								unset($iTunesAlbum['Track'][$i]);
+								break;
+							}
+						}
+					}
+				}
+			}
+			
+			// Set request data if it hasn't been submitted already
+			if (!isset($this->request->data['Album']) && !isset($this->request->data['Track'])) {
+				// Prefer to populate request data from local album combined with iTunes data
+				if (isset($localAlbum)) {
+					$this->request->data['Album'] = $localAlbum['Album'];
+					$this->request->data['Track'] = array_merge($iTunesAlbum['Track'], $localAlbum['Track']);
+					
+					// Need to sort after merging local and iTunes (by ascending by disc and track number)
+					$discNumbers = array();
+					$trackNumbers = array();
+					foreach ($this->request->data['Track'] as $i => $track) {
+						$discNumbers[$i] = $track['t_DiskNumber'];
+						$trackNumbers[$i] = $track['t_TrackNumber'];
+					}
+					array_multisort($discNumbers, SORT_ASC, $trackNumbers, SORT_ASC, $this->request->data['Track']);
+				} elseif (isset($iTunesAlbum)) {
+					$this->request->data['Album'] = $iTunesAlbum['Album'];
+					$this->request->data['Track'] = $iTunesAlbum['Track'];
+				}
 			}
 			
 			// Unset any empty tracks
@@ -145,13 +187,34 @@ class AlbumsController extends AppController {
 				if ($track['t_DiskNumber'] === '' &&
 					$track['t_TrackNumber'] === '' &&
 					$track['t_Title'] === '' &&
-					$track['t_Artist'] === ''&&
+					$track['t_Artist'] === '' &&
 					$track['t_Duration'] === ''
 				) unset($this->request->data['Track'][$key]);
 			}
 			
-			// Save album, set the foreign key on each track, then save the tracks
+			// Start a transaction if we also need to remove the local album
+			$this->Album->getDataSource()->begin();
+			
+			// Save album and tracks
 			if ($this->Album->saveAssociated($this->request->data, array('validate' => true))) {
+				// Delete local album if necessary
+				if (isset($this->request->data['localAlbumId'])) {
+					$localAlbum = $this->Album->find('first', array('conditions' => array('a_AlbumID' => $this->request->data['localAlbumId'])));
+					
+					// All of the tracks should now belong to the new album
+					if ($localAlbum && count($localAlbum['Track']) === 0) {
+						if ($this->Album->delete($localAlbum['Album']['a_AlbumID'])) {
+							$this->Album->getDataSource()->commit();
+						} else {
+							$this->Album->getDataSource()->rollback();
+							return;
+						}
+					}
+				} else {
+					// No local album to remove
+					$this->Album->getDataSource()->commit();
+				}
+				
 				$this->Session->setFlash(
 					'The album was saved.',
 					'flash_success',
