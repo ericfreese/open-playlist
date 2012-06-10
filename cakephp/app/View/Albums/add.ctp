@@ -5,45 +5,47 @@
 		<div class="page-header">
 			<h1>Add Album</h1>
 		</div>
-		<?php echo $this->Form->create('Album', array('type' => 'put', 'class' => 'form-horizontal')); ?>
+		<?php echo $this->Form->create(false, array('type' => 'put', 'class' => 'form-horizontal')); ?>
+			<?php if (isset($this->request->data['localAlbumId'])) echo $this->Form->hidden('localAlbumId'); ?>
+			<?php if (isset($this->request->data['iTunesAlbumId'])) echo $this->Form->hidden('iTunesAlbumId'); ?>
 			<fieldset id="album">
 				<div class="row-fluid">
 					<div class="span6">
-						<?php echo $this->TB->input('a_AlbumID', array(
+						<?php echo $this->TB->input('Album.a_AlbumID', array(
 							'label' => 'CD Code',
 							'type' => 'text',
 							'pattern' => '[0-9]*',
 							'class' => 'input-large'
 						)); ?>
-						<?php echo $this->TB->input('a_Title', array(
+						<?php echo $this->TB->input('Album.a_Title', array(
 							'label' => 'Album Title',
 							'type' => 'text',
 							'class' => 'input-large'
 						)); ?>
-						<?php echo $this->TB->input('a_Compilation', array(
+						<?php echo $this->TB->input('Album.a_Compilation', array(
 							'label' => 'Compilation',
 							'checkbox_label' => 'Is this album a compilation of tracks by various artists?'
 						)); ?>
-						<?php echo $this->TB->input('a_Artist', array(
+						<?php echo $this->TB->input('Album.a_Artist', array(
 							'label' => 'Artist',
 							'type' => 'text',
 							'class' => 'input-large'
 						)); ?>
 					</div>
 					<div class="span6">
-						<?php echo $this->TB->input('a_GenreID', array(
+						<?php echo $this->TB->input('Album.a_GenreID', array(
 							'label' => 'Genre',
 							'help_inline' => (isset($iTunesGenre) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the genre as: \n\n'.str_replace('\'', '\\\'', $iTunesGenre).'\');"></i>' : false),
 							'empty' => true,
 							'options' => $genres
 						)); ?>
-						<?php echo $this->TB->input('a_Label', array(
+						<?php echo $this->TB->input('Album.a_Label', array(
 							'label' => 'Label',
 							'type' => 'text',
 							'help_inline' => (isset($iTunesCopyright) ? '<i style="cursor: pointer;" class="icon-info-sign" onclick="alert(\'iTunes lists the copyright info as: \n\n'.str_replace('\'', '\\\'', $iTunesCopyright).'\');"></i>' : false),
 							'class' => 'input-large'
 						)); ?>
-						<?php echo $this->TB->input('a_Location', array(
+						<?php echo $this->TB->input('Album.a_Location', array(
 							'label' => 'Location',
 							'options' => array(
 								'Gnu Bin' => 'Gnu Bin',
@@ -52,7 +54,7 @@
 								'Digital Library' => 'Digital Library'
 							)
 						)); ?>
-						<?php echo $this->TB->input('a_AlbumArt', array(
+						<?php echo $this->TB->input('Album.a_AlbumArt', array(
 							'label' => 'Album Art URL',
 							'type' => 'url',
 							'class' => 'input-large',
@@ -60,7 +62,7 @@
 						)); ?>
 					</div>
 				</div>
-				<?php echo $this->Form->hidden('a_ITunesId'); ?>
+				<?php echo $this->Form->hidden('Album.a_ITunesId'); ?>
 			</fieldset>
 			<fieldset id="tracks">
 				<div class="control-group">
@@ -74,12 +76,14 @@
 									<th>Track Name</th>
 									<th class="track-artist">Artist</th>
 									<th>Duration (s)</th>
+									<?php if (!isset($this->request->data['iTunesAlbumId'])): ?><th></th><?php endif; ?>
 								</tr>
 							</thead>
 							<tbody>
 								<?php foreach ($this->request->data['Track'] as $key => $track): ?>
 									<tr>
 										<td>
+											<?php echo $this->Form->input('Track.'.$key.'.t_TrackID', array('type' => 'hidden')); ?>
 											<?php echo $this->TB->input('Track.'.$key.'.t_DiskNumber', array(
 												'type' => 'text',
 												'pattern' => '[0-9]*',
@@ -117,16 +121,20 @@
 												'class' => 'input-mini'
 											)); ?>
 										</td>
-										<td>
-											<a class="close" href="#" title="Remove track">&times;</a>
-										</td>
+										<?php if (!isset($this->request->data['iTunesAlbumId'])): ?>
+											<td>
+												<a class="close" href="#" title="Remove track">&times;</a>
+											</td>
+										<?php endif; ?>
 									</tr>
 								<?php endforeach; ?>
 							</tbody>
 						</table>
-						<div>
-							<a href="#" class="btn btn-mini add-track" style="margin-left: 5px;"><i class="icon-plus-sign"></i> Add track</a>
-						</div>
+						<?php if (!isset($this->request->data['iTunesAlbumId'])): ?>
+							<div>
+								<a href="#" class="btn btn-mini add-track" style="margin-left: 5px;"><i class="icon-plus-sign"></i> Add track</a>
+							</div>
+						<?php endif; ?>
 					</div>
 				</div>
 			</fieldset>

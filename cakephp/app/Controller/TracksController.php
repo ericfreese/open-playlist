@@ -26,9 +26,7 @@ class TracksController extends AppController {
 		$this->set('album', $album);
 		
 		if ($this->request->is('put')) {
-			$this->set('data', $this->data);
-			$this->Track->set($this->data['Track']);
-			if ($this->Track->save()) {
+			if ($this->Track->save($this->request->data)) {
 				$this->Session->setFlash(
 					'The track was saved.',
 					'flash_success',
@@ -76,7 +74,7 @@ class TracksController extends AppController {
 				if ($this->request->data['confirm']) {
 					if ($this->Track->delete($this->request->data['t_TrackID'])) {
 						$this->Session->setFlash('The track was successfully deleted.');
-						$this->redirect(array('controller' => 'music_library', 'action' => 'index'));
+						$this->redirect(array('controller' => 'albums', 'action' => 'view', $track['Track']['t_AlbumID']));
 					}
 				} else {
 					$this->redirect(array('controller' => 'tracks', 'action' => 'view', $this->request->data['t_TrackID']));
