@@ -7,3 +7,6 @@
 [submodule "cakephp/app/Plugin/DebugKit"]
 	path = cakephp/app/Plugin/DebugKit
 	url = git://github.com/cakephp/debug_kit.git
+[submodule "tools/fullcalendar"]
+	path = tools/fullcalendar
+	url = https://github.com/arshaw/fullcalendar.git
