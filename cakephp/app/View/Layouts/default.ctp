@@ -55,7 +55,8 @@
 							<li><?php echo $this->Html->link('Show Builder', 'http://kgnu.net/playlist/findshows.php') ?></li>
 							<li><?php echo $this->Html->link('Schedule', 'http://kgnu.net/playlist/calendar.php') ?></li>
 							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Events', 'http://kgnu.net/playlist/events.php') ?></li>
+							<li><?php echo $this->Html->link('Events', array('controller' => 'events', 'action' => 'index')); ?></li>
+							<li><?php echo $this->Html->link('Hosts', array('controller' => 'hosts', 'action' => 'index')); ?></li>
 						</ul>
 						<ul class="nav pull-right">
 							<!--<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>-->
