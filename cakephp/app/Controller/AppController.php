@@ -49,6 +49,35 @@ class AppController extends Controller {
 		'Crumb'
 	);
 	
+	protected function api_index($model) {
+		$params = array_merge(array(
+			'limit' => 50,
+			'offset' => 0,
+			'recursive' => -1
+		), $this->request->query);
+		
+		$this->set('data', array(
+			'total' => $model->find('count', array_merge($params, array('limit' => null))),
+			'limit' => $params['limit'],
+			'offset' => $params['offset'],
+			'response' => $model->find('all', $params)
+		));
+		
+		$this->set('_serialize', 'data');
+	}
+	
+	protected function api_view($model, $id) {
+		$params = array_merge(array(
+			'recursive' => -1
+		), $this->request->query);
+		
+		$response = $model->find('first', array_merge($params, array('conditions' => array($model->primaryKey => $id))));
+		if (!$response) throw new NotFoundException('Resource not found');
+		
+		$this->set('response', $response);
+		$this->set('_serialize', 'response');
+	}
+	
 	// function beforeFilter() {
 	// 	$this->Auth->allow('*');
 	// }

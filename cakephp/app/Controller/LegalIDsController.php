@@ -45,5 +45,13 @@ class LegalIDsController extends AppController {
 			$this->data = $this->LegalIDEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->LegalIDEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->LegalIDEvent, $id);
+	}
 }
 ?>

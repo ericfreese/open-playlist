@@ -45,5 +45,13 @@ class PSACategoriesController extends AppController {
 			$this->data = $this->PSACategory->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->PSACategory);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->PSACategory, $id);
+	}
 }
 ?>

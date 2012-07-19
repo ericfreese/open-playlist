@@ -45,5 +45,13 @@ class AnnouncementsController extends AppController {
 			$this->data = $this->AnnouncementEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->AnnouncementEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->AnnouncementEvent, $id);
+	}
 }
 ?>

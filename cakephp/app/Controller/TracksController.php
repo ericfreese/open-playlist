@@ -93,5 +93,13 @@ class TracksController extends AppController {
 			}
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->Track);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->Track, $id);
+	}
 }
 ?>

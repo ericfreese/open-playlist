@@ -46,5 +46,13 @@ class HostsController extends AppController {
 			$this->data = $this->Host->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->Host);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->Host, $id);
+	}
 }
 ?>

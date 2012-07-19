@@ -45,5 +45,13 @@ class EASTestsController extends AppController {
 			$this->data = $this->EASTestEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->EASTestEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->EASTestEvent, $id);
+	}
 }
 ?>

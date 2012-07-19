@@ -298,5 +298,13 @@ class AlbumsController extends AppController {
 			}
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->Album);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->Album, $id);
+	}
 }
 ?>

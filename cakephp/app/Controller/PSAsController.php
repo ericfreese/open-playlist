@@ -47,5 +47,13 @@ class PSAsController extends AppController {
 		}
 		$this->set('psaCategories', $this->PSACategory->find('list', array('order' => 'Title ASC')));
 	}
+	
+	function api_index() {
+		parent::api_index($this->PSAEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->PSAEvent, $id);
+	}
 }
 ?>

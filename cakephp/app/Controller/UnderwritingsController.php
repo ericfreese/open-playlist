@@ -45,5 +45,13 @@ class UnderwritingsController extends AppController {
 			$this->data = $this->UnderwritingEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->UnderwritingEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->UnderwritingEvent, $id);
+	}
 }
 ?>

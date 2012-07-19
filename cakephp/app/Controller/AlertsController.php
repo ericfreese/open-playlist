@@ -45,5 +45,13 @@ class AlertsController extends AppController {
 			$this->data = $this->AlertEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->AlertEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->AlertEvent, $id);
+	}
 }
 ?>

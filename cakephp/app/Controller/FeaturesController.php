@@ -45,5 +45,13 @@ class FeaturesController extends AppController {
 			$this->data = $this->FeatureEvent->read();
 		}
 	}
+	
+	function api_index() {
+		parent::api_index($this->FeatureEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->FeatureEvent, $id);
+	}
 }
 ?>

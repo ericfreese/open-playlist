@@ -47,5 +47,13 @@ class ShowsController extends AppController {
 		}
 		$this->set('hosts', $this->Host->find('list', array('conditions' => array('Active' => true))));
 	}
+	
+	function api_index() {
+		parent::api_index($this->ShowEvent);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->ShowEvent, $id);
+	}
 }
 ?>
