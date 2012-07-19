@@ -4,7 +4,7 @@ class UnderwritingsController extends AppController {
 	var $uses = array('UnderwritingEvent');
 	
 	function index() {
-		$this->set('underwritings', $this->UnderwritingEvent->find('all'));
+		$this->set('underwritings', $this->UnderwritingEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

@@ -4,7 +4,7 @@ class EASTestsController extends AppController {
 	var $uses = array('EASTestEvent');
 	
 	function index() {
-		$this->set('easTests', $this->EASTestEvent->find('all'));
+		$this->set('easTests', $this->EASTestEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

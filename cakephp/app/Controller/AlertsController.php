@@ -4,7 +4,7 @@ class AlertsController extends AppController {
 	var $uses = array('AlertEvent');
 	
 	function index() {
-		$this->set('alerts', $this->AlertEvent->find('all'));
+		$this->set('alerts', $this->AlertEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

@@ -4,7 +4,7 @@ class PSAsController extends AppController {
 	var $uses = array('PSAEvent', 'PSACategory');
 	
 	function index() {
-		$this->set('psas', $this->PSAEvent->find('all'));
+		$this->set('psas', $this->PSAEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

@@ -4,7 +4,7 @@ class ShowsController extends AppController {
 	var $uses = array('ShowEvent', 'Host');
 	
 	function index() {
-		$this->set('shows', $this->ShowEvent->find('all'));
+		$this->set('shows', $this->ShowEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

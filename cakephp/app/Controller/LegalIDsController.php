@@ -4,7 +4,7 @@ class LegalIDsController extends AppController {
 	var $uses = array('LegalIDEvent');
 	
 	function index() {
-		$this->set('legalIDs', $this->LegalIDEvent->find('all'));
+		$this->set('legalIDs', $this->LegalIDEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

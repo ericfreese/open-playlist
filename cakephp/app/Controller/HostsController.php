@@ -4,7 +4,7 @@ class HostsController extends AppController {
 	var $uses = array('Host');
 	
 	function index() {
-		$this->set('hosts', $this->Host->find('all'));
+		$this->set('hosts', $this->Host->find('all', array('order' => 'Name ASC')));
 	}
 	
 	function view($id) {

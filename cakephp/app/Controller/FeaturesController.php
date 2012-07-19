@@ -4,7 +4,7 @@ class FeaturesController extends AppController {
 	var $uses = array('FeatureEvent');
 	
 	function index() {
-		$this->set('features', $this->FeatureEvent->find('all'));
+		$this->set('features', $this->FeatureEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {

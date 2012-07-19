@@ -4,7 +4,7 @@ class AnnouncementsController extends AppController {
 	var $uses = array('AnnouncementEvent');
 	
 	function index() {
-		$this->set('announcements', $this->AnnouncementEvent->find('all'));
+		$this->set('announcements', $this->AnnouncementEvent->find('all', array('order' => 'e_Title ASC')));
 	}
 	
 	function view($id) {
