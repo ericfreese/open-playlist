@@ -29,6 +29,7 @@ class InheritableBehavior extends ModelBehavior {
  * 	- inheritanceField
  * 	- method: STI or CTI
  * 	- fieldAlias
+ * 	- fields
  *
  * @var array
  */
@@ -46,7 +47,8 @@ class InheritableBehavior extends ModelBehavior {
 		$_defaults = array(
             'inheritanceField' => 'type',
             'method' => 'STI',
-            'fieldAlias' => $Model->alias);
+            'fieldAlias' => $Model->alias,
+            'fields' => false);
 		$this->settings[$Model->alias] = array_merge($_defaults, $config);
 
 		$Model->parent = ClassRegistry::init(get_parent_class($Model));
@@ -126,6 +128,21 @@ class InheritableBehavior extends ModelBehavior {
 				}
 			}
 		}
+		
+		if (is_array($this->settings[$Model->alias]['fields'])) {
+			foreach ($results as $i => $res) {
+				if (is_int($i)) {
+					if (!empty($res[$Model->alias])) {
+						foreach ($res[$Model->alias] as $key => $value) {
+							if (!in_array($key, $this->settings[$Model->alias]['fields'])) {
+								unset($results[$i][$Model->alias][$key]);
+							}
+						}
+					}
+				}
+			}
+		}
+		
 		return $results;
 	}
 

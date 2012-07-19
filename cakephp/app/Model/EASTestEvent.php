@@ -5,7 +5,12 @@ class EASTestEvent extends Event {
 	
 	var $actsAs = array('Inheritable' => array(
 		'inheritanceField' => 'e_DISCRIMINATOR',
-		'method' => 'STI'
+		'method' => 'STI',
+		'fields' => array(
+			'e_Id',
+			'e_Title',
+			'e_Active'
+		)
 	));
 }
 ?>

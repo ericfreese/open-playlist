@@ -5,7 +5,15 @@ class FeatureEvent extends Event {
 	
 	var $actsAs = array('Inheritable' => array(
 		'inheritanceField' => 'e_DISCRIMINATOR',
-		'method' => 'STI'
+		'method' => 'STI',
+		'fields' => array(
+			'e_Id',
+			'e_ProducerName',
+			'e_GuestName',
+			'e_Description',
+			'e_InternalNote'
+			'e_Active'
+		)
 	));
 }
 ?>
