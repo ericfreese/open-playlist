@@ -5,5 +5,13 @@ class EventsController extends AppController {
 	
 	function index() {
 	}
+	
+	function api_index() {
+		parent::api_index($this->Event);
+	}
+	
+	function api_view($id) {
+		parent::api_view($this->Event, $id);
+	}
 }
 ?>
