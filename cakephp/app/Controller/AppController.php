@@ -50,11 +50,31 @@ class AppController extends Controller {
 	);
 	
 	protected function api_index($model) {
+		$model->Behaviors->attach('Containable', array('autoFields' => false));
+		
 		$params = array_merge(array(
 			'limit' => 50,
 			'offset' => 0,
-			'recursive' => -1
+			'contain' => false
 		), $this->request->query);
+		
+		if (isset($this->request->query['contain'])) {
+			$contain = json_decode($this->request->query['contain'], true);
+			if ($contain === null) throw new BadRequestException('Malformed JSON');
+			$params['contain'] = $contain;
+		}
+		
+		if (isset($this->request->query['fields'])) {
+			$fields = json_decode($this->request->query['fields'], true);
+			if ($fields === null) throw new BadRequestException('Malformed JSON');
+			$params['fields'] = $fields;
+		}
+		
+		if (isset($this->request->query['conditions'])) {
+			$conditions = json_decode($this->request->query['conditions'], true);
+			if ($conditions === null) throw new BadRequestException('Malformed JSON');
+			$params['conditions'] = $conditions;
+		}
 		
 		$this->set('data', array(
 			'total' => $model->find('count', array_merge($params, array('limit' => null))),
@@ -67,9 +87,23 @@ class AppController extends Controller {
 	}
 	
 	protected function api_view($model, $id) {
+		$model->Behaviors->attach('Containable', array('autoFields' => false));
+		
 		$params = array_merge(array(
-			'recursive' => -1
+			'contain' => false
 		), $this->request->query);
+		
+		if (isset($this->request->query['contain'])) {
+			$contain = json_decode($this->request->query['contain'], true);
+			if ($contain === null) throw new BadRequestException('Malformed JSON');
+			$params['contain'] = $contain;
+		}
+		
+		if (isset($this->request->query['fields'])) {
+			$fields = json_decode($this->request->query['fields'], true);
+			if ($fields === null) throw new BadRequestException('Malformed JSON');
+			$params['fields'] = $fields;
+		}
 		
 		$response = $model->find('first', array_merge($params, array('conditions' => array($model->primaryKey => $id))));
 		if (!$response) throw new NotFoundException('Resource not found');
