@@ -3,6 +3,10 @@ $(function() {
 		height: 475,
 		defaultView: 'agendaWeek',
 		allDaySlot: false,
+		header: false,
+		viewDisplay: function(view) {
+			$('#title').html(view.title);
+		},
 		events: function(start, end, callback) {
 			$.ajax({
 				url: 'api/scheduled_event_instances.json',
@@ -24,5 +28,15 @@ $(function() {
 				callback(events);
 			});
 		}
+	});
+	
+	$('#previous').click(function() {
+		$('#calendar').fullCalendar('prev');
+		return false;
+	});
+	
+	$('#next').click(function() {
+		$('#calendar').fullCalendar('next');
+		return false;
 	});
 });
