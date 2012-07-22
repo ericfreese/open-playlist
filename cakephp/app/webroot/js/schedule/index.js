@@ -8,21 +8,41 @@ $(function() {
 			$('#title').html(view.title);
 		},
 		events: function(start, end, callback) {
-			$.ajax({
+			var seLoaded = $.ajax({
+				url: 'api/scheduled_events.json',
+				dataType: 'json',
+				data: {
+					contain: JSON.stringify(['Event', 'TimeInfo']),
+					conditions: JSON.stringify({
+						'TimeInfo.ti_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
+					})
+				}
+			});
+			
+			var seiLoaded = $.ajax({
 				url: 'api/scheduled_event_instances.json',
 				dataType: 'json',
 				data: {
-					contain: JSON.stringify(['ScheduledEvent.Event'])
+					contain: JSON.stringify(['ScheduledEvent.Event']),
+					conditions: JSON.stringify({
+						'sei_StartDateTime >=': $.fullCalendar.formatDate(start, 'yyyy-MM-dd HH:mm:ss'),
+						'sei_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
+					})
 				}
-			}).then(function(data) {
+			});
+			
+			$.when(seLoaded, seiLoaded).then(function(seResponse, seiResponse) {
+				var scheduledEvents = seResponse[0],
+					scheduledEventInstances = seiResponse[0];
+				
 				var startDateTime, events = [];
-				for (var i = 0; i < data.response.length; i++) {
-					startDateTime = new Date(data.response[i].ScheduledEventInstance.sei_StartDateTime);
+				for (var i = 0; i < scheduledEventInstances.response.length; i++) {
+					startDateTime = new Date(scheduledEventInstances.response[i].ScheduledEventInstance.sei_StartDateTime);
 					events.push({
 						allDay: false,
-						title: data.response[i].ScheduledEvent.Event.e_Title,
+						title: scheduledEventInstances.response[i].ScheduledEvent.Event.e_Title,
 						start: startDateTime,
-						end: new Date(startDateTime.getTime() + data.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
+						end: new Date(startDateTime.getTime() + scheduledEventInstances.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
 					});
 				}
 				callback(events);
