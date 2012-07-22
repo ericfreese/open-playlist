@@ -77,7 +77,7 @@ class AppController extends Controller {
 		}
 		
 		$this->set('data', array(
-			'total' => $model->find('count', array_merge($params, array('limit' => null))),
+			'total' => $model->find('count', array_merge($params, array('limit' => null, 'fields' => null, 'contain' => null))),
 			'limit' => $params['limit'],
 			'offset' => $params['offset'],
 			'response' => $model->find('all', $params)
