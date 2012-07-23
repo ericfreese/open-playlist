@@ -23,8 +23,16 @@ $(function() {
 				url: 'api/scheduled_event_instances.json',
 				dataType: 'json',
 				data: {
-					contain: JSON.stringify(['ScheduledEvent.Event']),
-					conditions: JSON.stringify({
+					'fields': JSON.stringify([ 'sei_Id', 'sei_DISCRIMINATOR', 'sei_StartDateTime', 'sei_Duration', 'sei_ScheduledEventId' ]),
+					'contain': JSON.stringify({
+						'ScheduledEvent': {
+							'fields': [ 'se_Id', 'se_EventId'],
+							'Event': {
+								'fields': [ 'e_DISCRIMINATOR', 'e_Title' ]
+							}
+						}
+					}),
+					'conditions': JSON.stringify({
 						'sei_StartDateTime >=': $.fullCalendar.formatDate(start, 'yyyy-MM-dd HH:mm:ss'),
 						'sei_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
 					})
@@ -34,6 +42,8 @@ $(function() {
 			$.when(seLoaded, seiLoaded).then(function(seResponse, seiResponse) {
 				var scheduledEvents = seResponse[0],
 					scheduledEventInstances = seiResponse[0];
+				
+				console.log(scheduledEventInstances);
 				
 				var startDateTime, events = [];
 				for (var i = 0; i < scheduledEventInstances.response.length; i++) {
