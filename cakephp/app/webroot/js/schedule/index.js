@@ -8,18 +8,6 @@ $(function() {
 			$('#title').html(view.title);
 		},
 		events: function(start, end, callback) {
-			var seLoaded = $.ajax({
-				url: 'api/scheduled_events.json',
-				dataType: 'json',
-				data: {
-					'limit': 0,
-					'contain': JSON.stringify(['Event', 'TimeInfo']),
-					'conditions': JSON.stringify({
-						'TimeInfo.ti_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
-					})
-				}
-			});
-			
 			var seiLoaded = $.ajax({
 				url: 'api/scheduled_event_instances.json',
 				dataType: 'json',
@@ -35,15 +23,15 @@ $(function() {
 						}
 					}),
 					'conditions': JSON.stringify({
+						'sei_DISCRIMINATOR': 'ScheduledShowInstance',
 						'sei_StartDateTime >=': $.fullCalendar.formatDate(start, 'yyyy-MM-dd HH:mm:ss'),
 						'sei_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
 					})
 				}
 			});
 			
-			$.when(seLoaded, seiLoaded).then(function(seResponse, seiResponse) {
-				var scheduledEvents = seResponse[0],
-					scheduledEventInstances = seiResponse[0];
+			$.when(seiLoaded).then(function(seiResponse) {
+				var scheduledEventInstances = seiResponse;
 				
 				console.log(scheduledEventInstances);
 				
