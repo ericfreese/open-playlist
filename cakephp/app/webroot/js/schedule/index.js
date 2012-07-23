@@ -12,8 +12,9 @@ $(function() {
 				url: 'api/scheduled_events.json',
 				dataType: 'json',
 				data: {
-					contain: JSON.stringify(['Event', 'TimeInfo']),
-					conditions: JSON.stringify({
+					'limit': 0,
+					'contain': JSON.stringify(['Event', 'TimeInfo']),
+					'conditions': JSON.stringify({
 						'TimeInfo.ti_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
 					})
 				}
@@ -23,6 +24,7 @@ $(function() {
 				url: 'api/scheduled_event_instances.json',
 				dataType: 'json',
 				data: {
+					'limit': 0,
 					'fields': JSON.stringify([ 'sei_Id', 'sei_DISCRIMINATOR', 'sei_StartDateTime', 'sei_Duration', 'sei_ScheduledEventId' ]),
 					'contain': JSON.stringify({
 						'ScheduledEvent': {
