@@ -10,10 +10,6 @@
 		
 		<?php echo $this->Html->css('bootstrap'); ?>
 		<style type="text/css">
-			body {
-				padding-top: 60px;
-				padding-bottom: 40px;
-			}
 			.sidebar-nav {
 				padding: 9px 0;
 			}
@@ -34,7 +30,7 @@
 	</head>
 	
 	<body>
-		<div class="navbar navbar-fixed-top">
+		<div class="navbar">
 			<div class="navbar-inner">
 				<div class="container-fluid">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
@@ -60,12 +56,13 @@
 								<ul class="dropdown-menu">
 									<li><?php echo $this->Html->link('Events', array('controller' => 'events', 'action' => 'index')) ?></li>
 									<li><?php echo $this->Html->link('Hosts', array('controller' => 'hosts', 'action' => 'index')) ?></li>
+									<li><?php echo $this->Html->link('Users', array('controller' => 'users', 'action' => 'index')) ?></li>
 								</ul>
 							</li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo 'username' ?> <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo AuthComponent::user('Username') ?> <span class="caret"></span></a>
 								<ul class="dropdown-menu">
-									<li><a href="http://kgnu.org/playlist/index.php?signout=1">Log Out</a></li>
+									<li><?php echo $this->Html->link('Log Out', array('controller' => 'users', 'action' => 'logout')) ?></li>
 								</ul>
 							</li>
 						</ul>

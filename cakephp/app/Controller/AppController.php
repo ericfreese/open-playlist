@@ -33,7 +33,6 @@ App::uses('Controller', 'Controller');
  */
 class AppController extends Controller {
 	var $helpers = array(
-		// 'Auth',
 		'Html',
 		'Form',
 		'Session',
@@ -45,6 +44,10 @@ class AppController extends Controller {
 	var $components = array(
 		'RequestHandler',
 		'Session',
+		'Auth' => array(
+			'loginRedirect' => array('controller' => 'pages', 'action' => 'display', 'home'),
+			'logoutRedirect' => array('controller' => 'users', 'action' => 'login')
+		),
 		//'DebugKit.Toolbar',
 		'Crumb'
 	);
@@ -111,8 +114,4 @@ class AppController extends Controller {
 		$this->set('response', $response);
 		$this->set('_serialize', 'response');
 	}
-	
-	// function beforeFilter() {
-	// 	$this->Auth->allow('*');
-	// }
 }

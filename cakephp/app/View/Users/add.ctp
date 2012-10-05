@@ -7,21 +7,21 @@
 			</div>
 		</div>
 		<?php echo $this->Form->create('User', array('type' => 'post')); ?>
-			<fieldset id="login">
-				<legend>Log In</legend>
+			<fieldset id="user">
+				<legend>Add User</legend>
 				<div class="row-fluid">
 					<div class="span12">
-						<?php echo $this->TB->input('username', array(
+						<?php echo $this->TB->input('Username', array(
 							'label' => 'Username',
 							'type' => 'text',
 							'class' => 'input-block-level'
 						)); ?>
-						<?php echo $this->TB->input('password', array(
+						<?php echo $this->TB->input('Password', array(
 							'label' => 'Password',
 							'type' => 'password',
 							'class' => 'input-block-level'
 						)); ?>
-						<?php echo $this->TB->button('Log In', array('style' => 'primary')); ?>
+						<?php echo $this->TB->button('Save', array('style' => 'primary')); ?>
 					</div>
 				</div>
 			</fieldset>

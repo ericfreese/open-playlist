@@ -552,22 +552,19 @@ INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_A
 -- Table structure for table `User`
 --
 
-CREATE TABLE IF NOT EXISTS `User` (
+CREATE TABLE IF NOT EXISTS `Users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `PasswordHash` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `RoleId` int(10) unsigned NOT NULL,
-  `LastVisit` datetime DEFAULT NULL,
-  `Shared` tinyint(1) NOT NULL DEFAULT '0',
+  `Password` varchar(100) COLLATE utf8_unicode_ci NOT NULL
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Username` (`Username`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 --
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`Id`, `Username`, `PasswordHash`, `RoleId`, `LastVisit`, `Shared`) VALUES(1, 'root', 'cd78abd152b9c698766c4c16738bd104', 1, '2011-05-29 18:37:19', 0);
+INSERT INTO `User` (`Id`, `Username`, `Password`) VALUES(1, 'root', '457c2cc0f4701f4ec3fdb40ad7f968299ecd34ca');
 
 -- --------------------------------------------------------
 
