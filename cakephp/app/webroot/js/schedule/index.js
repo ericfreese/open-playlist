@@ -9,7 +9,7 @@ $(function() {
 		},
 		events: function(start, end, callback) {
 			var eventsLoaded = $.ajax({
-				url: '/playlist/cake/api/events_between.json',
+				url: 'api/events_between.json',
 				dataType: 'json',
 				data: {
 					'start': start.getTime() / 1000,
