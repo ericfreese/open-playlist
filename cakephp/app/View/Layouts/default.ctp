@@ -9,11 +9,6 @@
 		<?php echo $this->Html->css('style'); ?>
 		
 		<?php echo $this->Html->css('bootstrap'); ?>
-		<style type="text/css">
-			.sidebar-nav {
-				padding: 9px 0;
-			}
-		</style>
 		<?php echo $this->Html->css('bootstrap-responsive'); ?>
 		
 		<?php echo $this->fetch('css'); ?>
