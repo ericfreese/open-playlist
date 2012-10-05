@@ -282,5 +282,5 @@ Cache::config('_cake_model_', array(
 	'duration' => $duration
 ));
 
-Configure::write('Organization.Name', 'Playlist Sandbox');
+Configure::write('Organization.Name', 'Open Playlist');
 Configure::write('Options.ReportingPeriod', true);
