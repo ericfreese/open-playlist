@@ -1,0 +1,19 @@
+web1:
+    name: playlist
+    document_root: cakephp/app/webroot
+    shared_writable_dirs:
+        - cakephp/app/tmp
+        - cakephp/app/tmp/cache
+        - cakephp/tmp/cache
+    php_extensions:
+        - mcrypt
+        - apc
+        - pdo_mysql
+        - mysqli
+        - mbstring
+    after_build:
+        - "mv pagoda/database.php cakephp/app/Config/database.php"
+        - "mv pagoda/core.php cakephp/app/Config/core.php"
+db1:
+    name: playlist
+    type: mysql
