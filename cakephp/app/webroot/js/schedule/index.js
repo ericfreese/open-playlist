@@ -33,6 +33,9 @@ $(function() {
 				
 				callback(fcEvents);
 			});
+		},
+		dayClick:  function(date, allDay, jsEvent, view) {
+			window.location = '/scheduled_events/add';
 		}
 	});
 	
