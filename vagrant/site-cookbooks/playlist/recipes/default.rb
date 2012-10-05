@@ -7,8 +7,6 @@
 # All rights reserved - Do Not Redistribute
 #
 
-package "phpmyadmin"
-
 execute "disable-default-site" do
   command "a2dissite default"
 end
@@ -33,5 +31,5 @@ end
 
 web_app "playlist" do
   application_name "playlist"
-  docroot "/vagrant/cakephp"
+  docroot "/vagrant/cakephp/app/webroot"
 end
