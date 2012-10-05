@@ -1,5 +1,3 @@
-<?php require_once 'initialize.php' ?>
-
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -45,26 +43,28 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<?php echo $this->Html->link(Configure::read('Organization.Name'), 'http://kgnu.org/playlist/contents.php', array('class' => 'brand')); ?>
+					<?php echo $this->Html->link(Configure::read('Organization.Name'), '/', array('class' => 'brand')); ?>
 					<div class="nav-collapse">
 						<ul class="nav">
 							<!--
-							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'showbuilder', 'action' => 'upcomingshows')) ?></li>
-							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
 							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
 							-->
-							<li><?php echo $this->Html->link('Show Builder', 'http://kgnu.org/playlist/findshows.php') ?></li>
-							<li><?php echo $this->Html->link('Schedule', 'http://kgnu.org/playlist/calendar.php') ?></li>
+							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'show_builder', 'action' => 'index')) ?></li>
+							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
 							<li><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Events', 'http://kgnu.org/playlist/events.php') ?></li>
-							<!--<li><?php //echo $this->Html->link('Hosts', array('controller' => 'hosts', 'action' => 'index')); ?></li>-->
 						</ul>
 						<ul class="nav pull-right">
-							<!--<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>-->
-							<li><?php echo $this->Html->link('Help', 'http://kgnu.org/playlist/about.php') ?></li>
+							<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo $_SESSION['Username'] ?> <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Admin <span class="caret"></span></a>
+								<ul class="dropdown-menu">
+									<li><?php echo $this->Html->link('Events', array('controller' => 'events', 'action' => 'index')) ?></li>
+									<li><?php echo $this->Html->link('Hosts', array('controller' => 'hosts', 'action' => 'index')) ?></li>
+								</ul>
+							</li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo 'username' ?> <span class="caret"></span></a>
 								<ul class="dropdown-menu">
 									<li><a href="http://kgnu.org/playlist/index.php?signout=1">Log Out</a></li>
 								</ul>

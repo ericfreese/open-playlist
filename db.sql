@@ -16,10 +16,11 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `comrad`
+-- Database: `playlist`
 --
-CREATE DATABASE `comrad` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `comrad`;
+DROP DATABASE IF EXISTS `playlist`;
+CREATE DATABASE `playlist` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `playlist`;
 
 -- --------------------------------------------------------
 

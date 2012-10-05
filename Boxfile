@@ -10,6 +10,7 @@ web1:
         - apc
         - pdo_mysql
         - mysqli
+        - mysql
         - mbstring
     after_build:
         - "mv pagoda/database.php cakephp/app/Config/database.php"
