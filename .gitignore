@@ -1,10 +1,2 @@
 .vagrant
 .DS_Store
-/cakephp/app/Config
-/cakephp/app/tmp
-/cakephp/lib/Cake/Console/Templates/skel/tmp/
-/cakephp/plugins
-/cakephp/vendors
-/cakephp/build
-/cakephp/dist
-/cakephp/tags
