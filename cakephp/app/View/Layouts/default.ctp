@@ -34,6 +34,7 @@
 	</head>
 	
 	<body>
+		<?php echo $_SERVER['DB1_USER'] ?>
 		
 		<div class="navbar navbar-fixed-top">
 			<div class="navbar-inner">
