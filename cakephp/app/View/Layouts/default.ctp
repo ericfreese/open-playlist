@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<?php echo $this->Html->charset(); ?>
-		<title><?php echo 'Music Library' ?> - <?php echo $title_for_layout; ?></title>
+		<title><?php echo $title_for_layout; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="KGNU">
 		<meta name="author" content="KGNU">
