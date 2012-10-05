@@ -5,7 +5,6 @@ web1:
         - cakephp/app/tmp
         - cakephp/app/tmp/cache
         - cakephp/tmp/cache
-        - cakephp/tmp/logs
     php_extensions:
         - mcrypt
         - apc
@@ -13,6 +12,9 @@ web1:
         - mysqli
         - mysql
         - mbstring
+    before_deploy:
+        - "mkdir -p cakephp/app/tmp/cache
+        - "mkdir cakephp/app/tmp/logs
     after_build:
         - "mv pagoda/database.php cakephp/app/Config/database.php"
         - "mv pagoda/core.php cakephp/app/Config/core.php"
