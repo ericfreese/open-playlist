@@ -1,12 +1,13 @@
-<?php $this->Html->script('scheduled_events/add.js', array('inline' => false)); ?>
+<?php $this->Html->script('scheduled_events/edit.js', array('inline' => false)); ?>
 
 <div class="row-fluid">
 	<div class="span12">
 		<div class="page-header">
-			<h1>Add Scheduled Event</h1>
+			<h1>Edit Scheduled Event</h1>
 		</div>
-		<?php echo $this->Form->create(false, array('type' => 'post', 'class' => 'form-horizontal')); ?>
+		<?php echo $this->Form->create(false, array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset id="scheduled-event">
+				<?php echo $this->Form->input('se_Id', array('type' => 'hidden')); ?>
 				<div class="row-fluid">
 					<div class="span12">
 						<?php echo $this->TB->input('ScheduledEvent.se_EventId', array(

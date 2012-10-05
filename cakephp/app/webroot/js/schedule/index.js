@@ -8,44 +8,30 @@ $(function() {
 			$('#title').html(view.title);
 		},
 		events: function(start, end, callback) {
-			var seiLoaded = $.ajax({
-				url: 'api/scheduled_event_instances.json',
+			var eventsLoaded = $.ajax({
+				url: '/playlist/cake/api/events_between.json',
 				dataType: 'json',
 				data: {
-					'limit': 0,
-					'fields': JSON.stringify([ 'sei_Id', 'sei_DISCRIMINATOR', 'sei_StartDateTime', 'sei_Duration', 'sei_ScheduledEventId' ]),
-					'contain': JSON.stringify({
-						'ScheduledEvent': {
-							'fields': [ 'se_Id', 'se_EventId'],
-							'Event': {
-								'fields': [ 'e_DISCRIMINATOR', 'e_Title' ]
-							}
-						}
-					}),
-					'conditions': JSON.stringify({
-						'sei_DISCRIMINATOR': 'ScheduledShowInstance',
-						'sei_StartDateTime >=': $.fullCalendar.formatDate(start, 'yyyy-MM-dd HH:mm:ss'),
-						'sei_StartDateTime <': $.fullCalendar.formatDate(end, 'yyyy-MM-dd HH:mm:ss')
-					})
+					'start': start.getTime() / 1000,
+					'end': end.getTime() / 1000
 				}
 			});
 			
-			$.when(seiLoaded).then(function(seiResponse) {
-				var scheduledEventInstances = seiResponse;
+			$.when(eventsLoaded).then(function(events) {
+				var startDateTime,
+					fcEvents = [];
 				
-				console.log(scheduledEventInstances);
-				
-				var startDateTime, events = [];
-				for (var i = 0; i < scheduledEventInstances.response.length; i++) {
-					startDateTime = new Date(scheduledEventInstances.response[i].ScheduledEventInstance.sei_StartDateTime);
-					events.push({
+				for (var i = 0; i < events.response.length; i++) {
+					startDateTime = new Date(events.response[i].ScheduledEventInstance.sei_StartDateTime * 1000);
+					fcEvents.push({
 						allDay: false,
-						title: scheduledEventInstances.response[i].ScheduledEvent.Event.e_Title,
+						title: events.response[i].ScheduledEvent.Event.e_Title,
 						start: startDateTime,
-						end: new Date(startDateTime.getTime() + scheduledEventInstances.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
+						end: new Date(startDateTime.getTime() + events.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
 					});
 				}
-				callback(events);
+				
+				callback(fcEvents);
 			});
 		}
 	});

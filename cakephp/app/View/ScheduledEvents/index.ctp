@@ -5,6 +5,7 @@
 				<tr>
 					<th>Title</th>
 					<th>Starts</th>
+					<th>Duration</th>
 					<th>Ends</th>
 					<th>Repeat Type</th>
 					<th>Repeat Interval</th>
@@ -16,6 +17,7 @@
 					<tr>
 						<td><?php echo $this->Html->link($scheduledEvent['Event']['e_Title'], array('controller' => 'scheduled_events', 'action' => 'view', $scheduledEvent['ScheduledEvent']['se_Id'])); ?></td>
 						<td><?php echo $scheduledEvent['TimeInfo']['ti_StartDateTime'] ?></td>
+						<td><?php echo $scheduledEvent['TimeInfo']['ti_Duration'] ?></td>
 						<td><?php echo $scheduledEvent['TimeInfo']['ti_EndDate'] ?></td>
 						<td><?php echo $scheduledEvent['TimeInfo']['ti_DISCRIMINATOR'] ?></td>
 						<td><?php echo $scheduledEvent['TimeInfo']['ti_Interval'] ?></td>
