@@ -5,6 +5,7 @@ web1:
         - cakephp/app/tmp
         - cakephp/app/tmp/cache
         - cakephp/tmp/cache
+        - cakephp/tmp/logs
     php_extensions:
         - mcrypt
         - apc
