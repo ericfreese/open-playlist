@@ -12,7 +12,6 @@ web1:
         - mysqli
         - mbstring
     after_build:
-        - "mkdir cakephp/app/Config"
         - "mv pagoda/database.php cakephp/app/Config/database.php"
         - "mv pagoda/core.php cakephp/app/Config/core.php"
 db1:
