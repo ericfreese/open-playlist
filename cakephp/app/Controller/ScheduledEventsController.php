@@ -32,7 +32,7 @@ class ScheduledEventsController extends AppController {
 	
 	function edit($id) {
 		if ($this->request->is('put')) {
-			if ($this->ScheduledEvent->save($this->request->data)) {
+			if ($this->ScheduledEvent->saveAssociated($this->request->data)) {
 				$this->Session->setFlash(
 					'The Scheduled Event was saved.',
 					'flash_success',

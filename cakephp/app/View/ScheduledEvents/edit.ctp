@@ -7,7 +7,7 @@
 		</div>
 		<?php echo $this->Form->create(false, array('type' => 'put', 'class' => 'form-horizontal')); ?>
 			<fieldset id="scheduled-event">
-				<?php echo $this->Form->input('se_Id', array('type' => 'hidden')); ?>
+				<?php echo $this->Form->input('ScheduledEvent.se_Id', array('type' => 'hidden')); ?>
 				<div class="row-fluid">
 					<div class="span12">
 						<?php echo $this->TB->input('ScheduledEvent.se_EventId', array(
@@ -25,6 +25,7 @@
 				</div>
 			</fieldset>
 			<fieldset id="time-info">
+				<?php echo $this->Form->input('TimeInfo.ti_Id', array('type' => 'hidden')); ?>
 				<div class="row-fluid">
 					<div class="span12">
 						<?php echo $this->TB->input('TimeInfo.ti_StartDateTime', array(
