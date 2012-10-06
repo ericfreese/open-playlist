@@ -11,7 +11,7 @@ class ScheduledEventsController extends AppController {
 		$this->set('scheduledEvent', $this->ScheduledEvent->find('first', array('conditions' => array('se_Id' => $id))));
 	}
 	
-	function add() {
+	function add($startDateTime = null) {
 		if ($this->request->is('post')) {
 			if ($this->ScheduledEvent->saveAssociated($this->request->data, array('validate' => true))) {
 				$this->Session->setFlash(
@@ -24,6 +24,9 @@ class ScheduledEventsController extends AppController {
 				);
 			}
 		}
+		
+		if ($startDateTime !== null) $this->data = array('TimeInfo' => array('ti_StartDateTime' => $startDateTime));
+		
 		$this->set('events', $this->Event->find('list', array(
 			'conditions' => array('e_Active' => true),
 			'order' => 'e_Title ASC'

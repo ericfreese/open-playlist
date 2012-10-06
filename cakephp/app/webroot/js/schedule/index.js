@@ -19,16 +19,19 @@ $(function() {
 			
 			$.when(eventsLoaded).then(function(events) {
 				var startDateTime,
+					eventType,
 					fcEvents = [];
 				
 				for (var i = 0; i < events.response.length; i++) {
 					startDateTime = new Date(events.response[i].ScheduledEventInstance.sei_StartDateTime * 1000);
+					eventType = events.response[i].ScheduledEvent.Event.e_DISCRIMINATOR.replace('Event', '');
 					fcEvents.push({
-						allDay: false,
-						title: events.response[i].ScheduledEvent.Event.e_Title,
-						start: startDateTime,
-						end: new Date(startDateTime.getTime() + events.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
-						className: [ events.response[i].ScheduledEvent.Event.e_DISCRIMINATOR.toLowerCase() ]
+						'allDay': false,
+						'title': events.response[i].ScheduledEvent.Event.e_Title,
+						'start': startDateTime,
+						'end': new Date(startDateTime.getTime() + events.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
+						'className': [ 'fc-' + eventType.toLowerCase() ],
+						'url': '/' + (eventType.charAt(0).toLowerCase() + eventType.slice(1)).replace(/([A-Z])/g, '_$1').toLowerCase() + '_instances/add/' + events.response[i].ScheduledEvent.se_Id + '/' + startDateTime.getTime() / 1000
 					});
 				}
 				
@@ -36,7 +39,7 @@ $(function() {
 			});
 		},
 		dayClick:  function(date, allDay, jsEvent, view) {
-			window.location = '/scheduled_events/add';
+			window.location = '/scheduled_events/add/' + date.getTime() / 1000;
 		}
 	});
 	
