@@ -555,7 +555,7 @@ INSERT INTO `Tracks` (`t_TrackID`, `t_AlbumID`, `t_Title`, `t_TrackNumber`, `t_A
 CREATE TABLE IF NOT EXISTS `Users` (
   `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `Username` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
-  `Password` varchar(100) COLLATE utf8_unicode_ci NOT NULL
+  `Password` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Username` (`Username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
@@ -564,7 +564,7 @@ CREATE TABLE IF NOT EXISTS `Users` (
 -- Dumping data for table `User`
 --
 
-INSERT INTO `User` (`Id`, `Username`, `Password`) VALUES(1, 'root', '457c2cc0f4701f4ec3fdb40ad7f968299ecd34ca');
+INSERT INTO `Users` (`Id`, `Username`, `Password`) VALUES(1, 'root', '457c2cc0f4701f4ec3fdb40ad7f968299ecd34ca');
 
 -- --------------------------------------------------------
 

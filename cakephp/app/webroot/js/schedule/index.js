@@ -28,6 +28,7 @@ $(function() {
 						title: events.response[i].ScheduledEvent.Event.e_Title,
 						start: startDateTime,
 						end: new Date(startDateTime.getTime() + events.response[i].ScheduledEventInstance.sei_Duration * 60 * 1000),
+						className: [ events.response[i].ScheduledEvent.Event.e_DISCRIMINATOR.toLowerCase() ]
 					});
 				}
 				

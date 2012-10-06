@@ -11,7 +11,7 @@ class FeatureEvent extends Event {
 			'e_ProducerName',
 			'e_GuestName',
 			'e_Description',
-			'e_InternalNote'
+			'e_InternalNote',
 			'e_Active'
 		)
 	));

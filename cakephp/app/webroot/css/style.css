@@ -34,3 +34,31 @@ th a:hover + .caret {
 	opacity: 1;
 	filter: alpha(opacity=100);
 }
+
+.fc-event.alertevent .fc-event-skin, .fc-event.alertevent.fc-event-skin {
+	background-color: darkred; border-color: darkred; color: white
+}
+.fc-event.announcementevent .fc-event-skin, .fc-event.announcementevent.fc-event-skin {
+	background-color: green; border-color: green; color: white
+}
+.fc-event.eastestevent .fc-event-skin, .fc-event.eastestevent.fc-event-skin {
+	background-color: #754C24; border-color: #754C24; color: white
+}
+.fc-event.featureevent .fc-event-skin, .fc-event.featureevent.fc-event-skin {
+	background-color: royalblue; border-color: royalblue; color: white
+}
+.fc-event.legalidevent .fc-event-skin, .fc-event.legalidevent.fc-event-skin {
+	background-color: indigo; border-color: indigo; color: white
+}
+.fc-event.psaevent .fc-event-skin, .fc-event.psaevent.fc-event-skin {
+	background-color: darkorange; border-color: darkorange; color: white
+}
+.fc-event.showevent .fc-event-skin, .fc-event.showevent.fc-event-skin {
+	background-color: #007084; border-color: #007084; color: white;
+}
+.fc-event.ticketgiveawayevent .fc-event-skin, .fc-event.ticketgiveawayevent.fc-event-skin {
+	background-color: darkgoldenrod; border-color: darkgoldenrod; color: white
+}
+.fc-event.underwritingevent .fc-event-skin, .fc-event.underwritingevent.fc-event-skin {
+	background-color: slategray; border-color: slategray; color: white
+}
