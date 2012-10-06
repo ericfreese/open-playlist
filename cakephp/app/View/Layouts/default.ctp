@@ -4,8 +4,8 @@
 		<?php echo $this->Html->charset(); ?>
 		<title><?php echo $title_for_layout; ?></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<meta name="description" content="KGNU">
-		<meta name="author" content="KGNU">
+		<meta name="description" content="Open Playlist">
+		<meta name="author" content="Open Playlist">
 		<?php echo $this->Html->css('style'); ?>
 		
 		<?php echo $this->Html->css('bootstrap'); ?>

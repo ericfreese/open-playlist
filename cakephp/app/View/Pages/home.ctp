@@ -11,7 +11,7 @@
 	</div>
 	<div class="span4">
 		<h2>Music Library</h2>
-		<p>Manage KGNU's music library</p>
+		<p>Manage the music library</p>
 		<?php echo $this->Html->link('Open Music Library', array('controller' => 'music_library', 'action' => 'index'), array('class' => 'btn btn-large')) ?>
 	</div>
 </div>

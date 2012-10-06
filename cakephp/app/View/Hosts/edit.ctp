@@ -16,7 +16,7 @@
 						<?php echo $this->TB->input('Internal', array(
 							'label' => 'Internal',
 							'type' => 'checkbox',
-							'checkbox_label' => 'Is this a KGNU host?'
+							'checkbox_label' => 'Is this an internal host?'
 						)); ?>
 						<?php echo $this->TB->input('Active', array(
 							'label' => 'Active',

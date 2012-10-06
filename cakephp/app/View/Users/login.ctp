@@ -21,7 +21,7 @@
 							'type' => 'password',
 							'class' => 'input-block-level'
 						)); ?>
-						<?php echo $this->TB->button('Log In', array('style' => 'primary')); ?>
+						<?php echo $this->TB->button('Log In', array('style' => 'primary')); ?> or <?php echo $this->Html->link('Register', array('controller' => 'users', 'action' => 'add')); ?>
 					</div>
 				</div>
 			</fieldset>
