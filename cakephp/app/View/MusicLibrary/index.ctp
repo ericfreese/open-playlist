@@ -65,7 +65,7 @@
 						<?php echo $this->Paginator->link('<i class="icon-chevron-right"></i>', array('page' => ($pageParams['nextPage'] ? $pageParams['page'] + 1 : $pageParams['pageCount'])), array('escape' => false, 'class' => 'btn'.($pageParams['nextPage'] ? '' : ' disabled'))); ?>
 					</div>
 				</div>
-				<div style="text-align: right; line-height: 2.3em; margin-right: 80px">
+				<div class="pull-right" style="line-height: 2.1em; margin-right: 6px">
 					<?php echo $this->Paginator->counter('<b>{:start}</b>-<b>{:end}</b> of <b>'.($pageParams['count'] > 2000 ? 'thousands' : '{:count}').'</b>'); ?>
 				</div>
 			</div>
@@ -124,7 +124,7 @@
 						<?php echo $this->Paginator->link('<i class="icon-chevron-right"></i>', array('page' => ($pageParams['nextPage'] ? $pageParams['page'] + 1 : $pageParams['pageCount'])), array('escape' => false, 'class' => 'btn'.($pageParams['nextPage'] ? '' : ' disabled'))); ?>
 					</div>
 				</div>
-				<div style="text-align: right; line-height: 2.3em; margin-right: 80px">
+				<div class="pull-right" style="line-height: 2.1em; margin-right: 6px">
 					<?php echo $this->Paginator->counter('<b>{:start}</b>-<b>{:end}</b> of <b>'.($pageParams['count'] > 2000 ? 'thousands' : '{:count}').'</b>'); ?>
 				</div>
 			</div>

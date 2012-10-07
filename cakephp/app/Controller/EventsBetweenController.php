@@ -4,9 +4,9 @@ class EventsBetweenController extends AppController {
 	var $uses = array('ScheduledEvent', 'ScheduledEventInstance');
 	var $helpers = array('Time');
 	
-	protected function _getEventInstances($start, $end) {
+	protected function _getEventInstances($start, $end, $conditions) {
 		// Get scheduled events
-		$scheduledEvents = $this->ScheduledEvent->findBetween($start, $end);
+		$scheduledEvents = $this->ScheduledEvent->findBetween($start, $end, $conditions);
 		
 		// Generate instances from scheduled events
 		$scheduledEventInstancesFromScheduledEvents = $this->ScheduledEvent->getInstancesBetween($scheduledEvents, $start, $end);
@@ -38,8 +38,13 @@ class EventsBetweenController extends AppController {
 		$start = isset($this->request->query['start']) ? $this->request->query['start'] : time();
 		$end = isset($this->request->query['end']) ? $this->request->query['end'] : $start + 7 * 24 * 60 * 60;
 		
+		if (isset($this->request->query['conditions'])) {
+			$conditions = json_decode($this->request->query['conditions'], true);
+			if ($conditions === null) throw new BadRequestException('Malformed JSON');
+		}
+		
 		// Get scheduled events
-		$instances = $this->_getEventInstances($start, $end);
+		$instances = $this->_getEventInstances($start, $end, isset($conditions) ? $conditions : array());
 		
 		$this->set('data', array(
 			'response' => $instances

@@ -1,10 +1,8 @@
 <div class="row-fluid">
 	<div class="span12">
-		<div class="page-header">
-			<h1>Search iTunes</h1>
-		</div>
 		<?php echo $this->Form->create(false, array('type' => 'get')); ?>
 			<fieldset>
+				<legend>Search iTunes</legend>
 				<div class="input-append">
 					<?php echo $this->TB->basic_input('q', array(
 						'type' => 'text',

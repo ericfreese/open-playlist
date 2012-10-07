@@ -36,13 +36,9 @@
 					<?php echo $this->Html->link(Configure::read('Organization.Name'), '/', array('class' => 'brand')); ?>
 					<div class="nav-collapse">
 						<ul class="nav">
-							<!--
-							<li class="active"><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Admin', array('controller' => 'events', 'action' => 'index')) ?></li>
-							-->
-							<li><?php echo $this->Html->link('Show Builder', array('controller' => 'show_builder', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Schedule', array('controller' => 'schedule', 'action' => 'index')) ?></li>
-							<li><?php echo $this->Html->link('Music Library', array('controller' => 'music_library', 'action' => 'index')) ?></li>
+							<li><?php echo $this->Html->link('<i class="icon-list-alt"></i> Show Builder', array('controller' => 'show_builder', 'action' => 'index'), array('escape' => false)) ?></li>
+							<li><?php echo $this->Html->link('<i class="icon-calendar"></i> Schedule', array('controller' => 'schedule', 'action' => 'index'), array('escape' => false)) ?></li>
+							<li><?php echo $this->Html->link('<i class="icon-music"></i> Music Library', array('controller' => 'music_library', 'action' => 'index'), array('escape' => false)) ?></li>
 						</ul>
 						<ul class="nav pull-right">
 							<li><?php echo $this->Html->link('Help', array('controller' => 'help', 'action' => 'index')) ?></li>
@@ -55,8 +51,10 @@
 								</ul>
 							</li>
 							<li class="dropdown">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">Logged in as <?php echo AuthComponent::user('Username') ?> <span class="caret"></span></a>
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="icon-user"></i> <strong><?php echo AuthComponent::user('Username') ?></strong> <span class="caret"></span></a>
 								<ul class="dropdown-menu">
+									<li><?php echo $this->Html->link('User Settings', array('controller' => 'users', 'action' => 'settings')) ?></li>
+									<li class="divider"></li>
 									<li><?php echo $this->Html->link('Log Out', array('controller' => 'users', 'action' => 'logout')) ?></li>
 								</ul>
 							</li>

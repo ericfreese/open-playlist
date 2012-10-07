@@ -24,8 +24,8 @@ class ScheduledEvent extends AppModel {
 		)
 	);
 	
-	public function findBetween($start, $end) {
-		return $this->find('all', array('conditions' => array(
+	public function findBetween($start, $end, $conditions = array()) {
+		return $this->find('all', array('conditions' => array_merge($conditions, array(
 			'TimeInfo.ti_StartDateTime <' => date('Y-M-d H:i:s', $end),
 			'OR' => array(
 				array(
@@ -44,7 +44,7 @@ class ScheduledEvent extends AppModel {
 					)
 				)
 			)
-		)));
+		))));
 	}
 	
 	public function getInstancesBetween($scheduledEvents, $start, $end) {
